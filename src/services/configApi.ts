@@ -74,6 +74,7 @@ export interface WeightEntryAPI {
   visceralFat: number | null;
   boneMass: number | null;
   bmr: number | null;
+  bodyAge: number | null;
   notes: string | null;
   source: string;
   createdAt: string;
@@ -143,4 +144,31 @@ export const fetchEntryAPI = async (id: string): Promise<WeightEntryAPI> => {
     throw new Error('Failed to fetch entry');
   }
   return response.json();
+};
+
+// Delete entry (requires API key)
+export const deleteEntryAPI = async (id: string, apiKey: string): Promise<{ success: boolean }> => {
+  const response = await fetch(`${API_BASE}/api/entries/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'X-API-Key': apiKey,
+    },
+  });
+  
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.error || 'Failed to delete entry');
+  }
+  
+  return response.json();
+};
+
+// Check if API key exists in localStorage
+export const hasApiKey = (): boolean => {
+  return !!localStorage.getItem('wt_api_key');
+};
+
+// Get API key from localStorage
+export const getApiKey = (): string | null => {
+  return localStorage.getItem('wt_api_key');
 };

@@ -2,16 +2,14 @@ import { useState, useCallback } from "react";
 import { useInfiniteQuery, useQueryClient, useQuery } from "@tanstack/react-query";
 import { WeightEntry } from "@/services/weightApi";
 import { fetchPaginatedEntries } from "@/services/weightDataService";
-import { fetchConfigStatus } from "@/services/configApi";
+import { fetchConfigStatus, hasApiKey } from "@/services/configApi";
 import DataLogEntry from "./DataLogEntry";
 import EntryDetailSheet from "./EntryDetailSheet";
 import DataLogSkeleton from "./DataLogSkeleton";
-import PullToRefreshIndicator from "./PullToRefreshIndicator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Loader2 } from "lucide-react";
 import { hapticFeedback } from "@/hooks/useHaptics";
-import { usePullToRefresh } from "@/hooks/usePullToRefresh";
 
 interface DataLogProps {
   entries: WeightEntry[];
@@ -21,6 +19,7 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const queryClient = useQueryClient();
+  const apiKeyExists = hasApiKey();
 
   // Fetch user config for gender
   const { data: userConfig } = useQuery({
@@ -50,11 +49,6 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
     await refetch();
   }, [queryClient, refetch]);
 
-  const { pullDistance, isRefreshing, isTriggered, progress, handlers } = usePullToRefresh({
-    onRefresh: handleRefresh,
-    threshold: 80,
-  });
-
   const allEntries = data?.pages.flatMap(page => page.entries) ?? initialEntries;
 
   const handleEntryClick = useCallback((entryId: string) => {
@@ -62,6 +56,10 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
     setSelectedEntryId(entryId);
     setSheetOpen(true);
   }, []);
+
+  const handleEntryDeleted = useCallback(() => {
+    handleRefresh();
+  }, [handleRefresh]);
 
   const handleLoadMore = useCallback(() => {
     hapticFeedback('selection');
@@ -80,24 +78,7 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
           </span>
         </div>
         
-        <div 
-          className="relative h-[320px] sm:h-[420px]"
-          {...handlers}
-        >
-          <PullToRefreshIndicator
-            pullDistance={pullDistance}
-            isRefreshing={isRefreshing}
-            isTriggered={isTriggered}
-            progress={progress}
-          />
-          
-          <ScrollArea 
-            className="h-full pr-2 sm:pr-4"
-            style={{
-              transform: `translateY(${isRefreshing ? 48 : pullDistance}px)`,
-              transition: pullDistance === 0 ? 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none',
-            }}
-          >
+        <ScrollArea className="h-[320px] sm:h-[420px] pr-2 sm:pr-4">
             {isLoading ? (
               <DataLogSkeleton count={8} />
             ) : isError ? (
@@ -115,6 +96,8 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
                     <DataLogEntry
                       entry={entry}
                       onClick={() => handleEntryClick(entry.id)}
+                      hasApiKey={apiKeyExists}
+                      onDeleted={handleEntryDeleted}
                     />
                   </div>
                 ))}
@@ -151,8 +134,7 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
                 )}
               </div>
             )}
-          </ScrollArea>
-        </div>
+        </ScrollArea>
       </div>
 
       <EntryDetailSheet
