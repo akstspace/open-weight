@@ -1,17 +1,14 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Dashboard from "@/components/Dashboard";
 import SetupScreen from "@/components/SetupScreen";
 import { Scale, Settings, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import { fetchConfigStatus } from "@/services/configApi";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useState, useCallback } from "react";
-import { usePullToRefresh } from "@/hooks/usePullToRefresh";
-import PullToRefreshIndicator from "@/components/PullToRefreshIndicator";
+import { useState } from "react";
 
 const Index = () => {
   const [localUserName, setLocalUserName] = useState<string | null>(null);
-  const queryClient = useQueryClient();
 
   const { data: config, isLoading, error } = useQuery({
     queryKey: ["configStatus"],
@@ -19,17 +16,6 @@ const Index = () => {
     retry: false,
     // In development preview, API won't exist - show demo mode
     staleTime: Infinity,
-  });
-
-  const handleRefresh = useCallback(async () => {
-    await queryClient.invalidateQueries({ queryKey: ['weightData'] });
-    await queryClient.invalidateQueries({ queryKey: ['paginatedEntries'] });
-    await queryClient.invalidateQueries({ queryKey: ['userConfig'] });
-  }, [queryClient]);
-
-  const { pullDistance, isRefreshing, isTriggered, progress, handlers } = usePullToRefresh({
-    onRefresh: handleRefresh,
-    threshold: 80,
   });
 
   const handleSetupComplete = (userName: string) => {
@@ -90,24 +76,8 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main 
-        className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 relative"
-        {...handlers}
-      >
-        <PullToRefreshIndicator
-          pullDistance={pullDistance}
-          isRefreshing={isRefreshing}
-          isTriggered={isTriggered}
-          progress={progress}
-        />
-        <div
-          style={{
-            transform: `translateY(${isRefreshing ? 48 : pullDistance}px)`,
-            transition: pullDistance === 0 ? 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none',
-          }}
-        >
-          <Dashboard />
-        </div>
+      <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
+        <Dashboard />
       </main>
     </div>
   );

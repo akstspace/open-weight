@@ -28,7 +28,7 @@ const RangeIndicator = ({ metricLabel, value, gender = 'male' }: RangeIndicatorP
   
   if (range.low) segments.push({ key: 'low', range: range.low, color: 'bg-blue-400', label: 'L' });
   if (range.standard) segments.push({ key: 'standard', range: range.standard, color: 'bg-green-400', label: 'S' });
-  if (range.excellent) segments.push({ key: 'excellent', range: range.excellent, color: 'bg-emerald-500', label: 'Excellent' });
+  if (range.excellent) segments.push({ key: 'excellent', range: range.excellent, color: 'bg-emerald-500', label: 'E' });
   if (range.high) segments.push({ key: 'high', range: range.high, color: 'bg-orange-400', label: 'H' });
   if (range.tooHigh) segments.push({ key: 'tooHigh', range: range.tooHigh, color: 'bg-red-400', label: 'TH' });
 
@@ -102,8 +102,11 @@ const RangeIndicator = ({ metricLabel, value, gender = 'male' }: RangeIndicatorP
       </div>
 
       {/* Description */}
-      <div className="pt-2 border-t border-border/50">
+      <div className="pt-2 border-t border-border/50 space-y-1.5">
         <p className="text-[10px] sm:text-xs text-muted-foreground">{range.description}</p>
+        <p className="text-[9px] sm:text-[10px] text-muted-foreground/70">
+          L: Low · S: Standard · E: Excellent · H: High · TH: Too High
+        </p>
       </div>
     </div>
   );
