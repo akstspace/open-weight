@@ -1,7 +1,8 @@
 import { useState, useCallback } from "react";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient, useQuery } from "@tanstack/react-query";
 import { WeightEntry } from "@/services/weightApi";
 import { fetchPaginatedEntries } from "@/services/weightDataService";
+import { fetchConfigStatus } from "@/services/configApi";
 import DataLogEntry from "./DataLogEntry";
 import EntryDetailSheet from "./EntryDetailSheet";
 import DataLogSkeleton from "./DataLogSkeleton";
@@ -20,6 +21,12 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
   const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const queryClient = useQueryClient();
+
+  // Fetch user config for gender
+  const { data: userConfig } = useQuery({
+    queryKey: ['userConfig'],
+    queryFn: fetchConfigStatus,
+  });
 
   const {
     data,
@@ -152,6 +159,7 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
         entryId={selectedEntryId}
         open={sheetOpen}
         onOpenChange={setSheetOpen}
+        gender={(userConfig?.sex === 'female' ? 'female' : 'male') as 'male' | 'female'}
       />
     </>
   );

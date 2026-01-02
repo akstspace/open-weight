@@ -1,67 +1,61 @@
 // Service that fetches real data from API and transforms it for UI
 import { fetchEntriesAPI, fetchStatsAPI, fetchEntryAPI, fetchConfigStatus, type WeightEntryAPI, type StatsAPI } from './configApi';
 import type { WeightEntry, WeightData, MetricWithRating, RatingLevel } from './weightApi';
+import { getMetricRange } from '@/data/metricRanges';
 
-// Medical standard calculations
-const calculateBMIRating = (bmi: number): RatingLevel => {
-  if (bmi < 18.5) return 'low';
-  if (bmi >= 18.5 && bmi < 25) return 'standard';
-  if (bmi >= 25 && bmi < 30) return 'high';
-  return 'too-high';
+// Helper function to determine rating level from value and ranges
+const getRatingFromRange = (value: number, metricKey: string, gender: 'male' | 'female' = 'male'): RatingLevel => {
+  const range = getMetricRange(metricKey, gender);
+  
+  if (range.low && value >= range.low.min && value <= range.low.max) return 'low';
+  if (range.standard && value >= range.standard.min && value <= range.standard.max) return 'standard';
+  if (range.excellent && value >= range.excellent.min && value <= range.excellent.max) return 'excellent';
+  if (range.high && value >= range.high.min && value <= range.high.max) return 'high';
+  if (range.tooHigh && value >= range.tooHigh.min && value <= range.tooHigh.max) return 'too-high';
+  
+  // Default fallback logic
+  if (range.low && value < range.low.min) return 'low';
+  if (range.tooHigh && value > range.tooHigh.max) return 'too-high';
+  if (range.high && value > range.high.max && !range.tooHigh) return 'high';
+  
+  return 'standard';
 };
 
-const calculateBodyFatRating = (bodyFat: number): RatingLevel => {
-  if (bodyFat < 10) return 'low';
-  if (bodyFat >= 10 && bodyFat <= 20) return 'standard';
-  if (bodyFat > 20 && bodyFat <= 25) return 'high';
-  return 'too-high';
+// Medical standard calculations with gender support
+const calculateBMIRating = (bmi: number, gender: 'male' | 'female' = 'male'): RatingLevel => {
+  return getRatingFromRange(bmi, 'bmi', gender);
 };
 
-const calculateMuscleRating = (muscleRate: number): RatingLevel => {
-  if (muscleRate >= 70) return 'excellent';
-  if (muscleRate >= 60) return 'standard';
-  if (muscleRate >= 50) return 'high';
-  return 'low';
+const calculateBodyFatRating = (bodyFat: number, gender: 'male' | 'female' = 'male'): RatingLevel => {
+  return getRatingFromRange(bodyFat, 'bodyFat', gender);
 };
 
-const calculateVisceralFatRating = (visceralFat: number): RatingLevel => {
-  if (visceralFat <= 9) return 'standard';
-  if (visceralFat <= 14) return 'high';
-  return 'too-high';
+const calculateMuscleRating = (muscleRate: number, gender: 'male' | 'female' = 'male'): RatingLevel => {
+  return getRatingFromRange(muscleRate, 'muscleRate', gender);
 };
 
-const calculateBodyWaterRating = (bodyWater: number): RatingLevel => {
-  if (bodyWater >= 55 && bodyWater <= 65) return 'excellent';
-  if (bodyWater >= 50 && bodyWater < 55) return 'standard';
-  if (bodyWater < 50) return 'low';
-  return 'high';
+const calculateVisceralFatRating = (visceralFat: number, gender: 'male' | 'female' = 'male'): RatingLevel => {
+  return getRatingFromRange(visceralFat, 'visceralFat', gender);
 };
 
-const calculateBoneMassRating = (boneMass: number, weight: number): RatingLevel => {
-  const ratio = (boneMass / weight) * 100;
-  if (ratio >= 3.5 && ratio <= 5) return 'standard';
-  if (ratio < 3.5) return 'low';
-  return 'high';
+const calculateBodyWaterRating = (bodyWater: number, gender: 'male' | 'female' = 'male'): RatingLevel => {
+  return getRatingFromRange(bodyWater, 'bodyWater', gender);
 };
 
-const calculateProteinRating = (protein: number): RatingLevel => {
-  if (protein >= 16 && protein <= 20) return 'excellent';
-  if (protein >= 14 && protein < 16) return 'standard';
-  return 'low';
+const calculateBoneMassRating = (boneMass: number, weight: number, gender: 'male' | 'female' = 'male'): RatingLevel => {
+  return getRatingFromRange(boneMass, 'boneMass', gender);
 };
 
-const calculateBodyAgeRating = (bodyAge: number, actualAge: number = 30): RatingLevel => {
-  if (bodyAge <= actualAge - 5) return 'excellent';
-  if (bodyAge <= actualAge) return 'standard';
-  if (bodyAge <= actualAge + 5) return 'high';
-  return 'too-high';
+const calculateProteinRating = (protein: number, gender: 'male' | 'female' = 'male'): RatingLevel => {
+  return getRatingFromRange(protein, 'protein', gender);
 };
 
-const calculateSubcutaneousFatRating = (subcutFat: number): RatingLevel => {
-  if (subcutFat >= 8 && subcutFat <= 15) return 'standard';
-  if (subcutFat > 15 && subcutFat <= 20) return 'high';
-  if (subcutFat > 20) return 'too-high';
-  return 'low';
+const calculateBodyAgeRating = (bodyAge: number, actualAge: number = 30, gender: 'male' | 'female' = 'male'): RatingLevel => {
+  return getRatingFromRange(bodyAge, 'bodyAge', gender);
+};
+
+const calculateSubcutaneousFatRating = (subcutFat: number, gender: 'male' | 'female' = 'male'): RatingLevel => {
+  return getRatingFromRange(subcutFat, 'subcutaneousFat', gender);
 };
 
 // Transform API entry to UI format with all calculated metrics
@@ -82,6 +76,7 @@ const transformEntryToUI = (entry: WeightEntryAPI, userConfig?: { height: number
   // Use user's actual age and sex for BMR calculation or fallback to defaults
   const age = userConfig?.age || 30;
   const sex = userConfig?.sex || 'male';
+  const gender = (sex === 'female' ? 'female' : 'male') as 'male' | 'female';
   const baseBMR = 10 * weight + 6.25 * heightCm - 5 * age;
   const bmr = entry.bmr || Math.round(sex === 'female' ? baseBMR - 161 : baseBMR + 5);
 
@@ -110,24 +105,24 @@ const transformEntryToUI = (entry: WeightEntryAPI, userConfig?: { height: number
     id: entry.id,
     date: dateStr,
     time: timeStr,
-    weight: { value: weight, unit: 'kg', rating: bmi > 25 ? 'high' : 'standard' },
-    bmi: { value: Number(bmi.toFixed(1)), unit: '', rating: calculateBMIRating(bmi) },
-    bodyFat: { value: bodyFatPercent, unit: '%', rating: calculateBodyFatRating(bodyFatPercent) },
-    fatMass: { value: Number(fatMass.toFixed(1)), unit: 'kg', rating: calculateBodyFatRating(bodyFatPercent) },
-    fatFreeBodyWeight: { value: Number(fatFreeBodyWeight.toFixed(1)), unit: 'kg' },
-    subcutaneousFat: { value: Number(subcutaneousFat.toFixed(1)), unit: '%', rating: calculateSubcutaneousFatRating(subcutaneousFat) },
-    visceralFat: { value: Number(visceralFat.toFixed(1)), unit: '', rating: calculateVisceralFatRating(visceralFat) },
-    muscleMass: { value: Number(muscleMass.toFixed(1)), unit: 'kg', rating: calculateMuscleRating(muscleRate) },
-    muscleRate: { value: Number(muscleRate.toFixed(1)), unit: '%', rating: calculateMuscleRating(muscleRate) },
-    skeletalMuscle: { value: Number(skeletalMuscle.toFixed(1)), unit: '%', rating: calculateMuscleRating(muscleRate) },
-    boneMass: { value: Number(boneMass.toFixed(1)), unit: 'kg', rating: calculateBoneMassRating(boneMass, weight) },
-    proteinMass: { value: Number(proteinMass.toFixed(1)), unit: 'kg', rating: calculateProteinRating(protein) },
-    protein: { value: Number(protein.toFixed(1)), unit: '%', rating: calculateProteinRating(protein) },
-    waterWeight: { value: Number(waterWeight.toFixed(1)), unit: 'kg', rating: calculateBodyWaterRating(bodyWater) },
-    bodyWater: { value: Number(bodyWater.toFixed(1)), unit: '%', rating: calculateBodyWaterRating(bodyWater) },
-    bmr: { value: Number(bmr.toFixed(0)), unit: 'kcal' },
-    bodyAge: { value: Number(bodyAge.toFixed(0)), unit: '', rating: calculateBodyAgeRating(bodyAge, age) },
-    idealBodyWeight: { value: Number(idealBodyWeight.toFixed(1)), unit: 'kg' },
+    weight: { value: weight, unit: 'kg', rating: getRatingFromRange(weight, 'weight', gender) },
+    bmi: { value: Number(bmi.toFixed(1)), unit: '', rating: calculateBMIRating(bmi, gender) },
+    bodyFat: { value: bodyFatPercent, unit: '%', rating: calculateBodyFatRating(bodyFatPercent, gender) },
+    fatMass: { value: Number(fatMass.toFixed(1)), unit: 'kg', rating: getRatingFromRange(fatMass, 'fatMass', gender) },
+    fatFreeBodyWeight: { value: Number(fatFreeBodyWeight.toFixed(1)), unit: 'kg', rating: getRatingFromRange(fatFreeBodyWeight, 'fatFreeBodyWeight', gender) },
+    subcutaneousFat: { value: Number(subcutaneousFat.toFixed(1)), unit: '%', rating: calculateSubcutaneousFatRating(subcutaneousFat, gender) },
+    visceralFat: { value: Number(visceralFat.toFixed(1)), unit: '', rating: calculateVisceralFatRating(visceralFat, gender) },
+    muscleMass: { value: Number(muscleMass.toFixed(1)), unit: 'kg', rating: getRatingFromRange(muscleMass, 'muscleMass', gender) },
+    muscleRate: { value: Number(muscleRate.toFixed(1)), unit: '%', rating: calculateMuscleRating(muscleRate, gender) },
+    skeletalMuscle: { value: Number(skeletalMuscle.toFixed(1)), unit: '%', rating: getRatingFromRange(skeletalMuscle, 'skeletalMuscle', gender) },
+    boneMass: { value: Number(boneMass.toFixed(1)), unit: 'kg', rating: calculateBoneMassRating(boneMass, weight, gender) },
+    proteinMass: { value: Number(proteinMass.toFixed(1)), unit: 'kg', rating: getRatingFromRange(proteinMass, 'proteinMass', gender) },
+    protein: { value: Number(protein.toFixed(1)), unit: '%', rating: calculateProteinRating(protein, gender) },
+    waterWeight: { value: Number(waterWeight.toFixed(1)), unit: 'kg', rating: getRatingFromRange(waterWeight, 'waterWeight', gender) },
+    bodyWater: { value: Number(bodyWater.toFixed(1)), unit: '%', rating: calculateBodyWaterRating(bodyWater, gender) },
+    bmr: { value: Number(bmr.toFixed(0)), unit: 'kcal', rating: getRatingFromRange(bmr, 'bmr', gender) },
+    bodyAge: { value: Number(bodyAge.toFixed(0)), unit: '', rating: calculateBodyAgeRating(bodyAge, age, gender) },
+    idealBodyWeight: { value: Number(idealBodyWeight.toFixed(1)), unit: 'kg', rating: getRatingFromRange(idealBodyWeight, 'idealBodyWeight', gender) },
   };
 };
 

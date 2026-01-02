@@ -363,7 +363,7 @@ app.post('/api/entries', authenticateApiKey, async (req, res) => {
   try {
     const { 
       weight, bodyFat, muscleMass, bodyWater, visceralFat, boneMass, 
-      subcutaneousFat, skeletalMuscle, proteinMass, notes, date 
+      subcutaneousFat, skeletalMuscle, proteinMass, bodyAge, notes, date 
     } = req.body;
 
     if (!weight || typeof weight !== 'number' || weight <= 0) {
@@ -391,16 +391,17 @@ app.post('/api/entries', authenticateApiKey, async (req, res) => {
       proteinMass
     );
     
-    // Estimate body age based on BMI and body fat
-    let bodyAge = age; // Default to actual age
+    // Use provided body age or estimate based on BMI and body fat
+    let calculatedBodyAge = age; // Default to actual age
     if (bodyFat) {
       // Simple estimation: if body fat is high, body age is higher
       // This is a rough approximation - real body age requires more complex algorithms
       const idealBodyFat = config.sex === 'male' ? 15 : 22; // Ideal ranges
       const fatDifference = bodyFat - idealBodyFat;
-      bodyAge = Math.round(age + (fatDifference / 2));
-      bodyAge = Math.max(18, Math.min(bodyAge, age + 20)); // Clamp between reasonable bounds
+      calculatedBodyAge = Math.round(age + (fatDifference / 2));
+      calculatedBodyAge = Math.max(18, Math.min(calculatedBodyAge, age + 20)); // Clamp between reasonable bounds
     }
+    const finalBodyAge = bodyAge !== undefined && bodyAge !== null ? bodyAge : calculatedBodyAge;
 
     const entry = await prisma.weightEntry.create({
       data: {
@@ -418,7 +419,7 @@ app.post('/api/entries', authenticateApiKey, async (req, res) => {
         // Calculated values
         bmi,
         bmr,
-        bodyAge,
+        bodyAge: finalBodyAge,
         fatMass: derivedMetrics.fatMass || null,
         fatFreeBodyWeight: derivedMetrics.fatFreeBodyWeight || null,
         muscleRate: derivedMetrics.muscleRate || null,
@@ -432,7 +433,7 @@ app.post('/api/entries', authenticateApiKey, async (req, res) => {
       },
     });
 
-    console.log(`[Entry] Created: ${entry.weight}kg on ${entry.date} (BMI: ${bmi}, BMR: ${bmr}, Body Age: ${bodyAge})`);
+    console.log(`[Entry] Created: ${entry.weight}kg on ${entry.date} (BMI: ${bmi}, BMR: ${bmr}, Body Age: ${finalBodyAge})`);
     res.status(201).json(entry);
   } catch (error) {
     console.error('Error creating entry:', error);
@@ -445,7 +446,7 @@ app.put('/api/entries/:id', authenticateApiKey, async (req, res) => {
   try {
     const { 
       weight, bodyFat, muscleMass, bodyWater, visceralFat, boneMass,
-      subcutaneousFat, skeletalMuscle, proteinMass, notes, date 
+      subcutaneousFat, skeletalMuscle, proteinMass, bodyAge, notes, date 
     } = req.body;
 
     // Get user config for recalculations
@@ -519,13 +520,18 @@ app.put('/api/entries/:id', authenticateApiKey, async (req, res) => {
       updateData.waterWeight = derivedMetrics.waterWeight || null;
       updateData.idealBodyWeight = derivedMetrics.idealBodyWeight || null;
       
-      // Recalculate body age if body fat is available
-      if (finalBodyFat !== null) {
+      // Use provided body age or recalculate if body fat is available
+      if (bodyAge !== undefined && bodyAge !== null) {
+        updateData.bodyAge = bodyAge;
+      } else if (finalBodyFat !== null) {
         const idealBodyFat = config.sex === 'male' ? 15 : 22;
         const fatDifference = finalBodyFat - idealBodyFat;
         updateData.bodyAge = Math.round(age + (fatDifference / 2));
         updateData.bodyAge = Math.max(18, Math.min(updateData.bodyAge, age + 20));
       }
+    } else if (bodyAge !== undefined && bodyAge !== null) {
+      // If only body age is updated without other changes
+      updateData.bodyAge = bodyAge;
     }
 
     // Update direct fields

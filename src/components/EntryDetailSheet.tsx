@@ -26,13 +26,15 @@ interface EntryDetailSheetProps {
   entryId: string | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  gender?: 'male' | 'female';
 }
 
-const MetricRow = ({ label, value, unit, rating }: {
+const MetricRow = ({ label, value, unit, rating, gender }: {
   label: string;
   value: number;
   unit: string;
   rating?: WeightEntry['weight']['rating'];
+  gender?: 'male' | 'female';
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const hasRating = rating !== undefined && rating !== null;
@@ -74,14 +76,14 @@ const MetricRow = ({ label, value, unit, rating }: {
       </CollapsibleTrigger>
       <CollapsibleContent>
         <div className="pb-3 px-2 -mx-2">
-          <RangeIndicator metricLabel={label} value={value} />
+          <RangeIndicator metricLabel={label} value={value} gender={gender} />
         </div>
       </CollapsibleContent>
     </Collapsible>
   );
 };
 
-const EntryDetailSheet = ({ entryId, open, onOpenChange }: EntryDetailSheetProps) => {
+const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: EntryDetailSheetProps) => {
   const { data: entry, isLoading } = useQuery({
     queryKey: ["weightEntry", entryId],
     queryFn: () => fetchWeightEntryById(entryId!),
@@ -149,46 +151,46 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange }: EntryDetailSheetProps
                 </div>
               </div>
 
-              <MetricRow label="Weight" value={entry.weight.value} unit="kg" rating={entry.weight.rating} />
+              <MetricRow label="Weight" value={entry.weight.value} unit="kg" rating={entry.weight.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="BMI" value={entry.bmi.value} unit="" rating={entry.bmi.rating} />
+              <MetricRow label="BMI" value={entry.bmi.value} unit="" rating={entry.bmi.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Body Fat" value={entry.bodyFat.value} unit="%" rating={entry.bodyFat.rating} />
+              <MetricRow label="Body Fat" value={entry.bodyFat.value} unit="%" rating={entry.bodyFat.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Fat Mass" value={entry.fatMass.value} unit="kg" rating={entry.fatMass.rating} />
+              <MetricRow label="Fat Mass" value={entry.fatMass.value} unit="kg" rating={entry.fatMass.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Fat-free Body Weight" value={entry.fatFreeBodyWeight.value} unit="kg" rating={entry.fatFreeBodyWeight.rating} />
+              <MetricRow label="Fat-free Body Weight" value={entry.fatFreeBodyWeight.value} unit="kg" rating={entry.fatFreeBodyWeight.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Muscle Mass" value={entry.muscleMass.value} unit="kg" rating={entry.muscleMass.rating} />
+              <MetricRow label="Muscle Mass" value={entry.muscleMass.value} unit="kg" rating={entry.muscleMass.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Muscle Rate" value={entry.muscleRate.value} unit="%" rating={entry.muscleRate.rating} />
+              <MetricRow label="Muscle Rate" value={entry.muscleRate.value} unit="%" rating={entry.muscleRate.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Skeletal Muscle" value={entry.skeletalMuscle.value} unit="%" rating={entry.skeletalMuscle.rating} />
+              <MetricRow label="Skeletal Muscle" value={entry.skeletalMuscle.value} unit="%" rating={entry.skeletalMuscle.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Bone Mass" value={entry.boneMass.value} unit="kg" rating={entry.boneMass.rating} />
+              <MetricRow label="Bone Mass" value={entry.boneMass.value} unit="kg" rating={entry.boneMass.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Protein Mass" value={entry.proteinMass.value} unit="kg" rating={entry.proteinMass.rating} />
+              <MetricRow label="Protein Mass" value={entry.proteinMass.value} unit="kg" rating={entry.proteinMass.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Protein" value={entry.protein.value} unit="%" rating={entry.protein.rating} />
+              <MetricRow label="Protein" value={entry.protein.value} unit="%" rating={entry.protein.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Water Weight" value={entry.waterWeight.value} unit="kg" rating={entry.waterWeight.rating} />
+              <MetricRow label="Water Weight" value={entry.waterWeight.value} unit="kg" rating={entry.waterWeight.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Body Water" value={entry.bodyWater.value} unit="%" rating={entry.bodyWater.rating} />
+              <MetricRow label="Body Water" value={entry.bodyWater.value} unit="%" rating={entry.bodyWater.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Subcutaneous Fat" value={entry.subcutaneousFat.value} unit="%" rating={entry.subcutaneousFat.rating} />
+              <MetricRow label="Subcutaneous Fat" value={entry.subcutaneousFat.value} unit="%" rating={entry.subcutaneousFat.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Visceral Fat" value={entry.visceralFat.value} unit="" rating={entry.visceralFat.rating} />
+              <MetricRow label="Visceral Fat" value={entry.visceralFat.value} unit="" rating={entry.visceralFat.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="BMR" value={entry.bmr.value} unit="kcal" rating={entry.bmr.rating} />
+              <MetricRow label="BMR" value={entry.bmr.value} unit="kcal" rating={entry.bmr.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Body Age" value={entry.bodyAge.value} unit="" rating={entry.bodyAge.rating} />
+              <MetricRow label="Body Age" value={entry.bodyAge.value} unit="" rating={entry.bodyAge.rating} gender={gender} />
               <Separator className="bg-border/50" />
-              <MetricRow label="Ideal Body Weight" value={entry.idealBodyWeight.value} unit="kg" rating={entry.idealBodyWeight.rating} />
+              <MetricRow label="Ideal Body Weight" value={entry.idealBodyWeight.value} unit="kg" rating={entry.idealBodyWeight.rating} gender={gender} />
             </div>
 
             {/* Footer note */}
             <p className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 px-1 pb-6">
-              Reference ranges are based on adult male standards. Actual healthy ranges may vary based on age, sex, and individual factors.
+              Reference ranges are based on gender-specific medical standards from ACE, ACSM, WHO, and clinical research. Ranges are calibrated for {gender === 'female' ? 'female' : 'male'} adults.
             </p>
           </ScrollArea>
         ) : (

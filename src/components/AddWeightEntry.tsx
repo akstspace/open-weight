@@ -1,6 +1,12 @@
 import { useState } from "react";
-import { Plus, Key, Check, AlertCircle } from "lucide-react";
+import { Plus, Key, Check, AlertCircle, Info } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -36,6 +42,7 @@ const AddWeightEntry = () => {
     subcutaneousFat: "",
     skeletalMuscle: "",
     proteinMass: "",
+    bodyAge: "",
     notes: "",
   });
 
@@ -86,6 +93,7 @@ const AddWeightEntry = () => {
         subcutaneousFat?: number;
         skeletalMuscle?: number;
         proteinMass?: number;
+        bodyAge?: number;
         notes?: string;
       } = {
         weight: parseFloat(formData.weight),
@@ -100,6 +108,7 @@ const AddWeightEntry = () => {
       if (formData.subcutaneousFat) payload.subcutaneousFat = parseFloat(formData.subcutaneousFat);
       if (formData.skeletalMuscle) payload.skeletalMuscle = parseFloat(formData.skeletalMuscle);
       if (formData.proteinMass) payload.proteinMass = parseFloat(formData.proteinMass);
+      if (formData.bodyAge) payload.bodyAge = parseInt(formData.bodyAge);
       if (formData.notes) payload.notes = formData.notes;
 
       const response = await fetch("/api/entries", {
@@ -132,6 +141,7 @@ const AddWeightEntry = () => {
         subcutaneousFat: "",
         skeletalMuscle: "",
         proteinMass: "",
+        bodyAge: "",
         notes: "",
       });
 
@@ -339,6 +349,32 @@ const AddWeightEntry = () => {
                   placeholder="14.5"
                   value={formData.proteinMass}
                   onChange={(e) => setFormData({ ...formData, proteinMass: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="bodyAge" className="text-sm flex items-center gap-1.5">
+                  Body Age
+                  <TooltipProvider delayDuration={0}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="h-3.5 w-3.5 text-muted-foreground cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p className="text-xs">
+                          If not entered, body age will be auto-calculated based on your BMI, body fat percentage, 
+                          and other metrics compared to healthy ranges for your chronological age.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </Label>
+                <Input
+                  id="bodyAge"
+                  type="number"
+                  placeholder="Auto-calculated"
+                  value={formData.bodyAge}
+                  onChange={(e) => setFormData({ ...formData, bodyAge: e.target.value })}
                 />
               </div>
             </div>

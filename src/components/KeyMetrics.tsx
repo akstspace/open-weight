@@ -16,25 +16,21 @@ const KeyMetrics = ({ entry }: KeyMetricsProps) => {
         <MetricCard
           label="Body Fat"
           value={`${entry.bodyFat.value}%`}
-          subtitle={`${entry.bodyFat.value}% BF`}
           icon={<User className="h-5 w-5 sm:h-6 sm:w-6" />}
         />
         <MetricCard
           label="Muscle Mass"
           value={`${entry.muscleMass.value}kg`}
-          subtitle={`${entry.muscleMass.value}kg`}
           icon={<Dumbbell className="h-5 w-5 sm:h-6 sm:w-6" />}
         />
         <MetricCard
           label="BMI"
           value={`${entry.bmi.value}`}
-          subtitle={`${entry.bmi.value} BMI`}
           icon={<Scale className="h-5 w-5 sm:h-6 sm:w-6" />}
         />
         <MetricCard
           label="Water"
           value={`${entry.bodyWater.value}%`}
-          subtitle={`${entry.bodyWater.value}%`}
           icon={<Droplets className="h-5 w-5 sm:h-6 sm:w-6" />}
         />
       </div>
