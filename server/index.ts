@@ -14,8 +14,11 @@ app.use(express.json());
 // ============= Calculation Utilities =============
 
 /**
- * Calculate BMI (Body Mass Index)
- * Formula: weight (kg) / height (m)^2
+ * Compute body mass index (BMI) from weight and height.
+ *
+ * @param weightKg - Weight in kilograms
+ * @param heightCm - Height in centimeters
+ * @returns BMI value rounded to one decimal place
  */
 function calculateBMI(weightKg: number, heightCm: number): number {
   const heightM = heightCm / 100;
@@ -23,7 +26,9 @@ function calculateBMI(weightKg: number, heightCm: number): number {
 }
 
 /**
- * Calculate age from birthday
+ * Calculates the age in years for the given birthday.
+ *
+ * @returns The age in whole years (rounded down) computed from `birthday`.
  */
 function calculateAge(birthday: Date): number {
   const today = new Date();
@@ -37,9 +42,13 @@ function calculateAge(birthday: Date): number {
 }
 
 /**
- * Calculate BMR (Basal Metabolic Rate) using Mifflin-St Jeor Equation
- * For men: BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age(y) + 5
- * For women: BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age(y) - 161
+ * Compute basal metabolic rate using the Mifflin–St Jeor equation.
+ *
+ * @param weightKg - Body weight in kilograms
+ * @param heightCm - Height in centimeters
+ * @param age - Age in years
+ * @param sex - 'male' or 'female'; if `null` or any other value, the male formula is used
+ * @returns The BMR rounded to the nearest kcal/day
  */
 function calculateBMR(
   weightKg: number,
@@ -69,6 +78,23 @@ interface DerivedMetrics {
   idealBodyWeight?: number;   // kg - based on height and healthy BMI
 }
 
+/**
+ * Computes optional body composition metrics from provided measurements.
+ *
+ * @param weight - Total body weight in kilograms
+ * @param heightCm - Height in centimeters (used to compute ideal body weight)
+ * @param bodyFat - Body fat percentage (e.g., 18 for 18%); when provided, `fatMass` and `fatFreeBodyWeight` are calculated
+ * @param muscleMass - Muscle mass in kilograms; when provided, `muscleRate` (percentage of weight) is calculated
+ * @param bodyWater - Body water percentage (e.g., 55 for 55%); when provided, `waterWeight` is calculated
+ * @param proteinMass - Protein mass in kilograms; when provided, `protein` (percentage of weight) is calculated
+ * @returns An object containing any of the following computed metrics:
+ * - `fatMass` (kg) — total fat mass when `bodyFat` is provided
+ * - `fatFreeBodyWeight` (kg) — weight minus fat mass when `bodyFat` is provided
+ * - `muscleRate` (%) — muscle mass as a percentage of total weight when `muscleMass` is provided
+ * - `protein` (%) — protein mass as a percentage of total weight when `proteinMass` is provided
+ * - `waterWeight` (kg) — total water weight when `bodyWater` is provided
+ * - `idealBodyWeight` (kg) — weight corresponding to BMI of 22 based on `heightCm`
+ */
 function calculateDerivedMetrics(
   weight: number,
   heightCm: number,

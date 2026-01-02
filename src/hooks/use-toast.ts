@@ -21,6 +21,11 @@ const actionTypes = {
 
 let count = 0;
 
+/**
+ * Generate a new toast identifier string.
+ *
+ * @returns A new numeric identifier encoded as a string
+ */
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER;
   return count.toString();
@@ -125,6 +130,11 @@ const listeners: Array<(state: State) => void> = [];
 
 let memoryState: State = { toasts: [] };
 
+/**
+ * Applies an action to the internal toast state and notifies all subscribers of the updated state.
+ *
+ * @param action - The action describing the state change to apply
+ */
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action);
   listeners.forEach((listener) => {
@@ -134,6 +144,12 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">;
 
+/**
+ * Creates and displays a toast and returns programmatic controls for it.
+ *
+ * @param props - Toast configuration (all toast fields except `id`)
+ * @returns An object with `id` (the toast identifier), `dismiss()` to close the toast, and `update()` to change the toast's properties
+ */
 function toast({ ...props }: Toast) {
   const id = genId();
 
@@ -163,6 +179,13 @@ function toast({ ...props }: Toast) {
   };
 }
 
+/**
+ * Provides reactive access to the toast state and helpers for creating and dismissing toasts.
+ *
+ * Subscribes to the internal toast store while the component is mounted and removes the subscription on unmount.
+ *
+ * @returns An object containing the current toast state (including `toasts`), the `toast` function to create a new toast, and `dismiss(toastId?)` to dismiss a specific toast or all toasts when called without an id.
+ */
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState);
 
