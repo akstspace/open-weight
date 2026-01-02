@@ -10,6 +10,7 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
   const { latestEntry, weeklyChange, entries } = data;
   const weightInLbs = (latestEntry.weight.value * 2.20462).toFixed(1);
   const isLoss = weeklyChange <= 0;
+  const totalEntries = entries.length;
 
   return (
     <div className="flex h-full flex-col rounded-xl bg-card p-4 sm:p-6">
@@ -62,12 +63,12 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
         <div className="rounded-lg bg-metric p-3 sm:p-4 touch-active">
           <div className="flex items-center gap-2">
             <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              Time
+              Total Entries
             </span>
           </div>
           <div className="mt-1 flex items-center gap-1 sm:gap-2">
             <span className="font-mono text-lg sm:text-2xl font-bold text-foreground">
-              {weeklyChange > 0 ? '+' : ''}{weeklyChange}kg
+              {totalEntries}
             </span>
             <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
           </div>

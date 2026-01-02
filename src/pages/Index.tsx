@@ -55,7 +55,7 @@ const Index = () => {
           </div>
           <div className="flex-1">
             <h1 className="text-lg sm:text-xl font-bold text-foreground">{displayName}</h1>
-            <p className="text-xs sm:text-sm text-muted-foreground">Health Analytics</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">open-weight</p>
           </div>
           <Link
             to="/settings"
