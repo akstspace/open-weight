@@ -1,5 +1,5 @@
 // Service that fetches real data from API and transforms it for UI
-import { fetchEntriesAPI, fetchStatsAPI, type WeightEntryAPI, type StatsAPI } from './configApi';
+import { fetchEntriesAPI, fetchStatsAPI, fetchEntryAPI, fetchConfigStatus, type WeightEntryAPI, type StatsAPI } from './configApi';
 import type { WeightEntry, WeightData, MetricWithRating, RatingLevel } from './weightApi';
 
 // Medical standard calculations
@@ -65,15 +65,25 @@ const calculateSubcutaneousFatRating = (subcutFat: number): RatingLevel => {
 };
 
 // Transform API entry to UI format with all calculated metrics
-const transformEntryToUI = (entry: WeightEntryAPI): WeightEntry => {
+const transformEntryToUI = (entry: WeightEntryAPI, userConfig?: { height: number | null; age: number | null; sex: string | null }): WeightEntry => {
   const weight = entry.weight;
   const bodyFatPercent = entry.bodyFat || 18.5;
-  const bmi = entry.bmi || weight / (1.75 * 1.75); // Assume height if not provided
+  
+  // Use user's actual height or fallback to 1.75m
+  const heightCm = userConfig?.height || 175;
+  const heightM = heightCm / 100;
+  const bmi = entry.bmi || weight / (heightM * heightM);
+  
   const muscleMass = entry.muscleMass || weight * 0.45;
   const bodyWater = entry.bodyWater || 57;
   const visceralFat = entry.visceralFat || 8;
   const boneMass = entry.boneMass || weight * 0.04;
-  const bmr = entry.bmr || Math.round(10 * weight + 6.25 * 175 - 5 * 30 + 5);
+  
+  // Use user's actual age and sex for BMR calculation or fallback to defaults
+  const age = userConfig?.age || 30;
+  const sex = userConfig?.sex || 'male';
+  const baseBMR = 10 * weight + 6.25 * heightCm - 5 * age;
+  const bmr = entry.bmr || Math.round(sex === 'female' ? baseBMR - 161 : baseBMR + 5);
 
   // Calculate derived metrics
   const fatMass = weight * (bodyFatPercent / 100);
@@ -84,8 +94,8 @@ const transformEntryToUI = (entry: WeightEntryAPI): WeightEntry => {
   const protein = (proteinMass / weight) * 100;
   const waterWeight = weight * (bodyWater / 100);
   const subcutaneousFat = bodyFatPercent * 0.86;
-  const bodyAge = 25 + (bmi - 22) * 2;
-  const idealBodyWeight = 22 * (1.75 * 1.75);
+  const bodyAge = (age || 30) + (bmi - 22) * 2;
+  const idealBodyWeight = 22 * (heightM * heightM);
 
   // Parse date and time
   const entryDate = new Date(entry.date);
@@ -116,7 +126,7 @@ const transformEntryToUI = (entry: WeightEntryAPI): WeightEntry => {
     waterWeight: { value: Number(waterWeight.toFixed(1)), unit: 'kg', rating: calculateBodyWaterRating(bodyWater) },
     bodyWater: { value: Number(bodyWater.toFixed(1)), unit: '%', rating: calculateBodyWaterRating(bodyWater) },
     bmr: { value: Number(bmr.toFixed(0)), unit: 'kcal' },
-    bodyAge: { value: Number(bodyAge.toFixed(0)), unit: '', rating: calculateBodyAgeRating(bodyAge) },
+    bodyAge: { value: Number(bodyAge.toFixed(0)), unit: '', rating: calculateBodyAgeRating(bodyAge, age) },
     idealBodyWeight: { value: Number(idealBodyWeight.toFixed(1)), unit: 'kg' },
   };
 };
@@ -124,14 +134,17 @@ const transformEntryToUI = (entry: WeightEntryAPI): WeightEntry => {
 // Fetch and transform weight data for dashboard
 export const fetchWeightData = async (): Promise<WeightData> => {
   try {
-    // Fetch entries and stats in parallel
-    const [entriesResponse, statsResponse] = await Promise.all([
+    // Fetch entries, stats, and user config in parallel
+    const [entriesResponse, statsResponse, userConfig] = await Promise.all([
       fetchEntriesAPI(12, 0), // Get last 12 entries for the dashboard
-      fetchStatsAPI()
+      fetchStatsAPI(),
+      fetchConfigStatus()
     ]);
 
-    // Transform entries to UI format
-    const entries = entriesResponse.entries.map(transformEntryToUI);
+    // Transform entries to UI format with user config
+    const entries = entriesResponse.entries.map(entry => 
+      transformEntryToUI(entry, { height: userConfig.height, age: userConfig.age, sex: userConfig.sex })
+    );
 
     // Get latest entry
     const latestEntry = entries[0];
@@ -179,9 +192,16 @@ export const fetchPaginatedEntries = async (
   hasMore: boolean;
 }> => {
   const offset = (page - 1) * pageSize;
-  const response = await fetchEntriesAPI(pageSize, offset);
   
-  const entries = response.entries.map(transformEntryToUI);
+  // Fetch entries and user config in parallel
+  const [response, userConfig] = await Promise.all([
+    fetchEntriesAPI(pageSize, offset),
+    fetchConfigStatus()
+  ]);
+  
+  const entries = response.entries.map(entry => 
+    transformEntryToUI(entry, { height: userConfig.height, age: userConfig.age, sex: userConfig.sex })
+  );
   
   return {
     entries,
@@ -192,12 +212,15 @@ export const fetchPaginatedEntries = async (
   };
 };
 
-// Fetch single entry by ID using real API
+// Fetch single entry by ID using dedicated API endpoint
 export const fetchWeightEntryById = async (id: string): Promise<WeightEntry | null> => {
   try {
-    const response = await fetchEntriesAPI(100, 0); // Fetch recent entries
-    const entry = response.entries.find(e => e.id === id);
-    return entry ? transformEntryToUI(entry) : null;
+    // Fetch entry and user config in parallel
+    const [entry, userConfig] = await Promise.all([
+      fetchEntryAPI(id),
+      fetchConfigStatus()
+    ]);
+    return transformEntryToUI(entry, { height: userConfig.height, age: userConfig.age, sex: userConfig.sex });
   } catch (error) {
     console.error('Error fetching entry:', error);
     return null;

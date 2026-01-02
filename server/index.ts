@@ -177,16 +177,7 @@ app.get('/api/config/status', async (req, res) => {
     const config = await prisma.config.findFirst();
     
     // Calculate age from birthday if available
-    let age = null;
-    if (config?.birthday) {
-      const today = new Date();
-      const birthDate = new Date(config.birthday);
-      age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-    }
+    const age = config?.birthday ? calculateAge(config.birthday) : null;
     
     res.json({ 
       configured: !!config,
@@ -289,6 +280,24 @@ app.get('/api/entries', async (req, res) => {
   }
 });
 
+// Get latest entry (public) - MUST be before /:id route
+app.get('/api/entries/latest', async (req, res) => {
+  try {
+    const entry = await prisma.weightEntry.findFirst({
+      orderBy: { date: 'desc' },
+    });
+
+    if (!entry) {
+      return res.status(404).json({ error: 'No entries found' });
+    }
+
+    res.json(entry);
+  } catch (error) {
+    console.error('Error fetching latest entry:', error);
+    res.status(500).json({ error: 'Failed to fetch latest entry' });
+  }
+});
+
 // Get single entry (public)
 app.get('/api/entries/:id', async (req, res) => {
   try {
@@ -304,24 +313,6 @@ app.get('/api/entries/:id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching entry:', error);
     res.status(500).json({ error: 'Failed to fetch entry' });
-  }
-});
-
-// Get latest entry (public)
-app.get('/api/entries/latest', async (req, res) => {
-  try {
-    const entry = await prisma.weightEntry.findFirst({
-      orderBy: { date: 'desc' },
-    });
-
-    if (!entry) {
-      return res.status(404).json({ error: 'No entries found' });
-    }
-
-    res.json(entry);
-  } catch (error) {
-    console.error('Error fetching latest entry:', error);
-    res.status(500).json({ error: 'Failed to fetch latest entry' });
   }
 });
 

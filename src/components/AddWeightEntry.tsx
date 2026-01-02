@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Plus, Key, Check, AlertCircle } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -15,6 +16,7 @@ const API_KEY_STORAGE_KEY = "wt_api_key";
 
 const AddWeightEntry = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const queryClient = useQueryClient();
   const [apiKey, setApiKey] = useState(() => {
     // Load API key from localStorage on mount
     return localStorage.getItem(API_KEY_STORAGE_KEY) || "";
@@ -133,11 +135,12 @@ const AddWeightEntry = () => {
         notes: "",
       });
 
-      // Close the collapsible after successful submission
-      setTimeout(() => setIsOpen(false), 1500);
+      // Invalidate queries to refetch updated data
+      await queryClient.invalidateQueries({ queryKey: ['weightData'] });
+      await queryClient.invalidateQueries({ queryKey: ['paginatedEntries'] });
 
-      // Refresh the page to show new entry
-      setTimeout(() => window.location.reload(), 2000);
+      // Close the collapsible after successful submission
+      setIsOpen(false);
     } catch (error: unknown) {
       toast({
         title: "Error",

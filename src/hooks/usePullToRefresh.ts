@@ -16,6 +16,7 @@ export const usePullToRefresh = ({
   const [isRefreshing, setIsRefreshing] = useState(false);
   const startY = useRef(0);
   const isPulling = useRef(false);
+  const wasAboveThresholdRef = useRef(false);
 
   const handleTouchStart = useCallback((e: TouchEvent) => {
     if (isRefreshing) return;
@@ -35,12 +36,15 @@ export const usePullToRefresh = ({
       const newDistance = Math.min(diff * resistance, maxPull);
       setPullDistance(newDistance);
       
-      // Haptic feedback when threshold is reached
-      if (newDistance >= threshold && pullDistance < threshold) {
+      // Haptic feedback when threshold is crossed from below to above
+      if (newDistance >= threshold && !wasAboveThresholdRef.current) {
         hapticFeedback('medium');
+        wasAboveThresholdRef.current = true;
+      } else if (newDistance < threshold) {
+        wasAboveThresholdRef.current = false;
       }
     }
-  }, [isRefreshing, maxPull, threshold, pullDistance]);
+  }, [isRefreshing, maxPull, threshold]);
 
   const handleTouchEnd = useCallback(async () => {
     if (!isPulling.current) return;
@@ -58,6 +62,7 @@ export const usePullToRefresh = ({
     }
     
     setPullDistance(0);
+    wasAboveThresholdRef.current = false;
   }, [pullDistance, threshold, isRefreshing, onRefresh]);
 
   const isTriggered = pullDistance >= threshold;

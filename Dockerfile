@@ -24,8 +24,11 @@ FROM oven/bun:1.3.5-alpine AS production
 
 WORKDIR /app
 
+# Install curl for healthcheck
+RUN apk add --no-cache curl
+
 # Install only production dependencies
-COPY package.json ./
+COPY package.json bun.lock ./
 COPY prisma ./prisma/
 RUN bun install --frozen-lockfile --production
 
@@ -49,7 +52,7 @@ EXPOSE 3000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/config/status || exit 1
+  CMD curl -f http://localhost:3000/api/config/status || exit 1
 
 # Start script
 COPY docker-entrypoint.sh /docker-entrypoint.sh

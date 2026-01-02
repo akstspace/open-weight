@@ -2,6 +2,9 @@
 export interface AppConfig {
   configured: boolean;
   userName: string | null;
+  age: number | null;
+  height: number | null;
+  sex: string | null;
 }
 
 // API base URL - empty for same-origin requests
@@ -17,15 +20,38 @@ export const fetchConfigStatus = async (): Promise<AppConfig> => {
 };
 
 // Setup the application
-export const setupApp = async (userName: string): Promise<{
+export const setupApp = async ({
+  userName,
+  birthday,
+  height,
+  sex,
+}: {
+  userName: string;
+  birthday: string;
+  height: number;
+  sex?: string;
+}): Promise<{
   success: boolean;
   userName: string;
   apiKey: string;
 }> => {
+  // Validate required fields
+  if (!userName || userName.trim().length === 0) {
+    throw new Error('User name is required');
+  }
+  
+  if (!birthday) {
+    throw new Error('Birthday is required');
+  }
+  
+  if (!height || height <= 0) {
+    throw new Error('Height is required');
+  }
+
   const response = await fetch(`${API_BASE}/api/config/setup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userName }),
+    body: JSON.stringify({ userName, birthday, height, sex }),
   });
   
   if (!response.ok) {
