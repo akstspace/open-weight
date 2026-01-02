@@ -28,6 +28,12 @@ type CarouselContextProps = {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
+/**
+ * Access the carousel context for components rendered inside a <Carousel />.
+ *
+ * @returns The carousel context object containing the container ref, Embla API handle, scroll controls, orientation, and related state.
+ * @throws Error if called outside of a <Carousel /> (when the context is unavailable).
+ */
 function useCarousel() {
   const context = React.useContext(CarouselContext);
 

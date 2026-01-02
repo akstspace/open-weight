@@ -19,6 +19,13 @@ const question = (prompt: string): Promise<string> => {
   });
 };
 
+/**
+ * CLI entry point that parses the command argument, executes the selected command, and performs cleanup.
+ *
+ * Parses the first command-line argument and dispatches to the corresponding command handler
+ * (status, reset-key, reset-all, or help). After the handler completes, disconnects the Prisma client
+ * and closes the readline interface.
+ */
 async function main() {
   const args = process.argv.slice(2);
   const command = args[0];
@@ -47,6 +54,11 @@ async function main() {
   rl.close();
 }
 
+/**
+ * Display the CLI configuration status and related metadata.
+ *
+ * If a configuration record exists, prints that the app is configured along with the owner's name, total weight entry count, and the configuration creation timestamp; otherwise prints that the app is not configured and instructs to run the web app for initial setup.
+ */
 async function showStatus() {
   const config = await prisma.config.findFirst();
   const entryCount = await prisma.weightEntry.count();
@@ -62,6 +74,13 @@ async function showStatus() {
   }
 }
 
+/**
+ * Resets the stored API key after an explicit user confirmation and prints the newly generated plaintext key.
+ *
+ * If no configuration exists, logs an error and returns without making changes. Prompts the user to confirm
+ * the action; if the user does not confirm, the operation is cancelled. When confirmed, a new API key is
+ * generated, its hash is stored in the database, and the plaintext key is displayed once with a security notice.
+ */
 async function resetApiKey() {
   const config = await prisma.config.findFirst();
   
@@ -91,6 +110,11 @@ async function resetApiKey() {
   console.log('The key is now hashed in the database for security.');
 }
 
+/**
+ * Permanently deletes all configuration and weight-entry data after explicit user confirmation.
+ *
+ * Displays the current config owner (if any) and the number of weight entries, then prompts the user to type "DELETE ALL". If the input matches exactly, all records in the `weightEntry` and `config` tables are removed and a confirmation message is printed; otherwise the operation is cancelled.
+ */
 async function resetAll() {
   const config = await prisma.config.findFirst();
   const entryCount = await prisma.weightEntry.count();
@@ -113,6 +137,9 @@ async function resetAll() {
   console.log('Restart the app to run initial setup again.');
 }
 
+/**
+ * Displays usage instructions, available commands for the CLI, and a note that API keys are hashed and cannot be retrieved.
+ */
 function showHelp() {
   console.log('Usage: npx ts-node server/cli.ts <command>\n');
   console.log('Commands:');
