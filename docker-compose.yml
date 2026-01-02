@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  weight-log:
+    build: .
+    container_name: weight-log
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      # Persist SQLite database
+      - weight-log-data:/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=file:/data/weight-log.db
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/config/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    # Make it easier to run CLI commands
+    stdin_open: true
+    tty: true
+
+volumes:
+  weight-log-data:
+    driver: local

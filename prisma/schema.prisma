@@ -1,0 +1,65 @@
+// Prisma schema for Weight Tracker
+// SQLite database for single-user self-hosted deployment
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Application configuration - single row table
+model Config {
+  id         Int      @id @default(1)
+  userName   String   // Owner's name - used as site title
+  apiKeyHash String   @unique // Hashed API key for authenticated requests
+  
+  // User biometric data (for calculations)
+  birthday   DateTime? // Birth date for age calculation
+  height     Float?    // Height in cm
+  sex        String?   // "male" or "female" for BMR/BMI calculations
+  
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// Weight entries
+model WeightEntry {
+  id          String   @id @default(uuid())
+  date        DateTime @default(now())
+  
+  // Core metrics (measured)
+  weight      Float    // in kg
+  bodyFat     Float?   // percentage - total body fat
+  muscleMass  Float?   // in kg
+  bodyWater   Float?   // percentage
+  
+  // Additional measured metrics
+  visceralFat       Int?     // level 1-59
+  boneMass          Float?   // in kg
+  subcutaneousFat   Float?   // percentage - fat under skin
+  skeletalMuscle    Float?   // percentage - voluntary muscle
+  proteinMass       Float?   // in kg
+  
+  // Calculated metrics (auto-generated)
+  bmi               Float?   // body mass index
+  bmr               Int?     // basal metabolic rate in kcal
+  bodyAge           Int?     // estimated body age
+  fatMass           Float?   // in kg - calculated from weight × bodyFat%
+  fatFreeBodyWeight Float?   // in kg - weight minus fat mass
+  muscleRate        Float?   // percentage - muscle mass ratio
+  protein           Float?   // percentage - protein ratio
+  waterWeight       Float?   // in kg - total water weight
+  idealBodyWeight   Float?   // in kg - based on height and healthy BMI
+  
+  // Metadata
+  notes       String?
+  source      String   @default("api") // "api" | "manual"
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date])
+}
