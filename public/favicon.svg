@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Scale base with rounded corners -->
+  <rect x="6" y="14" width="20" height="14" fill="#2563eb" rx="2"/>
+  
+  <!-- Scale platform top edge -->
+  <rect x="6" y="12" width="20" height="2" fill="#3b82f6" rx="1"/>
+  
+  <!-- Display screen -->
+  <rect x="10" y="16" width="12" height="6" fill="#1e3a8a" rx="1"/>
+  
+  <!-- Display numbers (79.5) -->
+  <text x="16" y="20.5" font-family="monospace" font-size="4" fill="#60a5fa" text-anchor="middle" font-weight="bold">79.5</text>
+  
+  <!-- Scale feet/pads -->
+  <rect x="7" y="26" width="3" height="1.5" fill="#1e40af" rx="0.5"/>
+  <rect x="22" y="26" width="3" height="1.5" fill="#1e40af" rx="0.5"/>
+  
+  <!-- Decorative line details -->
+  <line x1="8" y1="24" x2="24" y2="24" stroke="#1e40af" stroke-width="0.5" opacity="0.5"/>
+</svg>
