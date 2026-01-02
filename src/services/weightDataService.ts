@@ -89,7 +89,7 @@ const transformEntryToUI = (entry: WeightEntryAPI, userConfig?: { height: number
   const protein = (proteinMass / weight) * 100;
   const waterWeight = weight * (bodyWater / 100);
   const subcutaneousFat = bodyFatPercent * 0.86;
-  const bodyAge = (age || 30) + (bmi - 22) * 2;
+  const bodyAge = entry.bodyAge || ((age || 30) + (bmi - 22) * 2);
   const idealBodyWeight = 22 * (heightM * heightM);
 
   // Parse date and time
