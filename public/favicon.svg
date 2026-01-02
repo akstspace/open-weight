@@ -1,13 +1,20 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Scale platform -->
-  <rect x="6" y="20" width="20" height="3" rx="1.5" fill="#4F46E5"/>
-  <!-- Scale base -->
-  <rect x="14" y="23" width="4" height="6" rx="1" fill="#4F46E5"/>
-  <!-- Scale dial/display -->
-  <circle cx="16" cy="12" r="8" fill="#E0E7FF" stroke="#4F46E5" stroke-width="2"/>
-  <!-- Indicator needle -->
-  <line x1="16" y1="12" x2="16" y2="7" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"/>
-  <!-- Tick marks -->
-  <line x1="12" y1="9" x2="13" y2="9.5" stroke="#4F46E5" stroke-width="1"/>
-  <line x1="20" y1="9" x2="19" y2="9.5" stroke="#4F46E5" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Scale base with rounded corners -->
+  <rect x="6" y="14" width="20" height="14" fill="#2563eb" rx="2"/>
+  
+  <!-- Scale platform top edge -->
+  <rect x="6" y="12" width="20" height="2" fill="#3b82f6" rx="1"/>
+  
+  <!-- Display screen -->
+  <rect x="10" y="16" width="12" height="6" fill="#1e3a8a" rx="1"/>
+  
+  <!-- Display numbers (79.5) -->
+  <text x="16" y="20.5" font-family="monospace" font-size="4" fill="#60a5fa" text-anchor="middle" font-weight="bold">79.5</text>
+  
+  <!-- Scale feet/pads -->
+  <rect x="7" y="26" width="3" height="1.5" fill="#1e40af" rx="0.5"/>
+  <rect x="22" y="26" width="3" height="1.5" fill="#1e40af" rx="0.5"/>
+  
+  <!-- Decorative line details -->
+  <line x1="8" y1="24" x2="24" y2="24" stroke="#1e40af" stroke-width="0.5" opacity="0.5"/>
 </svg>

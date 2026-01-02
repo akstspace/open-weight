@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Dashboard from "@/components/Dashboard";
 import SetupScreen from "@/components/SetupScreen";
-import { Scale, Settings } from "lucide-react";
+import { Scale, Settings, Github } from "lucide-react";
 import { Link } from "react-router-dom";
 import { fetchConfigStatus } from "@/services/configApi";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -57,6 +57,15 @@ const Index = () => {
             <h1 className="text-lg sm:text-xl font-bold text-foreground">{displayName}</h1>
             <p className="text-xs sm:text-sm text-muted-foreground">open-weight</p>
           </div>
+          <a
+            href="https://github.com/akstspace/open-weight"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors spring-tap"
+            aria-label="View on GitHub"
+          >
+            <Github className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
+          </a>
           <Link
             to="/settings"
             className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors spring-tap"

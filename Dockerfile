@@ -1,10 +1,10 @@
 # Build stage
-FROM oven/bun:1.1-alpine AS builder
+FROM oven/bun:1.3.5-alpine AS builder
 
 WORKDIR /app
 
 # Copy package files
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 COPY prisma ./prisma/
 
 # Install dependencies
@@ -20,12 +20,12 @@ RUN bunx prisma generate
 RUN bun run build
 
 # Production stage
-FROM oven/bun:1.1-alpine AS production
+FROM oven/bun:1.3.5-alpine AS production
 
 WORKDIR /app
 
 # Install only production dependencies
-COPY package.json bun.lockb ./
+COPY package.json ./
 COPY prisma ./prisma/
 RUN bun install --frozen-lockfile --production
 
