@@ -13,6 +13,7 @@ export interface WeightEntry {
   id: string;
   date: string;
   time: string;
+  source?: string; // 'api' | 'manual'
   // Primary metrics
   weight: MetricWithRating;
   bmi: MetricWithRating;

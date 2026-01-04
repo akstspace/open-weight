@@ -56,7 +56,7 @@ model WeightEntry {
   
   // Metadata
   notes       String?
-  source      String   @default("api") // "api" | "manual"
+  source      String   @default("manual") // "manual" | "automated"
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

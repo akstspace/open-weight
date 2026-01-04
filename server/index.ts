@@ -363,7 +363,7 @@ app.post('/api/entries', authenticateApiKey, async (req, res) => {
   try {
     const { 
       weight, bodyFat, muscleMass, bodyWater, visceralFat, boneMass, 
-      subcutaneousFat, skeletalMuscle, proteinMass, bodyAge, notes, date 
+      subcutaneousFat, skeletalMuscle, proteinMass, bodyAge, notes, date, source 
     } = req.body;
 
     if (!weight || typeof weight !== 'number' || weight <= 0) {
@@ -391,17 +391,8 @@ app.post('/api/entries', authenticateApiKey, async (req, res) => {
       proteinMass
     );
     
-    // Use provided body age or estimate based on BMI and body fat
-    let calculatedBodyAge = age; // Default to actual age
-    if (bodyFat) {
-      // Simple estimation: if body fat is high, body age is higher
-      // This is a rough approximation - real body age requires more complex algorithms
-      const idealBodyFat = config.sex === 'male' ? 15 : 22; // Ideal ranges
-      const fatDifference = bodyFat - idealBodyFat;
-      calculatedBodyAge = Math.round(age + (fatDifference / 2));
-      calculatedBodyAge = Math.max(18, Math.min(calculatedBodyAge, age + 20)); // Clamp between reasonable bounds
-    }
-    const finalBodyAge = bodyAge !== undefined && bodyAge !== null ? bodyAge : calculatedBodyAge;
+    // Only use provided body age from scale measurement, don't calculate
+    const finalBodyAge = bodyAge !== undefined && bodyAge !== null ? bodyAge : null;
 
     const entry = await prisma.weightEntry.create({
       data: {
@@ -429,7 +420,7 @@ app.post('/api/entries', authenticateApiKey, async (req, res) => {
         
         notes: notes || null,
         date: date ? new Date(date) : new Date(),
-        source: 'api',
+        source: source || 'automated',
       },
     });
 
@@ -520,14 +511,9 @@ app.put('/api/entries/:id', authenticateApiKey, async (req, res) => {
       updateData.waterWeight = derivedMetrics.waterWeight || null;
       updateData.idealBodyWeight = derivedMetrics.idealBodyWeight || null;
       
-      // Use provided body age or recalculate if body fat is available
+      // Only use provided body age from scale measurement, don't calculate
       if (bodyAge !== undefined && bodyAge !== null) {
         updateData.bodyAge = bodyAge;
-      } else if (finalBodyFat !== null) {
-        const idealBodyFat = config.sex === 'male' ? 15 : 22;
-        const fatDifference = finalBodyFat - idealBodyFat;
-        updateData.bodyAge = Math.round(age + (fatDifference / 2));
-        updateData.bodyAge = Math.max(18, Math.min(updateData.bodyAge, age + 20));
       }
     } else if (bodyAge !== undefined && bodyAge !== null) {
       // If only body age is updated without other changes

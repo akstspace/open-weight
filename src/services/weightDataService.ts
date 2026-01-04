@@ -61,17 +61,21 @@ const calculateSubcutaneousFatRating = (subcutFat: number, gender: 'male' | 'fem
 // Transform API entry to UI format with all calculated metrics
 const transformEntryToUI = (entry: WeightEntryAPI, userConfig?: { height: number | null; age: number | null; sex: string | null }): WeightEntry => {
   const weight = entry.weight;
-  const bodyFatPercent = entry.bodyFat || 18.5;
+  const bodyFatPercent = entry.bodyFat;
   
   // Use user's actual height or fallback to 1.75m
   const heightCm = userConfig?.height || 175;
   const heightM = heightCm / 100;
   const bmi = entry.bmi || weight / (heightM * heightM);
   
-  const muscleMass = entry.muscleMass || weight * 0.45;
-  const bodyWater = entry.bodyWater || 57;
-  const visceralFat = entry.visceralFat || 8;
-  const boneMass = entry.boneMass || weight * 0.04;
+  // Use actual measured values, no guessing
+  const muscleMass = entry.muscleMass;
+  const bodyWater = entry.bodyWater;
+  const visceralFat = entry.visceralFat;
+  const boneMass = entry.boneMass;
+  const proteinMass = entry.proteinMass;
+  const subcutaneousFat = entry.subcutaneousFat;
+  const skeletalMuscle = entry.skeletalMuscle;
   
   // Use user's actual age and sex for BMR calculation or fallback to defaults
   const age = userConfig?.age || 30;
@@ -80,16 +84,13 @@ const transformEntryToUI = (entry: WeightEntryAPI, userConfig?: { height: number
   const baseBMR = 10 * weight + 6.25 * heightCm - 5 * age;
   const bmr = entry.bmr || Math.round(sex === 'female' ? baseBMR - 161 : baseBMR + 5);
 
-  // Calculate derived metrics
-  const fatMass = weight * (bodyFatPercent / 100);
-  const fatFreeBodyWeight = weight - fatMass;
-  const muscleRate = (muscleMass / weight) * 100;
-  const skeletalMuscle = muscleRate * 0.68;
-  const proteinMass = weight * 0.18;
-  const protein = (proteinMass / weight) * 100;
-  const waterWeight = weight * (bodyWater / 100);
-  const subcutaneousFat = bodyFatPercent * 0.86;
-  const bodyAge = entry.bodyAge || ((age || 30) + (bmi - 22) * 2);
+  // Calculate only what can be accurately derived
+  const fatMass = bodyFatPercent ? weight * (bodyFatPercent / 100) : 0;
+  const fatFreeBodyWeight = bodyFatPercent ? weight - fatMass : 0;
+  const muscleRate = muscleMass ? (muscleMass / weight) * 100 : 0;
+  const protein = proteinMass ? (proteinMass / weight) * 100 : 0;
+  const waterWeight = bodyWater ? weight * (bodyWater / 100) : 0;
+  const bodyAge = entry.bodyAge || 0;
   const idealBodyWeight = 22 * (heightM * heightM);
 
   // Parse date and time
@@ -105,23 +106,24 @@ const transformEntryToUI = (entry: WeightEntryAPI, userConfig?: { height: number
     id: entry.id,
     date: dateStr,
     time: timeStr,
+    source: entry.source,
     weight: { value: weight, unit: 'kg', rating: getRatingFromRange(weight, 'weight', gender) },
     bmi: { value: Number(bmi.toFixed(1)), unit: '', rating: calculateBMIRating(bmi, gender) },
-    bodyFat: { value: bodyFatPercent, unit: '%', rating: calculateBodyFatRating(bodyFatPercent, gender) },
-    fatMass: { value: Number(fatMass.toFixed(1)), unit: 'kg', rating: getRatingFromRange(fatMass, 'fatMass', gender) },
-    fatFreeBodyWeight: { value: Number(fatFreeBodyWeight.toFixed(1)), unit: 'kg', rating: getRatingFromRange(fatFreeBodyWeight, 'fatFreeBodyWeight', gender) },
-    subcutaneousFat: { value: Number(subcutaneousFat.toFixed(1)), unit: '%', rating: calculateSubcutaneousFatRating(subcutaneousFat, gender) },
-    visceralFat: { value: Number(visceralFat.toFixed(1)), unit: '', rating: calculateVisceralFatRating(visceralFat, gender) },
-    muscleMass: { value: Number(muscleMass.toFixed(1)), unit: 'kg', rating: getRatingFromRange(muscleMass, 'muscleMass', gender) },
-    muscleRate: { value: Number(muscleRate.toFixed(1)), unit: '%', rating: calculateMuscleRating(muscleRate, gender) },
-    skeletalMuscle: { value: Number(skeletalMuscle.toFixed(1)), unit: '%', rating: getRatingFromRange(skeletalMuscle, 'skeletalMuscle', gender) },
-    boneMass: { value: Number(boneMass.toFixed(1)), unit: 'kg', rating: calculateBoneMassRating(boneMass, weight, gender) },
-    proteinMass: { value: Number(proteinMass.toFixed(1)), unit: 'kg', rating: getRatingFromRange(proteinMass, 'proteinMass', gender) },
-    protein: { value: Number(protein.toFixed(1)), unit: '%', rating: calculateProteinRating(protein, gender) },
-    waterWeight: { value: Number(waterWeight.toFixed(1)), unit: 'kg', rating: getRatingFromRange(waterWeight, 'waterWeight', gender) },
-    bodyWater: { value: Number(bodyWater.toFixed(1)), unit: '%', rating: calculateBodyWaterRating(bodyWater, gender) },
+    bodyFat: { value: bodyFatPercent || 0, unit: '%', rating: bodyFatPercent ? calculateBodyFatRating(bodyFatPercent, gender) : undefined },
+    fatMass: { value: Number(fatMass.toFixed(1)), unit: 'kg', rating: fatMass > 0 ? getRatingFromRange(fatMass, 'fatMass', gender) : undefined },
+    fatFreeBodyWeight: { value: Number(fatFreeBodyWeight.toFixed(1)), unit: 'kg', rating: fatFreeBodyWeight > 0 ? getRatingFromRange(fatFreeBodyWeight, 'fatFreeBodyWeight', gender) : undefined },
+    subcutaneousFat: { value: subcutaneousFat || 0, unit: '%', rating: subcutaneousFat ? calculateSubcutaneousFatRating(subcutaneousFat, gender) : undefined },
+    visceralFat: { value: visceralFat || 0, unit: '', rating: visceralFat ? calculateVisceralFatRating(visceralFat, gender) : undefined },
+    muscleMass: { value: muscleMass || 0, unit: 'kg', rating: muscleMass ? getRatingFromRange(muscleMass, 'muscleMass', gender) : undefined },
+    muscleRate: { value: Number(muscleRate.toFixed(1)), unit: '%', rating: muscleRate > 0 ? calculateMuscleRating(muscleRate, gender) : undefined },
+    skeletalMuscle: { value: skeletalMuscle || 0, unit: '%', rating: skeletalMuscle ? getRatingFromRange(skeletalMuscle, 'skeletalMuscle', gender) : undefined },
+    boneMass: { value: boneMass || 0, unit: 'kg', rating: boneMass ? calculateBoneMassRating(boneMass, weight, gender) : undefined },
+    proteinMass: { value: proteinMass || 0, unit: 'kg', rating: proteinMass ? getRatingFromRange(proteinMass, 'proteinMass', gender) : undefined },
+    protein: { value: Number(protein.toFixed(1)), unit: '%', rating: protein > 0 ? calculateProteinRating(protein, gender) : undefined },
+    waterWeight: { value: Number(waterWeight.toFixed(1)), unit: 'kg', rating: waterWeight > 0 ? getRatingFromRange(waterWeight, 'waterWeight', gender) : undefined },
+    bodyWater: { value: bodyWater || 0, unit: '%', rating: bodyWater ? calculateBodyWaterRating(bodyWater, gender) : undefined },
     bmr: { value: Number(bmr.toFixed(0)), unit: 'kcal', rating: getRatingFromRange(bmr, 'bmr', gender) },
-    bodyAge: { value: Number(bodyAge.toFixed(0)), unit: '', rating: calculateBodyAgeRating(bodyAge, age, gender) },
+    bodyAge: { value: bodyAge ? Number(bodyAge.toFixed(0)) : 0, unit: '', rating: bodyAge > 0 ? calculateBodyAgeRating(bodyAge, age, gender) : undefined },
     idealBodyWeight: { value: Number(idealBodyWeight.toFixed(1)), unit: 'kg', rating: getRatingFromRange(idealBodyWeight, 'idealBodyWeight', gender) },
   };
 };

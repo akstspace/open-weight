@@ -95,8 +95,10 @@ const AddWeightEntry = () => {
         proteinMass?: number;
         bodyAge?: number;
         notes?: string;
+        source: string;
       } = {
         weight: parseFloat(formData.weight),
+        source: 'manual',
       };
 
       // Add optional fields if provided

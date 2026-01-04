@@ -299,11 +299,11 @@ const Algorithms = () => {
             </div>
             
             <p className="text-sm text-muted-foreground mb-3">
-              A calculated age based on your metabolic rate, body composition, and other health metrics compared to population averages.
+              Measured by bioimpedance scales based on your metabolic rate, body composition, and other health metrics compared to population averages.
             </p>
 
             <div className="space-y-2 text-sm">
-              <p className="font-semibold">Factors Considered:</p>
+              <p className="font-semibold">Factors Considered by Scale:</p>
               <ul className="space-y-1 ml-4">
                 <li>● Basal Metabolic Rate (BMR)</li>
                 <li>● Body Fat Percentage</li>
@@ -312,7 +312,7 @@ const Algorithms = () => {
                 <li>● Bone Mass</li>
               </ul>
               <p className="text-xs text-muted-foreground mt-3">
-                <strong>Goal:</strong> Keep body age below or equal to actual age through healthy lifestyle choices.
+                <strong>Note:</strong> Body age is measured directly by your smart scale, not calculated automatically. Goal: Keep body age below or equal to actual age through healthy lifestyle choices.
               </p>
             </div>
           </section>
@@ -344,21 +344,20 @@ const Algorithms = () => {
             </h3>
             <div className="text-sm space-y-2">
               <p className="text-muted-foreground mb-3">
-                The following metrics are calculated automatically and don't need to be entered:
+                The following metrics are calculated automatically from your measured data:
               </p>
               <ul className="space-y-1 ml-4">
                 <li>✓ <strong>BMI</strong> - From weight and height</li>
                 <li>✓ <strong>BMR</strong> - From weight, height, age, and sex</li>
-                <li>✓ <strong>Body Age</strong> - Estimated from body fat percentage</li>
-                <li>✓ <strong>Fat Mass</strong> - Weight × Body Fat %</li>
-                <li>✓ <strong>Fat-Free Body Weight</strong> - Weight - Fat Mass</li>
-                <li>✓ <strong>Muscle Rate</strong> - (Muscle Mass / Weight) × 100</li>
-                <li>✓ <strong>Protein %</strong> - (Protein Mass / Weight) × 100</li>
-                <li>✓ <strong>Water Weight</strong> - Weight × Body Water %</li>
-                <li>✓ <strong>Ideal Body Weight</strong> - Based on height and healthy BMI</li>
+                <li>✓ <strong>Fat Mass</strong> - Weight × Body Fat % (only if body fat measured)</li>
+                <li>✓ <strong>Fat-Free Body Weight</strong> - Weight - Fat Mass (only if body fat measured)</li>
+                <li>✓ <strong>Muscle Rate</strong> - (Muscle Mass / Weight) × 100 (only if muscle mass measured)</li>
+                <li>✓ <strong>Protein %</strong> - (Protein Mass / Weight) × 100 (only if protein mass measured)</li>
+                <li>✓ <strong>Water Weight</strong> - Weight × Body Water % (only if body water measured)</li>
+                <li>✓ <strong>Ideal Body Weight</strong> - Based on height and healthy BMI of 22</li>
               </ul>
               <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border">
-                These calculations happen automatically when you add a new weight entry, ensuring consistency and accuracy.
+                <strong>Note:</strong> Metrics like Body Age, Muscle Mass, Body Fat %, Visceral Fat, Bone Mass, etc. must be measured by your smart scale - they are not calculated automatically.
               </p>
             </div>
           </section>
