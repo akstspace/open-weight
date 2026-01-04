@@ -47,7 +47,7 @@ const WeightChart = ({ entries }: WeightChartProps) => {
               color: 'hsl(0, 0%, 98%)',
             }}
             labelFormatter={(_, payload) => payload[0]?.payload?.fullDate || ''}
-            formatter={(value: number) => [`${value} kg`, 'Weight']}
+            formatter={(value: number) => [`${value.toFixed(2)} kg`, 'Weight']}
           />
           <Area
             type="monotone"
