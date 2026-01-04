@@ -38,6 +38,7 @@ const MetricRow = ({ label, value, unit, rating, gender }: {
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const hasRating = rating !== undefined && rating !== null;
+  const formattedValue = unit === '' && Number.isInteger(value) ? value.toString() : value.toFixed(2);
 
   // If no rating, show as simple info row without dropdown
   if (!hasRating) {
@@ -46,7 +47,7 @@ const MetricRow = ({ label, value, unit, rating, gender }: {
         <span className="text-sm sm:text-base text-muted-foreground text-left">{label}</span>
         <div className="flex items-center gap-2 sm:gap-3">
           <span className="font-mono text-sm sm:text-base font-semibold text-foreground">
-            {value}<span className="text-xs sm:text-sm text-muted-foreground">{unit}</span>
+            {formattedValue}<span className="text-xs sm:text-sm text-muted-foreground">{unit}</span>
           </span>
           <div className="w-14 sm:w-16"></div>
           <div className="w-3.5 sm:w-4"></div>
@@ -62,7 +63,7 @@ const MetricRow = ({ label, value, unit, rating, gender }: {
           <span className="text-sm sm:text-base text-muted-foreground text-left">{label}</span>
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="font-mono text-sm sm:text-base font-semibold text-foreground">
-              {value}<span className="text-xs sm:text-sm text-muted-foreground">{unit}</span>
+              {formattedValue}<span className="text-xs sm:text-sm text-muted-foreground">{unit}</span>
             </span>
             <div className="w-14 sm:w-16 text-right">
               <RatingBadge rating={rating} />
@@ -126,19 +127,19 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: Entr
               <div className="mt-2 sm:mt-3 grid grid-cols-3 gap-2 sm:gap-4">
                 <div className="text-center">
                   <p className="font-mono text-xl sm:text-2xl font-bold text-foreground">
-                    {entry.weight.value}<span className="text-xs sm:text-sm">kg</span>
+                    {entry.weight.value.toFixed(2)}<span className="text-xs sm:text-sm">kg</span>
                   </p>
                   <p className="text-[10px] sm:text-xs text-muted-foreground">Weight</p>
                 </div>
                 <div className="text-center">
                   <p className="font-mono text-xl sm:text-2xl font-bold text-foreground">
-                    {entry.bmi.value}
+                    {entry.bmi.value.toFixed(2)}
                   </p>
                   <p className="text-[10px] sm:text-xs text-muted-foreground">BMI</p>
                 </div>
                 <div className="text-center">
                   <p className="font-mono text-xl sm:text-2xl font-bold text-foreground">
-                    {entry.bodyFat.value}<span className="text-xs sm:text-sm">%</span>
+                    {entry.bodyFat.value.toFixed(2)}<span className="text-xs sm:text-sm">%</span>
                   </p>
                   <p className="text-[10px] sm:text-xs text-muted-foreground">Body Fat</p>
                 </div>

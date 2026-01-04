@@ -4,6 +4,7 @@ import { ChevronRight, Trash2 } from "lucide-react";
 import { memo, useState } from "react";
 import { deleteEntryAPI, getApiKey } from "@/services/configApi";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -70,9 +71,19 @@ const DataLogEntry = memo(({ entry, onClick, hasApiKey = false, onDeleted }: Dat
         onClick={onClick}
         className="flex w-full items-center justify-between rounded-lg border border-border bg-secondary/50 px-3 sm:px-4 py-2.5 sm:py-3 text-left touch-active smooth-transition hover:bg-secondary hover:border-primary/30 group active:bg-secondary/80"
       >
-        <span className="font-medium text-sm sm:text-base text-foreground">
-          {formattedDate}: {entry.weight.value}kg, {entry.bodyFat.value}% BF
-        </span>
+        <div className="flex flex-col gap-1">
+          <span className="font-medium text-sm sm:text-base text-foreground">
+            {formattedDate}: {entry.weight.value.toFixed(2)}kg, {entry.bodyFat.value.toFixed(2)}% BF
+          </span>
+          <span className={cn(
+            "text-[10px] px-1.5 py-0.5 rounded-full font-medium w-fit",
+            entry.source === 'automated'
+              ? "bg-green-500/10 text-green-500"
+              : "bg-blue-500/10 text-blue-500"
+          )}>
+            {entry.source === 'automated' ? 'Automated' : 'Manual'}
+          </span>
+        </div>
         <div className="flex items-center gap-2">
           {hasApiKey && (
             <button
