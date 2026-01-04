@@ -73,6 +73,9 @@ export interface WeightEntryAPI {
   bodyWater: number | null;
   visceralFat: number | null;
   boneMass: number | null;
+  proteinMass: number | null;
+  subcutaneousFat: number | null;
+  skeletalMuscle: number | null;
   bmr: number | null;
   bodyAge: number | null;
   notes: string | null;

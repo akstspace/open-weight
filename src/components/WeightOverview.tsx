@@ -22,7 +22,7 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
 
       <div className="mb-3 sm:mb-4">
         <span className="font-mono text-4xl sm:text-5xl font-bold text-foreground">
-          {latestEntry.weight.value}
+          {latestEntry.weight.value.toFixed(2)}
         </span>
         <span className="ml-1 text-xl sm:text-2xl font-light text-muted-foreground">kg</span>
       </div>
@@ -34,10 +34,10 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
       <div className="mt-3 sm:mt-4 border-t border-border pt-3 sm:pt-4">
         <div className="mb-2">
           <span className="font-mono text-xl sm:text-2xl font-bold text-foreground">
-            {latestEntry.weight.value} kg
+            {latestEntry.weight.value.toFixed(2)} kg
           </span>
           <p className="text-xs sm:text-sm text-muted-foreground">
-            {weightInLbs} lbs / {latestEntry.bodyFat.value}% BF
+            {weightInLbs} lbs / {latestEntry.bodyFat.value.toFixed(2)}% BF
           </p>
         </div>
       </div>
@@ -51,7 +51,7 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
           </div>
           <div className="mt-1 flex items-center gap-1 sm:gap-2">
             <span className={`font-mono text-lg sm:text-2xl font-bold ${isLoss ? 'text-green-400' : 'text-red-400'}`}>
-              {weeklyChange > 0 ? '+' : ''}{weeklyChange}kg
+              {weeklyChange > 0 ? '+' : ''}{weeklyChange.toFixed(2)}kg
             </span>
             {isLoss ? (
               <TrendingDown className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
