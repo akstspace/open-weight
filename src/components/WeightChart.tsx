@@ -37,7 +37,7 @@ const WeightChart = ({ entries }: WeightChartProps) => {
             axisLine={false}
             tickLine={false}
             tick={{ fill: 'hsl(220, 10%, 55%)', fontSize: 12 }}
-            tickFormatter={(value) => `${value}`}
+            tickFormatter={(value) => `${value.toFixed(2)}`}
           />
           <Tooltip
             contentStyle={{
