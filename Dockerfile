@@ -6,6 +6,7 @@ WORKDIR /app
 # Copy package files
 COPY package.json bun.lock ./
 COPY prisma ./prisma/
+COPY prisma.config.ts ./
 
 # Install dependencies
 RUN bun install --frozen-lockfile
@@ -30,6 +31,7 @@ RUN apk add --no-cache curl
 # Install only production dependencies
 COPY package.json bun.lock ./
 COPY prisma ./prisma/
+COPY prisma.config.ts ./
 RUN bun install --frozen-lockfile --production
 
 # Generate Prisma client for production

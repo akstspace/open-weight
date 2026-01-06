@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import readline from 'readline';
-import prismaConfig from '../prisma/prisma.config';
+import prismaConfig from '../prisma.config.js';
 
 const prisma = new PrismaClient(prismaConfig);
 
