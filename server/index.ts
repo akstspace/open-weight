@@ -3,10 +3,9 @@ import { PrismaClient } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import path from 'path';
-import prismaConfig from '../prisma.config.js';
 
-// Prisma 7 requires explicit database configuration
-const prisma = new PrismaClient(prismaConfig);
+// Prisma 7 uses DATABASE_URL from environment variable
+const prisma = new PrismaClient();
 const app = express();
 const PORT = parseInt(process.env.PORT || '3001', 10);
 

@@ -4,9 +4,8 @@ import { PrismaClient } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import readline from 'readline';
-import prismaConfig from '../prisma.config.js';
 
-const prisma = new PrismaClient(prismaConfig);
+const prisma = new PrismaClient();
 
 const rl = readline.createInterface({
   input: process.stdin,
