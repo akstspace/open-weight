@@ -4,8 +4,14 @@ import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import path from 'path';
 
-// Prisma 7 uses DATABASE_URL from environment variable
-const prisma = new PrismaClient();
+// Prisma 7 requires datasource configuration in constructor
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL || 'file:./dev.db'
+    }
+  }
+});
 const app = express();
 const PORT = parseInt(process.env.PORT || '3001', 10);
 
