@@ -1,12 +1,12 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import path from 'path';
-import prismaConfig from '../prisma.config.js';
+import { PrismaClient } from '../prisma/generated/prisma/client.js';
+import { PrismaLibSql } from '@prisma/adapter-libsql';
 
-// Prisma 7 requires explicit database configuration
-const prisma = new PrismaClient(prismaConfig);
+const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL || "" });
+export const prisma = new PrismaClient({ adapter });
 const app = express();
 const PORT = parseInt(process.env.PORT || '3001', 10);
 
@@ -594,13 +594,6 @@ export const cli = {
     console.log('Configuration deleted. Restart to setup again.');
   },
 };
-
-// Serve frontend for all other routes (SPA)
-if (process.env.NODE_ENV === 'production') {
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
-  });
-}
 
 // Start server
 app.listen(PORT, '0.0.0.0', () => {

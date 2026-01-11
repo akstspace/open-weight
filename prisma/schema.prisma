@@ -2,7 +2,10 @@
 // SQLite database for single-user self-hosted deployment
 
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client"
+  output     = "./generated/prisma"
+  engineType = "client"
+  runtime    = "bun"
 }
 
 datasource db {

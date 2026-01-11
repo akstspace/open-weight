@@ -1,12 +1,13 @@
 #!/usr/bin/env npx ts-node
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../prisma/generated/prisma/client';
+import { PrismaLibSql } from '@prisma/adapter-libsql';
 import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import readline from 'readline';
-import prismaConfig from '../prisma.config.js';
 
-const prisma = new PrismaClient(prismaConfig);
+const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL || "" });
+const prisma = new PrismaClient({ adapter });
 
 const rl = readline.createInterface({
   input: process.stdin,

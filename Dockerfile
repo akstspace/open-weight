@@ -1,5 +1,5 @@
 # Build stage
-FROM oven/bun:1.3.5-alpine AS builder
+FROM oven/bun:1.3.5-debian AS builder
 
 WORKDIR /app
 
@@ -15,18 +15,19 @@ RUN bun install --frozen-lockfile
 COPY . .
 
 # Generate Prisma client
+ENV DATABASE_URL="file:/data/weight-log.db"
 RUN bunx prisma generate
 
 # Build frontend
 RUN bun run build
 
 # Production stage
-FROM oven/bun:1.3.5-alpine AS production
+FROM oven/bun:1.3.5-debian AS production
 
 WORKDIR /app
 
 # Install curl for healthcheck
-RUN apk add --no-cache curl
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 # Install only production dependencies
 COPY package.json bun.lock ./
@@ -35,6 +36,7 @@ COPY prisma.config.ts ./
 RUN bun install --frozen-lockfile --production
 
 # Generate Prisma client for production
+ENV DATABASE_URL="file:/data/weight-log.db"
 RUN bunx prisma generate
 
 # Copy built assets
@@ -47,7 +49,6 @@ RUN mkdir -p /data
 # Environment variables
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV DATABASE_URL="file:/data/weight-log.db"
 
 # Expose port
 EXPOSE 3000
