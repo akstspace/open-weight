@@ -5,13 +5,7 @@ import { randomBytes } from 'crypto';
 import bcrypt from 'bcrypt';
 import readline from 'readline';
 
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL || 'file:./dev.db'
-    }
-  }
-});
+const prisma = new PrismaClient();
 
 const rl = readline.createInterface({
   input: process.stdin,
