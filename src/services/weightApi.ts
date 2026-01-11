@@ -43,6 +43,7 @@ export interface WeightData {
   entries: WeightEntry[];
   latestEntry: WeightEntry;
   weeklyChange: number;
+  changePeriodDays: number;
 }
 
 // Medical standard calculations (simplified algorithms)

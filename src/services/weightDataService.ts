@@ -152,8 +152,11 @@ export const fetchWeightData = async (): Promise<WeightData> => {
 
     // Calculate weekly change from stats or entries
     let weeklyChange = 0;
+    let changePeriodDays = 7;
+    
     if (statsResponse.stats?.weeklyChange !== null && statsResponse.stats?.weeklyChange !== undefined) {
       weeklyChange = statsResponse.stats.weeklyChange;
+      changePeriodDays = 7; // Stats API provides 7-day change
     } else if (entries.length > 1) {
       // Calculate from entries if not in stats
       const weekAgoEntry = entries.find(e => {
@@ -164,12 +167,18 @@ export const fetchWeightData = async (): Promise<WeightData> => {
       }) || entries[entries.length - 1];
       
       weeklyChange = Number((latestEntry.weight.value - weekAgoEntry.weight.value).toFixed(1));
+      
+      // Calculate actual days between the two entries
+      const latestDate = new Date(latestEntry.date);
+      const comparisonDate = new Date(weekAgoEntry.date);
+      changePeriodDays = Math.round((latestDate.getTime() - comparisonDate.getTime()) / (1000 * 60 * 60 * 24));
     }
 
     return {
       entries,
       latestEntry,
       weeklyChange,
+      changePeriodDays,
     };
   } catch (error) {
     console.error('Error fetching weight data:', error);
