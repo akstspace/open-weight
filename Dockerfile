@@ -14,10 +14,7 @@ RUN bun install --frozen-lockfile
 # Copy source code
 COPY . .
 
-# Generate Prisma client
-RUN bunx prisma generate
-
-# Build frontend
+# Build frontend (does not require Prisma)
 RUN bun run build
 
 # Production stage
@@ -34,6 +31,9 @@ COPY prisma ./prisma/
 COPY prisma.config.ts ./
 RUN bun install --frozen-lockfile --production
 
+# Set DATABASE_URL before Prisma generate
+ENV DATABASE_URL="file:/data/weight-log.db"
+
 # Generate Prisma client for production
 RUN bunx prisma generate
 
@@ -47,7 +47,6 @@ RUN mkdir -p /data
 # Environment variables
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV DATABASE_URL="file:/data/weight-log.db"
 
 # Expose port
 EXPOSE 3000
