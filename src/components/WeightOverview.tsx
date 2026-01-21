@@ -7,10 +7,9 @@ interface WeightOverviewProps {
 }
 
 const WeightOverview = ({ data }: WeightOverviewProps) => {
-  const { latestEntry, weeklyChange, changePeriodDays, entries } = data;
+  const { latestEntry, weeklyChange, changePeriodDays, entries, totalEntries } = data;
   const weightInLbs = (latestEntry.weight.value * 2.20462).toFixed(1);
   const isLoss = weeklyChange <= 0;
-  const totalEntries = entries.length;
   
   // Dynamic label based on actual period
   const changeLabel = changePeriodDays === 7 ? 'Weekly Change' : `${changePeriodDays}-Day Change`;

@@ -179,6 +179,7 @@ export const fetchWeightData = async (): Promise<WeightData> => {
       latestEntry,
       weeklyChange,
       changePeriodDays,
+      totalEntries: entriesResponse.total,
     };
   } catch (error) {
     console.error('Error fetching weight data:', error);
