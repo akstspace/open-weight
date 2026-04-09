@@ -1,4 +1,4 @@
-import { ArrowLeft, Moon, Sun, Monitor } from "lucide-react";
+import { ArrowLeft, Moon, Sun, Monitor, CupSoda } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ const Settings = () => {
   const themes = [
     { value: "light", label: "Light", icon: Sun },
     { value: "dark", label: "Dark", icon: Moon },
-    { value: "chai", label: "Chai", icon: Moon },
+    { value: "chai", label: "Chai", icon: CupSoda },
     { value: "system", label: "System", icon: Monitor },
   ];
 
