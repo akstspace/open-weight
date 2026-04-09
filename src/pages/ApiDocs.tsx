@@ -6,11 +6,12 @@ const ApiDocs = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+      <header className="sticky top-0 z-10 border-b border-border bg-background">
         <div className="container mx-auto flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4">
           <Link
             to="/"
-            className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-secondary transition-colors hover:bg-background sm:h-10 sm:w-10"
+            aria-label="Back to dashboard"
           >
             <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-foreground" />
           </Link>
@@ -23,18 +24,18 @@ const ApiDocs = () => {
 
       {/* Content */}
       <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-4xl">
-        <div className="prose prose-sm sm:prose dark:prose-invert max-w-none">
+        <div className="max-w-none text-foreground">
           {/* Quick Start */}
           <section className="mb-8">
             <div className="flex items-center gap-2 mb-4">
-              <Code className="h-5 w-5 text-primary" />
+              <Code className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Quick Start</h2>
             </div>
-            <p className="text-muted-foreground mb-3">
+            <p className="mb-3 text-base leading-6 text-muted-foreground">
               The Open-Weight API allows you to add and retrieve weight entries. All write operations require authentication with an API key.
             </p>
-            <div className="p-4 rounded-lg bg-muted/50 border border-border">
-              <p className="text-sm font-medium mb-2">💡 Tip: You can also add entries from the Settings page</p>
+            <div className="rounded-lg border border-border bg-secondary p-4">
+              <p className="mb-2 text-sm font-medium">Tip: You can also add entries from the Settings page</p>
               <p className="text-xs text-muted-foreground">
                 Navigate to Settings → Advanced → Add Weight Entry to manually add data through the UI.
               </p>
@@ -42,15 +43,15 @@ const ApiDocs = () => {
           </section>
 
           {/* Authentication */}
-          <section className="mb-8 p-4 rounded-lg bg-card border border-border">
+          <section className="mb-8 rounded-lg border border-border bg-card p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Key className="h-5 w-5 text-primary" />
+              <Key className="h-5 w-5 text-accent" />
               <h3 className="text-lg font-semibold m-0">Authentication</h3>
             </div>
             <p className="text-sm text-muted-foreground mb-3">
               Include your API key in the request headers for authenticated endpoints:
             </p>
-            <pre className="bg-muted p-3 rounded text-xs overflow-x-auto">
+            <pre className="overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-xs">
               <code>X-API-Key: wt_your_api_key_here</code>
             </pre>
             <p className="text-xs text-muted-foreground mt-2">
@@ -61,20 +62,20 @@ const ApiDocs = () => {
           {/* Endpoints */}
           <section className="mb-8">
             <div className="flex items-center gap-2 mb-4">
-              <Database className="h-5 w-5 text-primary" />
+              <Database className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Endpoints</h2>
             </div>
 
             {/* Add Entry */}
-            <div className="mb-6 p-4 rounded-lg border border-border">
+            <div className="mb-6 rounded-lg border border-border bg-card p-4">
               <div className="flex items-baseline gap-2 mb-2">
-                <span className="px-2 py-1 bg-green-500/10 text-green-500 rounded text-xs font-mono">POST</span>
+                <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-success">POST</span>
                 <code className="text-sm font-mono">/api/entries</code>
               </div>
               <p className="text-sm text-muted-foreground mb-3">Add a new weight entry</p>
               
               <p className="text-xs font-semibold mb-2">Request Body:</p>
-              <pre className="bg-muted p-3 rounded text-xs overflow-x-auto mb-3">
+              <pre className="mb-3 overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-xs">
 {`{
   "weight": 75.5,          // Required: weight in kg
   "bodyFat": 18.5,         // Optional: body fat %
@@ -89,7 +90,7 @@ const ApiDocs = () => {
               </pre>
 
               <p className="text-xs font-semibold mb-2">Example:</p>
-              <pre className="bg-muted p-3 rounded text-xs overflow-x-auto">
+              <pre className="overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-xs">
 {`curl -X POST http://localhost:3000/api/entries \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: wt_your_api_key" \\
@@ -98,9 +99,9 @@ const ApiDocs = () => {
             </div>
 
             {/* Get Entries */}
-            <div className="mb-6 p-4 rounded-lg border border-border">
+            <div className="mb-6 rounded-lg border border-border bg-card p-4">
               <div className="flex items-baseline gap-2 mb-2">
-                <span className="px-2 py-1 bg-blue-500/10 text-blue-500 rounded text-xs font-mono">GET</span>
+                <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-accent">GET</span>
                 <code className="text-sm font-mono">/api/entries</code>
               </div>
               <p className="text-sm text-muted-foreground mb-3">Get all weight entries (public, no auth required)</p>
@@ -114,33 +115,33 @@ const ApiDocs = () => {
               </ul>
 
               <p className="text-xs font-semibold mb-2">Example:</p>
-              <pre className="bg-muted p-3 rounded text-xs overflow-x-auto">
+              <pre className="overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-xs">
 {`curl http://localhost:3000/api/entries?limit=10`}
               </pre>
             </div>
 
             {/* Get Stats */}
-            <div className="mb-6 p-4 rounded-lg border border-border">
+            <div className="mb-6 rounded-lg border border-border bg-card p-4">
               <div className="flex items-baseline gap-2 mb-2">
-                <span className="px-2 py-1 bg-blue-500/10 text-blue-500 rounded text-xs font-mono">GET</span>
+                <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-accent">GET</span>
                 <code className="text-sm font-mono">/api/stats</code>
               </div>
               <p className="text-sm text-muted-foreground mb-3">Get statistics (public, no auth required)</p>
 
               <p className="text-xs font-semibold mb-2">Example:</p>
-              <pre className="bg-muted p-3 rounded text-xs overflow-x-auto">
+              <pre className="overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-xs">
 {`curl http://localhost:3000/api/stats`}
               </pre>
             </div>
           </section>
 
           {/* CLI */}
-          <section className="mb-8 p-4 rounded-lg bg-primary/5 border border-primary/20">
+          <section className="mb-8 rounded-lg border border-border bg-secondary p-4">
             <h3 className="text-lg font-semibold mb-3">CLI Commands</h3>
             <p className="text-sm text-muted-foreground mb-3">
               Manage your Open-Weight installation using the CLI:
             </p>
-            <pre className="bg-muted p-3 rounded text-xs overflow-x-auto">
+            <pre className="overflow-x-auto rounded-lg border border-border bg-background p-3 text-xs">
 {`# Check status
 docker compose exec weight-log bun run server/cli.ts status
 

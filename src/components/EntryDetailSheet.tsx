@@ -110,7 +110,7 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: Entr
         ) : entry ? (
           <ScrollArea className="h-[calc(100vh-80px)] px-4 sm:px-6">
             {/* Header Summary */}
-            <div className="mb-4 sm:mb-6 rounded-lg bg-secondary p-3 sm:p-4 animate-in-bounce">
+            <div className="mb-4 sm:mb-6 rounded-lg border border-border bg-secondary p-3 sm:p-4 animate-in-fade">
               <div className="flex items-center justify-between">
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   {entry.time} • {format(parseISO(entry.date), "MMM dd, yyyy")}
@@ -118,8 +118,8 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: Entr
                 <span className={cn(
                   "text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-medium",
                   entry.source === 'automated'
-                    ? "bg-green-500/10 text-green-500"
-                    : "bg-blue-500/10 text-blue-500"
+                    ? "bg-success/10 text-success"
+                    : "bg-background text-accent"
                 )}>
                   {entry.source === 'automated' ? 'Automated' : 'Manual'}
                 </span>
@@ -152,7 +152,7 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: Entr
             </p>
 
             {/* Metrics */}
-            <div className="rounded-lg border border-border bg-background/50 px-3 sm:px-4 animate-in-slide-up" style={{ animationDelay: '150ms' }}>
+            <div className="rounded-lg border border-border bg-card px-3 sm:px-4 animate-in-slide-up" style={{ animationDelay: '150ms' }}>
               <div className="flex items-center justify-between border-b border-border py-2.5 sm:py-3 text-[10px] sm:text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 <span>Index</span>
                 <div className="flex items-center gap-2 sm:gap-3">

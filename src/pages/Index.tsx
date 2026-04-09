@@ -48,10 +48,10 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+      <header className="sticky top-0 z-10 border-b border-border bg-background">
         <div className="container mx-auto flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4">
-          <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-primary/10">
-            <Scale className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-secondary sm:h-10 sm:w-10">
+            <Scale className="h-4 w-4 text-accent sm:h-5 sm:w-5" />
           </div>
           <div className="flex-1">
             <h1 className="text-lg sm:text-xl font-bold text-foreground">{displayName}</h1>
@@ -61,14 +61,15 @@ const Index = () => {
             href="https://github.com/akstspace/open-weight"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors spring-tap"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-secondary transition-colors hover:bg-background spring-tap sm:h-10 sm:w-10"
             aria-label="View on GitHub"
           >
             <Github className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
           </a>
           <Link
             to="/settings"
-            className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors spring-tap"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-secondary transition-colors hover:bg-background spring-tap sm:h-10 sm:w-10"
+            aria-label="Open settings"
           >
             <Settings className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
           </Link>

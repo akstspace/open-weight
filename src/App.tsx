@@ -32,7 +32,13 @@ const AnimatedRoutes = () => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ThemeProvider attribute="class" defaultTheme="system" storageKey="open-weight-theme">
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      themes={["light", "dark", "chai"]}
+      storageKey="open-weight-theme"
+    >
       <TooltipProvider>
         <Toaster />
         <Sonner />

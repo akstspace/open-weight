@@ -68,7 +68,7 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
 
   return (
     <>
-      <div className="flex flex-col rounded-xl bg-card p-4 sm:p-6">
+      <div className="flex flex-col rounded-lg border border-border bg-card p-4 sm:p-6">
         <div className="mb-3 sm:mb-4 flex items-center justify-between">
           <h2 className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Data Log
@@ -107,7 +107,7 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
                   <div className="pt-2 sm:pt-3 animate-in-fade" style={{ animationDelay: '200ms' }}>
                     <Button
                       variant="ghost"
-                      className="w-full h-10 sm:h-11 text-xs sm:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/80 touch-subtle gap-2 smooth-transition"
+                      className="w-full h-10 sm:h-11 gap-2 text-xs font-medium text-muted-foreground smooth-transition touch-subtle hover:bg-secondary hover:text-accent sm:text-sm"
                       onClick={handleLoadMore}
                       disabled={isFetchingNextPage}
                     >

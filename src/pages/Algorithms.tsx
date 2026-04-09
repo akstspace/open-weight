@@ -6,11 +6,12 @@ const Algorithms = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+      <header className="sticky top-0 z-10 border-b border-border bg-background">
         <div className="container mx-auto flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4">
           <Link
             to="/"
-            className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-secondary transition-colors hover:bg-background sm:h-10 sm:w-10"
+            aria-label="Back to dashboard"
           >
             <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-foreground" />
           </Link>
@@ -23,7 +24,7 @@ const Algorithms = () => {
 
       {/* Content */}
       <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 max-w-4xl">
-        <div className="prose prose-sm sm:prose dark:prose-invert max-w-none">
+        <div className="max-w-none text-foreground">
           
           {/* Introduction */}
           <section className="mb-8">
@@ -35,7 +36,7 @@ const Algorithms = () => {
           {/* BMI */}
           <section className="mb-8 p-4 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <Calculator className="h-5 w-5 text-primary" />
+              <Calculator className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Body Mass Index (BMI)</h2>
             </div>
             
@@ -43,7 +44,7 @@ const Algorithms = () => {
               BMI is a measure of body fat based on height and weight.
             </p>
 
-            <div className="bg-muted p-3 rounded text-sm mb-3">
+            <div className="mb-3 rounded-lg border border-border bg-secondary p-3 text-sm">
               <strong>Formula:</strong>
               <pre className="mt-2">BMI = weight (kg) / (height (m))²</pre>
             </div>
@@ -51,11 +52,11 @@ const Algorithms = () => {
             <div className="space-y-2 text-sm">
               <p className="font-semibold">WHO Classification:</p>
               <ul className="space-y-1 ml-4">
-                <li><span className="text-blue-500">● Underweight:</span> BMI &lt; 18.5</li>
-                <li><span className="text-green-500">● Normal:</span> BMI 18.5 - 24.9</li>
-                <li><span className="text-yellow-500">● Overweight:</span> BMI 25.0 - 29.9</li>
-                <li><span className="text-orange-500">● Obese Class I:</span> BMI 30.0 - 34.9</li>
-                <li><span className="text-red-500">● Obese Class II:</span> BMI 35.0 - 39.9</li>
+                <li><span className="text-muted-foreground">● Underweight:</span> BMI &lt; 18.5</li>
+                <li><span className="text-success">● Normal:</span> BMI 18.5 - 24.9</li>
+                <li><span className="text-warning">● Overweight:</span> BMI 25.0 - 29.9</li>
+                <li><span className="text-accent">● Obese Class I:</span> BMI 30.0 - 34.9</li>
+                <li><span className="text-destructive">● Obese Class II:</span> BMI 35.0 - 39.9</li>
                 <li><span className="text-destructive">● Obese Class III:</span> BMI ≥ 40.0</li>
               </ul>
             </div>
@@ -64,7 +65,7 @@ const Algorithms = () => {
           {/* Body Fat Percentage */}
           <section className="mb-8 p-4 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <TrendingDown className="h-5 w-5 text-primary" />
+              <TrendingDown className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Body Fat Percentage</h2>
             </div>
             
@@ -76,21 +77,21 @@ const Algorithms = () => {
               <div>
                 <p className="font-semibold mb-2">Male Standards:</p>
                 <ul className="space-y-1 ml-4">
-                  <li><span className="text-blue-500">● Essential:</span> 2-5%</li>
-                  <li><span className="text-green-500">● Athletes:</span> 6-13%</li>
-                  <li><span className="text-green-500">● Fitness:</span> 14-17%</li>
-                  <li><span className="text-yellow-500">● Average:</span> 18-24%</li>
-                  <li><span className="text-orange-500">● Obese:</span> ≥ 25%</li>
+                  <li><span className="text-muted-foreground">● Essential:</span> 2-5%</li>
+                  <li><span className="text-success">● Athletes:</span> 6-13%</li>
+                  <li><span className="text-success">● Fitness:</span> 14-17%</li>
+                  <li><span className="text-warning">● Average:</span> 18-24%</li>
+                  <li><span className="text-accent">● Obese:</span> ≥ 25%</li>
                 </ul>
               </div>
               <div>
                 <p className="font-semibold mb-2">Female Standards:</p>
                 <ul className="space-y-1 ml-4">
-                  <li><span className="text-blue-500">● Essential:</span> 10-13%</li>
-                  <li><span className="text-green-500">● Athletes:</span> 14-20%</li>
-                  <li><span className="text-green-500">● Fitness:</span> 21-24%</li>
-                  <li><span className="text-yellow-500">● Average:</span> 25-31%</li>
-                  <li><span className="text-orange-500">● Obese:</span> ≥ 32%</li>
+                  <li><span className="text-muted-foreground">● Essential:</span> 10-13%</li>
+                  <li><span className="text-success">● Athletes:</span> 14-20%</li>
+                  <li><span className="text-success">● Fitness:</span> 21-24%</li>
+                  <li><span className="text-warning">● Average:</span> 25-31%</li>
+                  <li><span className="text-accent">● Obese:</span> ≥ 32%</li>
                 </ul>
               </div>
             </div>
@@ -99,7 +100,7 @@ const Algorithms = () => {
           {/* Basal Metabolic Rate */}
           <section className="mb-8 p-4 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <Activity className="h-5 w-5 text-primary" />
+              <Activity className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Basal Metabolic Rate (BMR)</h2>
             </div>
             
@@ -107,7 +108,7 @@ const Algorithms = () => {
               The number of calories your body burns at rest. Used to calculate daily caloric needs.
             </p>
 
-            <div className="bg-muted p-3 rounded text-sm mb-3 overflow-x-auto">
+            <div className="mb-3 overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-sm">
               <strong>Mifflin-St Jeor Equation:</strong>
               <div className="mt-2 space-y-1">
                 <div className="break-words">
@@ -136,7 +137,7 @@ const Algorithms = () => {
           {/* Visceral Fat */}
           <section className="mb-8 p-4 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <Heart className="h-5 w-5 text-primary" />
+              <Heart className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Visceral Fat Level</h2>
             </div>
             
@@ -147,9 +148,9 @@ const Algorithms = () => {
             <div className="space-y-2 text-sm">
               <p className="font-semibold">Rating Scale (1-59):</p>
               <ul className="space-y-1 ml-4">
-                <li><span className="text-green-500">● Healthy:</span> 1-12</li>
-                <li><span className="text-yellow-500">● Excess:</span> 13-17</li>
-                <li><span className="text-red-500">● High:</span> ≥ 18</li>
+                <li><span className="text-success">● Healthy:</span> 1-12</li>
+                <li><span className="text-warning">● Excess:</span> 13-17</li>
+                <li><span className="text-destructive">● High:</span> ≥ 18</li>
               </ul>
               <p className="text-xs text-muted-foreground mt-3">
                 <strong>Note:</strong> Levels above 13 indicate increased risk of cardiovascular disease, type 2 diabetes, and metabolic syndrome.
@@ -160,7 +161,7 @@ const Algorithms = () => {
           {/* Body Water */}
           <section className="mb-8 p-4 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <Calculator className="h-5 w-5 text-primary" />
+              <Calculator className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Body Water Percentage</h2>
             </div>
             
@@ -168,7 +169,7 @@ const Algorithms = () => {
               The percentage of total body mass that is water. Important for overall health and hydration.
             </p>
 
-            <div className="bg-muted p-3 rounded text-sm mb-3">
+            <div className="mb-3 rounded-lg border border-border bg-secondary p-3 text-sm">
               <strong>Auto-Calculated:</strong>
               <pre className="mt-2">Water Weight (kg) = Weight × Body Water %</pre>
             </div>
@@ -188,7 +189,7 @@ const Algorithms = () => {
           {/* Muscle Mass Metrics */}
           <section className="mb-8 p-4 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <Activity className="h-5 w-5 text-primary" />
+              <Activity className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Muscle Mass Metrics</h2>
             </div>
             
@@ -196,7 +197,7 @@ const Algorithms = () => {
               Measurements related to muscle composition and distribution.
             </p>
 
-            <div className="bg-muted p-3 rounded text-sm mb-3">
+            <div className="mb-3 rounded-lg border border-border bg-secondary p-3 text-sm">
               <strong>Auto-Calculated:</strong>
               <pre className="mt-2">Muscle Rate (%) = (Muscle Mass / Weight) × 100</pre>
             </div>
@@ -206,10 +207,10 @@ const Algorithms = () => {
                 <p className="font-semibold">Skeletal Muscle Percentage:</p>
                 <p className="text-muted-foreground text-xs mb-2">Voluntary muscles you can control (legs, arms, core)</p>
                 <ul className="space-y-1 ml-4">
-                  <li><span className="text-green-500">● Excellent (Men):</span> ≥ 46%</li>
-                  <li><span className="text-green-500">● Excellent (Women):</span> ≥ 40%</li>
-                  <li><span className="text-yellow-500">● Standard:</span> 35-45% (Men), 30-39% (Women)</li>
-                  <li><span className="text-orange-500">● Low:</span> &lt; 35% (Men), &lt; 30% (Women)</li>
+                  <li><span className="text-success">● Excellent (Men):</span> ≥ 46%</li>
+                  <li><span className="text-success">● Excellent (Women):</span> ≥ 40%</li>
+                  <li><span className="text-warning">● Standard:</span> 35-45% (Men), 30-39% (Women)</li>
+                  <li><span className="text-accent">● Low:</span> &lt; 35% (Men), &lt; 30% (Women)</li>
                 </ul>
               </div>
             </div>
@@ -218,7 +219,7 @@ const Algorithms = () => {
           {/* Fat Mass Metrics */}
           <section className="mb-8 p-4 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <TrendingDown className="h-5 w-5 text-primary" />
+              <TrendingDown className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Fat Mass Metrics</h2>
             </div>
             
@@ -226,7 +227,7 @@ const Algorithms = () => {
               Breakdown of body fat into subcutaneous and visceral components.
             </p>
 
-            <div className="bg-muted p-3 rounded text-sm mb-3">
+            <div className="mb-3 rounded-lg border border-border bg-secondary p-3 text-sm">
               <strong>Auto-Calculated:</strong>
               <pre className="mt-2">Fat Mass (kg) = Weight × Body Fat %</pre>
               <pre className="mt-1">Fat-Free Body Weight (kg) = Weight - Fat Mass</pre>
@@ -237,9 +238,9 @@ const Algorithms = () => {
                 <p className="font-semibold">Subcutaneous Fat:</p>
                 <p className="text-muted-foreground text-xs mb-2">Fat stored under the skin (less health risk than visceral)</p>
                 <ul className="space-y-1 ml-4">
-                  <li><span className="text-green-500">● Standard (Men):</span> 10-20%</li>
-                  <li><span className="text-green-500">● Standard (Women):</span> 15-25%</li>
-                  <li><span className="text-orange-500">● High:</span> Above standard range</li>
+                  <li><span className="text-success">● Standard (Men):</span> 10-20%</li>
+                  <li><span className="text-success">● Standard (Women):</span> 15-25%</li>
+                  <li><span className="text-accent">● High:</span> Above standard range</li>
                 </ul>
               </div>
             </div>
@@ -248,7 +249,7 @@ const Algorithms = () => {
           {/* Protein Mass */}
           <section className="mb-8 p-4 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <Calculator className="h-5 w-5 text-primary" />
+              <Calculator className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Protein Mass</h2>
             </div>
             
@@ -256,7 +257,7 @@ const Algorithms = () => {
               Total protein content in your body, essential for muscle maintenance and overall health.
             </p>
 
-            <div className="bg-muted p-3 rounded text-sm mb-3">
+            <div className="mb-3 rounded-lg border border-border bg-secondary p-3 text-sm">
               <strong>Auto-Calculated:</strong>
               <pre className="mt-2">Protein (%) = (Protein Mass / Weight) × 100</pre>
             </div>
@@ -264,9 +265,9 @@ const Algorithms = () => {
             <div className="space-y-2 text-sm">
               <p className="font-semibold">Healthy Ranges:</p>
               <ul className="space-y-1 ml-4">
-                <li><span className="text-green-500">● Excellent:</span> 16-20%</li>
-                <li><span className="text-yellow-500">● Standard:</span> 12-16%</li>
-                <li><span className="text-orange-500">● Low:</span> &lt; 12%</li>
+                <li><span className="text-success">● Excellent:</span> 16-20%</li>
+                <li><span className="text-warning">● Standard:</span> 12-16%</li>
+                <li><span className="text-accent">● Low:</span> &lt; 12%</li>
               </ul>
             </div>
           </section>
@@ -274,7 +275,7 @@ const Algorithms = () => {
           {/* Ideal Body Weight */}
           <section className="mb-8 p-4 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <Heart className="h-5 w-5 text-primary" />
+              <Heart className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Ideal Body Weight</h2>
             </div>
             
@@ -282,7 +283,7 @@ const Algorithms = () => {
               Target weight calculated based on your height for optimal health.
             </p>
 
-            <div className="bg-muted p-3 rounded text-sm mb-3">
+            <div className="mb-3 rounded-lg border border-border bg-secondary p-3 text-sm">
               <strong>Auto-Calculated:</strong>
               <pre className="mt-2">Ideal Weight = 22 × (Height in m)²</pre>
               <p className="text-xs text-muted-foreground mt-2">
@@ -294,7 +295,7 @@ const Algorithms = () => {
           {/* Body Age */}
           <section className="mb-8 p-4 rounded-lg bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <Activity className="h-5 w-5 text-primary" />
+              <Activity className="h-5 w-5 text-accent" />
               <h2 className="text-xl font-bold m-0">Body Age</h2>
             </div>
             
@@ -318,7 +319,7 @@ const Algorithms = () => {
           </section>
 
           {/* Data Sources */}
-          <section className="mb-8 p-4 rounded-lg bg-muted/50 border border-border">
+          <section className="mb-8 rounded-lg border border-border bg-secondary p-4">
             <h3 className="text-lg font-semibold mb-3">Data Sources & Accuracy</h3>
             <div className="text-sm text-muted-foreground space-y-2">
               <p>
@@ -337,7 +338,7 @@ const Algorithms = () => {
           </section>
 
           {/* Auto-Calculated Summary */}
-          <section className="mb-8 p-4 rounded-lg bg-primary/5 border border-primary/20">
+          <section className="mb-8 rounded-lg border border-border bg-secondary p-4">
             <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
               <Calculator className="h-5 w-5" />
               Automatically Calculated Metrics

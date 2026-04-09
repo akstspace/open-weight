@@ -9,31 +9,22 @@ interface EmptyStateProps {
 const EmptyState = ({ userName }: EmptyStateProps) => {
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4">
-      <div className="text-center max-w-md mx-auto animate-in-slide-up">
-        {/* Icon */}
+      <div className="mx-auto max-w-md rounded-lg border border-border bg-card px-6 py-8 text-center animate-in-slide-up">
         <div className="mb-6 flex justify-center">
-          <div className="relative">
-            <div className="absolute inset-0 animate-ping opacity-20">
-              <div className="h-24 w-24 rounded-full bg-primary/30"></div>
-            </div>
-            <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-primary/10">
-              <Scale className="h-12 w-12 text-primary" />
-            </div>
+          <div className="relative flex h-20 w-20 items-center justify-center rounded-full border border-border bg-secondary">
+            <Scale className="h-10 w-10 text-accent" />
           </div>
         </div>
-
-        {/* Title */}
-        <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+          Fresh Start
+        </p>
+        <h2 className="mb-3 text-2xl font-bold text-foreground sm:text-3xl">
           No Weight Entries Yet
         </h2>
-
-        {/* Description */}
-        <p className="text-muted-foreground mb-8 text-sm sm:text-base leading-relaxed">
+        <p className="mb-8 text-sm leading-relaxed text-muted-foreground sm:text-base">
           {userName ? `Welcome, ${userName}! ` : "Welcome! "}
           Start tracking your weight journey by adding your first entry using the API.
         </p>
-
-        {/* CTA */}
         <div className="pt-4">
           <Link to="/api-docs">
             <Button variant="outline" size="lg">

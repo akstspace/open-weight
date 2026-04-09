@@ -24,8 +24,8 @@ const PullToRefreshIndicator = ({
       }}
     >
       <div
-        className={`flex items-center justify-center rounded-full bg-primary/10 backdrop-blur-sm smooth-transition ${
-          isTriggered ? 'bg-primary/20' : ''
+        className={`flex items-center justify-center rounded-full border border-border bg-secondary smooth-transition ${
+          isTriggered ? 'bg-background' : ''
         }`}
         style={{
           width: 36,
@@ -35,11 +35,11 @@ const PullToRefreshIndicator = ({
         }}
       >
         {isRefreshing ? (
-          <Loader2 className="h-5 w-5 text-primary animate-spin" />
+          <Loader2 className="h-5 w-5 animate-spin text-accent" />
         ) : (
           <ArrowDown
             className={`h-5 w-5 smooth-transition-fast ${
-              isTriggered ? 'text-primary' : 'text-muted-foreground'
+              isTriggered ? 'text-accent' : 'text-muted-foreground'
             }`}
             style={{
               transform: isTriggered ? 'rotate(180deg)' : 'rotate(0deg)',

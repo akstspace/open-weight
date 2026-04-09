@@ -167,7 +167,7 @@ const AddWeightEntry = () => {
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <CollapsibleTrigger asChild>
-        <button className="w-full flex items-center justify-between px-4 py-3 bg-card rounded-xl border border-border hover:bg-muted/50 transition-colors">
+        <button className="flex w-full items-center justify-between rounded-lg border border-border bg-card px-4 py-3 transition-colors hover:bg-secondary">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
               <Plus className="h-5 w-5 text-foreground" />
@@ -186,7 +186,7 @@ const AddWeightEntry = () => {
       </CollapsibleTrigger>
 
       <CollapsibleContent className="mt-3">
-        <div className="bg-card rounded-xl border border-border p-4 space-y-4">
+        <div className="space-y-4 rounded-lg border border-border bg-card p-4">
           {/* API Key Section */}
           {showApiKey ? (
             <div className="space-y-2">
@@ -224,7 +224,7 @@ const AddWeightEntry = () => {
               </p>
             </div>
           ) : (
-            <div className="flex items-center justify-between px-3 py-2 bg-muted/50 rounded-lg">
+            <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Key className="h-4 w-4" />
                 <span>API Key configured</span>

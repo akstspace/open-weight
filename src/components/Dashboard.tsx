@@ -28,9 +28,9 @@ const Dashboard = () => {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <Skeleton className="h-[600px] rounded-xl" />
-        <Skeleton className="h-[600px] rounded-xl" />
-        <Skeleton className="h-[600px] rounded-xl" />
+        <Skeleton className="h-[600px] rounded-lg border border-border bg-secondary" />
+        <Skeleton className="h-[600px] rounded-lg border border-border bg-secondary" />
+        <Skeleton className="h-[600px] rounded-lg border border-border bg-secondary" />
       </div>
     );
   }
@@ -42,7 +42,7 @@ const Dashboard = () => {
     }
     
     return (
-      <div className="flex h-96 items-center justify-center rounded-xl bg-card">
+      <div className="flex h-96 items-center justify-center rounded-lg border border-border bg-card">
         <p className="text-muted-foreground">Failed to load weight data</p>
       </div>
     );

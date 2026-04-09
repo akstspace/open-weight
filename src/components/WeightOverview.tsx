@@ -15,7 +15,7 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
   const changeLabel = changePeriodDays === 7 ? 'Weekly Change' : `${changePeriodDays}-Day Change`;
 
   return (
-    <div className="flex h-full flex-col rounded-xl bg-card p-4 sm:p-6">
+    <div className="flex h-full flex-col rounded-lg border border-border bg-card p-4 sm:p-6">
       <div className="mb-3 sm:mb-4 flex items-center justify-between">
         <h2 className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
           Weight Overview
@@ -45,24 +45,24 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
       </div>
 
       <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2 sm:gap-3">
-        <div className="rounded-lg bg-metric p-3 sm:p-4 touch-active">
+        <div className="rounded-lg border border-border bg-metric p-3 sm:p-4 touch-active">
           <div className="flex items-center gap-2">
             <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wider text-muted-foreground">
               {changeLabel}
             </span>
           </div>
           <div className="mt-1 flex items-center gap-1 sm:gap-2">
-            <span className={`font-mono text-lg sm:text-2xl font-bold ${isLoss ? 'text-green-400' : 'text-red-400'}`}>
+            <span className={`font-mono text-lg sm:text-2xl font-bold ${isLoss ? 'text-success' : 'text-destructive'}`}>
               {weeklyChange > 0 ? '+' : ''}{weeklyChange.toFixed(2)}kg
             </span>
             {isLoss ? (
-              <TrendingDown className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
+              <TrendingDown className="h-4 w-4 sm:h-5 sm:w-5 text-success" />
             ) : (
-              <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
+              <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-destructive" />
             )}
           </div>
         </div>
-        <div className="rounded-lg bg-metric p-3 sm:p-4 touch-active">
+        <div className="rounded-lg border border-border bg-metric p-3 sm:p-4 touch-active">
           <div className="flex items-center gap-2">
             <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wider text-muted-foreground">
               Total Entries
@@ -72,7 +72,7 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
             <span className="font-mono text-lg sm:text-2xl font-bold text-foreground">
               {totalEntries}
             </span>
-            <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+            <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
           </div>
         </div>
       </div>

@@ -15,6 +15,7 @@ const Settings = () => {
   const themes = [
     { value: "light", label: "Light", icon: Sun },
     { value: "dark", label: "Dark", icon: Moon },
+    { value: "chai", label: "Chai", icon: Moon },
     { value: "system", label: "System", icon: Monitor },
   ];
 
@@ -23,11 +24,12 @@ const Settings = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+      <header className="sticky top-0 z-10 border-b border-border bg-background">
         <div className="container mx-auto flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4">
           <Link
             to="/"
-            className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-muted hover:bg-muted/80 transition-colors spring-tap"
+            className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-secondary transition-colors hover:bg-background spring-tap sm:h-10 sm:w-10"
+            aria-label="Back to dashboard"
           >
             <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-foreground" />
           </Link>
@@ -46,7 +48,7 @@ const Settings = () => {
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
               Appearance
             </h2>
-            <div className="bg-card rounded-2xl border border-border overflow-hidden">
+            <div className="overflow-hidden rounded-lg border border-border bg-card">
               <div className="p-4 border-b border-border">
                 <p className="font-medium text-foreground">Theme</p>
                 <p className="text-sm text-muted-foreground mt-0.5">
@@ -61,27 +63,32 @@ const Settings = () => {
                     <button
                       key={t.value}
                       onClick={() => setTheme(t.value)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all spring-tap ${
+                      className={`w-full flex items-center gap-3 rounded-md px-4 py-3 transition-all spring-tap ${
                         isActive
-                          ? "bg-primary/10 text-primary"
-                          : "text-foreground hover:bg-muted"
+                          ? "bg-muted text-foreground"
+                          : "text-foreground hover:bg-secondary"
                       }`}
                       style={{ animationDelay: `${index * 50}ms` }}
                     >
                       <div
-                        className={`flex h-10 w-10 items-center justify-center rounded-full transition-colors ${
-                          isActive ? "bg-primary text-primary-foreground" : "bg-muted"
+                        className={`flex h-10 w-10 items-center justify-center rounded-full border transition-colors ${
+                          isActive ? "border-border bg-primary text-primary-foreground" : "border-border bg-secondary"
                         }`}
                       >
                         <Icon className="h-5 w-5" />
                       </div>
                       <span className="font-medium">{t.label}</span>
                       {isActive && (
-                        <div className="ml-auto h-2 w-2 rounded-full bg-primary animate-in-spring" />
+                        <div className="ml-auto h-2 w-2 rounded-full bg-accent animate-in-fade" />
                       )}
                     </button>
                   );
                 })}
+              </div>
+              <div className="border-t border-border px-4 py-3">
+                <p className="text-xs text-muted-foreground">
+                  <strong>System</strong> follows your device light or standard dark mode. <strong>Chai</strong> is the warm editorial dark theme and stays opt-in.
+                </p>
               </div>
             </div>
           </section>
@@ -91,9 +98,9 @@ const Settings = () => {
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
               Advanced
             </h2>
-            <div className="mb-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-              <p className="text-xs text-amber-700 dark:text-amber-400">
-                ⚠️ <strong>Owner Only:</strong> This section is intended for the site owner to manually add weight entries. 
+            <div className="mb-3 rounded-lg border border-warning/30 bg-warning/10 p-3">
+              <p className="text-xs text-foreground">
+                <strong>Owner Only:</strong> This section is intended for the site owner to manually add weight entries. 
                 Requires API key authentication.
               </p>
             </div>
@@ -105,7 +112,7 @@ const Settings = () => {
             <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
               About
             </h2>
-            <div className="bg-card rounded-2xl border border-border overflow-hidden">
+            <div className="overflow-hidden rounded-lg border border-border bg-card">
               <div className="p-4 space-y-3">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Application</span>
@@ -115,7 +122,7 @@ const Settings = () => {
               <div className="border-t border-border">
                 <Link
                   to="/algorithms"
-                  className="flex items-center justify-between px-4 py-3 hover:bg-muted/50 transition-colors"
+                  className="flex items-center justify-between px-4 py-3 transition-colors hover:bg-secondary"
                 >
                   <span className="text-sm font-medium text-foreground">Health Metrics & Algorithms</span>
                   <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">

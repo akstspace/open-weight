@@ -14,8 +14,23 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Space Grotesk', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: [
+          'IBM Plex Sans',
+          'IBM Plex Sans Variable',
+          '-apple-system',
+          'system-ui',
+          'Avenir Next',
+          'Avenir',
+          'Segoe UI',
+          'Helvetica Neue',
+          'Helvetica',
+          'Ubuntu',
+          'Roboto',
+          'Noto',
+          'Arial',
+          'sans-serif',
+        ],
+        mono: ['Source Code Pro', 'Menlo', 'Consolas', 'Monaco', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -34,6 +49,14 @@ export default {
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -57,6 +80,8 @@ export default {
         },
         chart: {
           line: "hsl(var(--chart-line))",
+          fill: "hsl(var(--chart-fill))",
+          highlight: "hsl(var(--chart-highlight))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",

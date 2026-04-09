@@ -26,11 +26,11 @@ const RangeIndicator = ({ metricLabel, value, gender = 'male' }: RangeIndicatorP
   // Build segments with their ranges
   const segments: { key: string; range: { min: number; max: number }; color: string; label: string }[] = [];
   
-  if (range.low) segments.push({ key: 'low', range: range.low, color: 'bg-blue-400', label: 'L' });
-  if (range.standard) segments.push({ key: 'standard', range: range.standard, color: 'bg-green-400', label: 'S' });
-  if (range.excellent) segments.push({ key: 'excellent', range: range.excellent, color: 'bg-emerald-500', label: 'E' });
-  if (range.high) segments.push({ key: 'high', range: range.high, color: 'bg-orange-400', label: 'H' });
-  if (range.tooHigh) segments.push({ key: 'tooHigh', range: range.tooHigh, color: 'bg-red-400', label: 'TH' });
+  if (range.low) segments.push({ key: 'low', range: range.low, color: 'bg-muted', label: 'L' });
+  if (range.standard) segments.push({ key: 'standard', range: range.standard, color: 'bg-secondary', label: 'S' });
+  if (range.excellent) segments.push({ key: 'excellent', range: range.excellent, color: 'bg-success', label: 'E' });
+  if (range.high) segments.push({ key: 'high', range: range.high, color: 'bg-warning', label: 'H' });
+  if (range.tooHigh) segments.push({ key: 'tooHigh', range: range.tooHigh, color: 'bg-destructive', label: 'TH' });
 
   // Sort segments by their min value
   segments.sort((a, b) => a.range.min - b.range.min);
@@ -80,7 +80,7 @@ const RangeIndicator = ({ metricLabel, value, gender = 'male' }: RangeIndicatorP
         
         {/* Current value indicator */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 rounded-full border-2 border-background bg-foreground shadow-lg smooth-transition"
+          className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background bg-foreground smooth-transition sm:h-4 sm:w-4"
           style={{ left: `${positionPercent}%` }}
         />
       </div>
@@ -102,7 +102,7 @@ const RangeIndicator = ({ metricLabel, value, gender = 'male' }: RangeIndicatorP
       </div>
 
       {/* Description */}
-      <div className="pt-2 border-t border-border/50 space-y-1.5">
+      <div className="space-y-1.5 border-t border-border/50 pt-2">
         <p className="text-[10px] sm:text-xs text-muted-foreground">{range.description}</p>
         <p className="text-[9px] sm:text-[10px] text-muted-foreground/70">
           L: Low · S: Standard · E: Excellent · H: High · TH: Too High

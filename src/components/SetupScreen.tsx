@@ -89,10 +89,10 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="w-full max-w-md animate-in-slide-up">
-          <div className="bg-card rounded-2xl border border-border p-6 sm:p-8 space-y-6">
+          <div className="space-y-6 rounded-lg border border-border bg-card p-6 sm:p-8">
             <div className="text-center space-y-2">
-              <div className="mx-auto w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mb-4">
-                <Key className="h-8 w-8 text-green-500" />
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-border bg-secondary">
+                <Key className="h-8 w-8 text-accent" />
               </div>
               <h1 className="text-2xl font-bold text-foreground">Setup Complete!</h1>
               <p className="text-muted-foreground">
@@ -102,10 +102,10 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
 
             <div className="space-y-3">
               <Label className="text-sm font-medium text-destructive">
-                ⚠️ Save this key now - it won't be shown again!
+                Save this key now. It will not be shown again.
               </Label>
               <div className="relative">
-                <div className="bg-secondary/50 rounded-lg p-4 pr-12 font-mono text-sm break-all border border-border">
+                <div className="rounded-lg border border-border bg-secondary p-4 pr-12 font-mono text-sm break-all">
                   {apiKey}
                 </div>
                 <Button
@@ -115,7 +115,7 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
                   onClick={handleCopyApiKey}
                 >
                   {copied ? (
-                    <Check className="h-4 w-4 text-green-500" />
+                    <Check className="h-4 w-4 text-success" />
                   ) : (
                     <Copy className="h-4 w-4" />
                   )}
@@ -123,7 +123,7 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
               </div>
             </div>
 
-            <div className="bg-muted/50 rounded-lg p-4 space-y-2 text-sm">
+            <div className="space-y-2 rounded-lg border border-border bg-secondary p-4 text-sm">
               <p className="font-medium text-foreground">How to use:</p>
               <p className="text-muted-foreground">
                 Use this API key in the <code className="bg-secondary px-1 rounded">X-API-Key</code> header 
@@ -150,10 +150,10 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-in-slide-up">
-        <div className="bg-card rounded-2xl border border-border p-6 sm:p-8 space-y-6">
+        <div className="space-y-6 rounded-lg border border-border bg-card p-6 sm:p-8">
           <div className="text-center space-y-2">
-            <div className="mx-auto w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-              <User className="h-8 w-8 text-primary" />
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-border bg-secondary">
+              <User className="h-8 w-8 text-accent" />
             </div>
             <h1 className="text-2xl font-bold text-foreground">Welcome!</h1>
             <p className="text-muted-foreground">
@@ -221,8 +221,8 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
               </div>
             </div>
 
-            <p className="text-xs text-muted-foreground bg-muted/50 rounded-lg p-3">
-              🔒 Biometric data is required to calculate BMI, BMR, and body age automatically.
+            <p className="rounded-lg border border-border bg-secondary p-3 text-xs text-muted-foreground">
+              Biometric data is required to calculate BMI, BMR, and body age automatically.
             </p>
 
             <Button 
