@@ -4,6 +4,7 @@ Reusable agent skill for Chai Studio MCP workflows:
 
 - connect a repo to the correct Chai Studio application
 - fetch live design/rules context from MCP for every run
+- sync `design.yaml` from `get_design_yaml` as the local design source of truth
 - run audit reconciliation
 - upload fresh audit runs with actionable violations
 
@@ -92,6 +93,7 @@ Common requests:
 
 - "Set up `chai-studio.json` for this repo."
 - "Fetch latest design and rules context from Chai Studio MCP for this app."
+- "Sync `design.yaml` from Chai Studio and delete stale local `DESIGN.md` files."
 - "Reconcile old audit violations and upload a fresh audit run."
 
 ## Safety Notes

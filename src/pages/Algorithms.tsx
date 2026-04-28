@@ -34,7 +34,7 @@ const Algorithms = () => {
           </section>
 
           {/* BMI */}
-          <section className="mb-8 p-4 rounded-sm bg-card border border-border">
+          <section className="mb-8 p-4 rounded-md bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Calculator className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-bold m-0 tracking-tight">Body Mass Index (BMI)</h2>
@@ -44,7 +44,7 @@ const Algorithms = () => {
               BMI is a measure of body fat based on height and weight.
             </p>
 
-            <div className="mb-3 rounded-sm border border-border bg-secondary p-3 text-sm">
+            <div className="mb-3 rounded-md border border-border bg-secondary p-3 text-sm">
               <strong>Formula:</strong>
               <pre className="mt-2">BMI = weight (kg) / (height (m))²</pre>
             </div>
@@ -63,7 +63,7 @@ const Algorithms = () => {
           </section>
 
           {/* Body Fat Percentage */}
-          <section className="mb-8 p-4 rounded-sm bg-card border border-border">
+          <section className="mb-8 p-4 rounded-md bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
               <TrendingDown className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-bold m-0 tracking-tight">Body Fat Percentage</h2>
@@ -98,7 +98,7 @@ const Algorithms = () => {
           </section>
 
           {/* Basal Metabolic Rate */}
-          <section className="mb-8 p-4 rounded-sm bg-card border border-border">
+          <section className="mb-8 p-4 rounded-md bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Activity className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-bold m-0 tracking-tight">Basal Metabolic Rate (BMR)</h2>
@@ -108,7 +108,7 @@ const Algorithms = () => {
               The number of calories your body burns at rest. Used to calculate daily caloric needs.
             </p>
 
-            <div className="mb-3 overflow-x-auto rounded-sm border border-border bg-secondary p-3 text-sm">
+            <div className="mb-3 overflow-x-auto rounded-md border border-border bg-secondary p-3 text-sm">
               <strong>Mifflin-St Jeor Equation:</strong>
               <div className="mt-2 space-y-1">
                 <div className="break-words">
@@ -135,7 +135,7 @@ const Algorithms = () => {
           </section>
 
           {/* Visceral Fat */}
-          <section className="mb-8 p-4 rounded-sm bg-card border border-border">
+          <section className="mb-8 p-4 rounded-md bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Heart className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-bold m-0 tracking-tight">Visceral Fat Level</h2>
@@ -159,7 +159,7 @@ const Algorithms = () => {
           </section>
 
           {/* Body Water */}
-          <section className="mb-8 p-4 rounded-sm bg-card border border-border">
+          <section className="mb-8 p-4 rounded-md bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Calculator className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-bold m-0 tracking-tight">Body Water Percentage</h2>
@@ -169,7 +169,7 @@ const Algorithms = () => {
               The percentage of total body mass that is water. Important for overall health and hydration.
             </p>
 
-            <div className="mb-3 rounded-sm border border-border bg-secondary p-3 text-sm">
+            <div className="mb-3 rounded-md border border-border bg-secondary p-3 text-sm">
               <strong>Auto-Calculated:</strong>
               <pre className="mt-2">Water Weight (kg) = Weight &times; Body Water %</pre>
             </div>
@@ -187,7 +187,7 @@ const Algorithms = () => {
           </section>
 
           {/* Muscle Mass Metrics */}
-          <section className="mb-8 p-4 rounded-sm bg-card border border-border">
+          <section className="mb-8 p-4 rounded-md bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Activity className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-bold m-0 tracking-tight">Muscle Mass Metrics</h2>
@@ -197,7 +197,7 @@ const Algorithms = () => {
               Measurements related to muscle composition and distribution.
             </p>
 
-            <div className="mb-3 rounded-sm border border-border bg-secondary p-3 text-sm">
+            <div className="mb-3 rounded-md border border-border bg-secondary p-3 text-sm">
               <strong>Auto-Calculated:</strong>
               <pre className="mt-2">Muscle Rate (%) = (Muscle Mass / Weight) &times; 100</pre>
             </div>
@@ -217,7 +217,7 @@ const Algorithms = () => {
           </section>
 
           {/* Fat Mass Metrics */}
-          <section className="mb-8 p-4 rounded-sm bg-card border border-border">
+          <section className="mb-8 p-4 rounded-md bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
               <TrendingDown className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-bold m-0 tracking-tight">Fat Mass Metrics</h2>
@@ -227,7 +227,7 @@ const Algorithms = () => {
               Breakdown of body fat into subcutaneous and visceral components.
             </p>
 
-            <div className="mb-3 rounded-sm border border-border bg-secondary p-3 text-sm">
+            <div className="mb-3 rounded-md border border-border bg-secondary p-3 text-sm">
               <strong>Auto-Calculated:</strong>
               <pre className="mt-2">Fat Mass (kg) = Weight &times; Body Fat %</pre>
               <pre className="mt-1">Fat-Free Body Weight (kg) = Weight - Fat Mass</pre>
@@ -247,7 +247,7 @@ const Algorithms = () => {
           </section>
 
           {/* Protein Mass */}
-          <section className="mb-8 p-4 rounded-sm bg-card border border-border">
+          <section className="mb-8 p-4 rounded-md bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Calculator className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-bold m-0 tracking-tight">Protein Mass</h2>
@@ -257,7 +257,7 @@ const Algorithms = () => {
               Total protein content in your body, essential for muscle maintenance and overall health.
             </p>
 
-            <div className="mb-3 rounded-sm border border-border bg-secondary p-3 text-sm">
+            <div className="mb-3 rounded-md border border-border bg-secondary p-3 text-sm">
               <strong>Auto-Calculated:</strong>
               <pre className="mt-2">Protein (%) = (Protein Mass / Weight) &times; 100</pre>
             </div>
@@ -273,7 +273,7 @@ const Algorithms = () => {
           </section>
 
           {/* Ideal Body Weight */}
-          <section className="mb-8 p-4 rounded-sm bg-card border border-border">
+          <section className="mb-8 p-4 rounded-md bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Heart className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-bold m-0 tracking-tight">Ideal Body Weight</h2>
@@ -283,7 +283,7 @@ const Algorithms = () => {
               Target weight calculated based on your height for optimal health.
             </p>
 
-            <div className="mb-3 rounded-sm border border-border bg-secondary p-3 text-sm">
+            <div className="mb-3 rounded-md border border-border bg-secondary p-3 text-sm">
               <strong>Auto-Calculated:</strong>
               <pre className="mt-2">Ideal Weight = 22 &times; (Height in m)²</pre>
               <p className="text-xs text-muted-foreground mt-2">
@@ -293,7 +293,7 @@ const Algorithms = () => {
           </section>
 
           {/* Body Age */}
-          <section className="mb-8 p-4 rounded-sm bg-card border border-border">
+          <section className="mb-8 p-4 rounded-md bg-card border border-border">
             <div className="flex items-center gap-2 mb-3">
               <Activity className="h-5 w-5 text-primary" />
               <h2 className="text-xl font-bold m-0 tracking-tight">Body Age</h2>

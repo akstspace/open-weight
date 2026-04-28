@@ -17,7 +17,9 @@ Use this skill to make Chai Studio MCP the only source of truth for design conte
 1. Look for `chai-studio.json` at the project root.
 2. If it is missing, call `get-applications`, ask the user to choose which application to configure, then create `chai-studio.json` from that selection.
 3. Read the configured application, preset, and audit rulesets before editing UI or running audits.
-4. Always fetch design and rule context live from MCP before editing UI or running audits.
+4. As the first operational step after app resolution, call `get_design_yaml(applicationId)` and write the returned content to `design.yaml`.
+5. Keep `design.yaml` in sync with Chai Studio on every use of Chai Studio functionality. Refresh it from `get_design_yaml` before redesigns, audits, or rule/preset-driven decisions.
+6. Delete any existing local design mirror files (`DESIGN.md`, `DESIGN-RULES.md`, or similar local design-spec copies) and do not recreate them.
 
 For the config schema and examples, read `references/config.md`.
 For full workflows, redesign protocol, and payload patterns, read `references/workflows.md`.
@@ -41,7 +43,10 @@ Do not invent IDs. Fetch them from Chai Studio MCP.
   - **Includes**: Crucial metadata linking each app to its design system (`presetId`) and its array of connected audit rulesets (`auditRuleSetIds`).
 - `get-design-doc`
   - **Input**: `applicationId`
-  - **Purpose**: Dynamically generates and returns a complete `DESIGN.md` document matching the "preset" linked to that specific application. This dictates all token-level stylings (colors, typography, spacing, shadows).
+  - **Purpose**: Legacy markdown design representation. Prefer `get_design_yaml` + `design.yaml` as the project source-of-truth file.
+- `get_design_yaml`
+  - **Input**: `applicationId`
+  - **Purpose**: Returns YAML for the preset linked to the application. Write it to `design.yaml` and keep that file synced with Chai Studio.
 - `get-presets`
   - **Purpose**: Fetches all raw design presets configuration data associated with the user.
 - `get-rulesets`
@@ -53,9 +58,6 @@ Do not invent IDs. Fetch them from Chai Studio MCP.
 - `get_audit_violations`
   - **Input**: `auditId` (plus optional filters like status, severity, category)
   - **Purpose**: Fetches the granular violations for a specific audit. Crucially, each finding returns an `aiFixPrompt`, the exact `codeSnippet`, and guidance to allow an agent to immediately patch the failing file.
-- `add_audit_results`
-  - **Input**: Comprehensive audit block including `applicationId`, `auditRuleSetId`, `status`, and array of violations.
-  - **Purpose**: Legacy batch upload path. Use only when streaming tools are unavailable.
 - `start_audit_run`
   - **Input**: `applicationId`, `auditRuleSetId`, optional `summary`, optional `totalRulesEvaluated`
   - **Purpose**: Creates one audit run before analysis so findings can be uploaded as they are discovered.
@@ -69,17 +71,19 @@ Do not invent IDs. Fetch them from Chai Studio MCP.
   - **Input**: `violationId`, `status`
   - **Purpose**: Allows the agent or IDE to automatically mark an open violation as resolved, ignored, or a `false_positive`. If all violations in an audit run are squashed, this tool auto-resolves the parent audit status.
 
-Name hygiene matters: do not rename MCP tools when calling them. Chai Studio currently exposes both hyphenated (`get-profile`, `get-design-doc`, `get-rulesets`, `get-applications`, `get-presets`) and underscored (`get_audits`, `get_audit_violations`, `start_audit_run`, `add_audit_violation`, `complete_audit_run`, `add_audit_results`, `update_violation_status`) tool names.
+Name hygiene matters: do not rename MCP tools when calling them. Chai Studio currently exposes both hyphenated (`get-profile`, `get-design-doc`, `get-rulesets`, `get-applications`, `get-presets`) and underscored (`get_design_yaml`, `get_audits`, `get_audit_violations`, `start_audit_run`, `add_audit_violation`, `complete_audit_run`, `update_violation_status`) tool names.
 
-If there is a `DESIGN.md` or `DESIGN-RULES.md` already present in the workspace, you MUST delete it. The source of truth is strictly the Chai Studio MCP server. Do not create or maintain local design mirror docs.
+`design.yaml` is the only local design source-of-truth file for this skill, and it must be generated from Chai Studio using `get_design_yaml`.
+
+If there is a `DESIGN.md`, `DESIGN-RULES.md`, or other local design mirror file already present in the workspace, you MUST delete it. The source of truth is strictly the Chai Studio MCP server. Do not create or maintain local design mirror docs outside `design.yaml` synced from Chai Studio.
 
 ## Redesign Flow
 
 When the user asks to redesign a page, component, app surface, visual system, or interaction, read `references/workflows.md#redesign-workflow` and follow that protocol. The mandatory loop is:
 
-1. **Context**: Read `chai-studio.json`, then fetch live context with `get-applications`, `get-design-doc`, `get-rulesets`, and `get-presets`.
+1. **Context**: Read `chai-studio.json`, then fetch live context with `get-applications`, `get_design_yaml`, `get-rulesets`, and `get-presets`.
 2. **Plan**: Identify affected files/routes/components and translate Chai Studio preset/ruleset constraints into implementation decisions.
-3. **Implement**: Redesign with the MCP `DESIGN.md` and linked rulesets as the source of truth.
+3. **Implement**: Redesign with `design.yaml` (synced from `get_design_yaml`) and linked rulesets as the source of truth.
 4. **Validate**: After write changes are done, always run the project build when a build command is available, plus relevant static checks. If Chrome DevTools MCP or Playwright MCP is available, ask the user whether they want browser tests/review through those MCPs.
 5. **Audit**: Reconcile prior audits, then create a fresh streaming audit run per configured ruleset.
 6. **Fix**: Fix every genuine violation introduced or remaining in scope, re-validate, then mark fixed prior violations with `update_violation_status`.
@@ -90,14 +94,14 @@ Do not stop after a visual pass. A Chai Studio redesign is complete only after i
 
 To follow Chai Studio project specifications effectively, treat project rules as a layered contract:
 
-1. Read application-level `DESIGN.md` first via `get-design-doc(applicationId)` and extract hard constraints.
+1. Read application-level `design.yaml` first via `get_design_yaml(applicationId)` and extract hard constraints.
 2. Read configured rulesets via `get-rulesets(applicationId)` and map rule IDs/categories/severities.
 3. Read configured preset via `get-presets` for token-level styling guidance.
 
 Priority order when rules conflict:
 
 1. Safety and explicit user instruction
-2. Chai Studio `DESIGN.md` hard constraints
+2. Chai Studio `design.yaml` hard constraints
 3. Chai Studio ruleset severity and guidance
 4. Preset/token conventions
 5. Explicit user preferences for this task
@@ -111,18 +115,30 @@ When producing findings or fixes:
 
 ## Audit Standards
 
+Audit flow is strictly:
+
+1. Start audit (`start_audit_run`).
+2. Add violations as the agent finds them (`add_audit_violation` per finding).
+3. Stop audit (`complete_audit_run`).
+
+Fixing audit flow is strictly:
+
+1. Update individual violations as each one is fixed (`update_violation_status` per violation).
+
 Audit workflow is mandatory and always two-phase:
 
 1. Reconcile previous audits first.
 2. Start and upload a new audit run.
 
 When the user asks for an audit, always run phase 1 before phase 2.
+When auditing, regardless of previous conversation context, always execute this full flow and always perform ruleset-based validation against the configured `auditRuleSetIds`.
 
 Audit depth is mandatory:
 
 - Audit each and every relevant page and each and every relevant component in scope.
 - Produce granular findings per page/component (do not collapse multiple issues into one vague item).
 - Include exact artifact context in every finding: page/screen, component name, file path, and line/snippet when available.
+- Component-level adherence is required for every audit: validate border radius, spacing, typography, color/semantic token usage, shadow/border treatment, and interaction states against `design.yaml` and linked rulesets.
 
 Before uploading:
 
@@ -132,13 +148,14 @@ Before uploading:
 4. Verify in current code/UI whether prior issues are fixed.
 5. For each verified fix, call `update_violation_status` before the new run.
 6. Audit the actual files or UI surfaces requested by the user.
-7. Classify each finding into supported MCP categories and severities before upload.
-8. Report each violation with exact file path, line/snippet, why it matters, and a concrete fix.
-9. Ensure each finding is grounded in Chai Studio `DESIGN.md` and/or ruleset guidance.
-10. Upload only genuine findings unless the user explicitly asks for dummy/test audits.
-11. Start one new audit run with `start_audit_run`, upload each violation immediately with `add_audit_violation`, then call `complete_audit_run` when finished. If there are zero violations, still start and complete the run.
-12. Keep an in-memory set of uploaded finding fingerprints for the current run and skip repeats before calling MCP. Use at least `ruleId`, `filePath`, `lineStart`, `lineEnd`, normalized `codeSnippet`, and normalized `violationDescription` in the fingerprint.
-13. If `chai-studio.json` has multiple `auditRuleSetIds`, audit each ruleset separately. For every ruleset, create one audit run, evaluate that ruleset's rules, upload only findings from that ruleset to that run, then complete that run before moving on or after finishing the ruleset's pass.
+7. For each audited component, explicitly check design and rule adherence (including border radius and token-level styling fidelity).
+8. Classify each finding into supported MCP categories and severities before upload.
+9. Report each violation with exact file path, line/snippet, why it matters, and a concrete fix.
+10. Ensure each finding is grounded in Chai Studio `design.yaml` and/or ruleset guidance.
+11. Upload only genuine findings unless the user explicitly asks for dummy/test audits.
+12. Start one new audit run with `start_audit_run`, upload each violation immediately with `add_audit_violation`, then call `complete_audit_run` when finished. If there are zero violations, still start and complete the run.
+13. Keep an in-memory set of uploaded finding fingerprints for the current run and skip repeats before calling MCP. Use at least `ruleId`, `filePath`, `lineStart`, `lineEnd`, normalized `codeSnippet`, and normalized `violationDescription` in the fingerprint.
+14. If `chai-studio.json` has multiple `auditRuleSetIds`, audit each ruleset separately. For every ruleset, create one audit run, evaluate that ruleset's rules, upload only findings from that ruleset to that run, then complete that run before moving on or after finishing the ruleset's pass.
 
 Browser/runtime validation:
 
@@ -157,10 +174,8 @@ Each uploaded violation must include a self-contained `aiFixPrompt` that another
 
 Chai Studio validation constraints to respect:
 
-- `add_audit_results.status` must be `completed` or `failed`.
-- `violations` max length is 200 per upload.
 - `complete_audit_run.status` must be `completed` or `failed`.
-- Prefer streaming uploads (`start_audit_run` -> `add_audit_violation` -> `complete_audit_run`) over batch uploads.
+- Use streaming uploads only (`start_audit_run` -> `add_audit_violation` -> `complete_audit_run`).
 - `severity` must be one of: `critical`, `high`, `medium`, `low`.
 - `category` must be one of: `accessibility`, `visual`, `typography`, `color`, `layout`, `motion`, `interaction`, `responsive`, `metadata`, `performance`, `content`.
 - Provide line numbers as positive integers when present.
@@ -190,6 +205,6 @@ Fix workflow requirement:
 ## Safety
 
 - Do not create dummy audits unless the user asks for test data.
-- Do not create or update local design-spec mirror files (`DESIGN.md`, `DESIGN-RULES.md`) as part of this skill.
+- Do not create or update local design-spec mirror files (`DESIGN.md`, `DESIGN-RULES.md`, or alternatives) as part of this skill. Keep only `design.yaml` synced from Chai Studio.
 - Do not migrate UI libraries, rewrite the design system, or refactor broad UI areas just to satisfy an audit.
 - Prefer Chai Studio IDs and tokens over memory or guesses.

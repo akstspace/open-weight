@@ -109,7 +109,7 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: Entr
         ) : entry ? (
           <ScrollArea className="h-[calc(100vh-80px)] px-4 sm:px-6">
             {/* Header Summary */}
-            <div className="mb-4 sm:mb-6 rounded-sm border border-border bg-secondary p-3 sm:p-4 animate-in-fade">
+            <div className="mb-4 sm:mb-6 rounded-md border border-border bg-secondary p-3 sm:p-4 animate-in-fade">
               <div className="flex items-center justify-between">
                 <p className="text-xs sm:text-sm text-muted-foreground">
                   {entry.time} &bull; {format(parseISO(entry.date), "MMM dd, yyyy")}
@@ -151,7 +151,7 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: Entr
             </p>
 
             {/* Metrics */}
-            <div className="rounded-sm border border-border bg-card px-3 sm:px-4 animate-in-slide-up" style={{ animationDelay: '150ms' }}>
+            <div className="rounded-md border border-border bg-card px-3 sm:px-4 animate-in-slide-up" style={{ animationDelay: '150ms' }}>
               <div className="flex items-center justify-between border-b border-border py-2.5 sm:py-3 label-caps text-muted-foreground">
                 <span>Index</span>
                 <div className="flex items-center gap-2 sm:gap-3">

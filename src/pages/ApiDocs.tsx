@@ -43,7 +43,7 @@ const ApiDocs = () => {
           </section>
 
           {/* Authentication */}
-          <section className="mb-8 rounded-sm border border-border bg-card p-4">
+          <section className="mb-8 rounded-md border border-border bg-card p-4">
             <div className="flex items-center gap-2 mb-3">
               <Key className="h-5 w-5 text-primary" />
               <h3 className="text-lg font-semibold m-0">Authentication</h3>
@@ -67,7 +67,7 @@ const ApiDocs = () => {
             </div>
 
             {/* Add Entry */}
-            <div className="mb-6 rounded-sm border border-border bg-card p-4">
+            <div className="mb-6 rounded-md border border-border bg-card p-4">
               <div className="flex items-baseline gap-2 mb-2">
                 <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-success">POST</span>
                 <code className="text-sm font-mono">/api/entries</code>
@@ -99,7 +99,7 @@ const ApiDocs = () => {
             </div>
 
             {/* Get Entries */}
-            <div className="mb-6 rounded-sm border border-border bg-card p-4">
+            <div className="mb-6 rounded-md border border-border bg-card p-4">
               <div className="flex items-baseline gap-2 mb-2">
                 <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-primary">GET</span>
                 <code className="text-sm font-mono">/api/entries</code>
@@ -121,7 +121,7 @@ const ApiDocs = () => {
             </div>
 
             {/* Get Stats */}
-            <div className="mb-6 rounded-sm border border-border bg-card p-4">
+            <div className="mb-6 rounded-md border border-border bg-card p-4">
               <div className="flex items-baseline gap-2 mb-2">
                 <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-primary">GET</span>
                 <code className="text-sm font-mono">/api/stats</code>
@@ -136,7 +136,7 @@ const ApiDocs = () => {
           </section>
 
           {/* CLI */}
-          <section className="mb-8 rounded-sm border border-border bg-secondary p-4">
+          <section className="mb-8 rounded-md border border-border bg-secondary p-4">
             <h3 className="text-lg font-semibold mb-3">CLI Commands</h3>
             <p className="text-sm text-muted-foreground mb-3">
               Manage your OpenWeight installation using the CLI:

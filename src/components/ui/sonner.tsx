@@ -5,7 +5,7 @@ type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme();
-  const sonnerTheme = theme === "chai" ? "dark" : theme;
+  const sonnerTheme = theme;
 
   return (
     <Sonner

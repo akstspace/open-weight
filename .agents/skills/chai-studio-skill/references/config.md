@@ -27,6 +27,7 @@ Create `chai-studio.json` in the project root. This file tells the skill which C
 - `sync.source`: usually `chai-studio`.
 - `sync.lastSyncedAt`: update after meaningful doc sync.
 - `metadata`: optional object for repo, branch, team, or environment notes.
+- `design.yaml`: keep this file in the repo root and refresh it from `get_design_yaml(applicationId)` whenever Chai Studio context is used.
 
 ## Setup Workflow
 
@@ -35,7 +36,8 @@ Create `chai-studio.json` in the project root. This file tells the skill which C
 3. Use only the user-selected application.
 4. Write `chai-studio.json`.
 5. Call `get-presets` and `get-rulesets` (with `applicationId`) to verify `presetId` and `auditRuleSetIds`.
-6. Do not create local design mirror docs; always fetch current design/rules context from MCP at run time.
+6. Call `get_design_yaml(applicationId)` and write/update `design.yaml`.
+7. Delete local design mirror docs like `DESIGN.md` or `DESIGN-RULES.md`; keep only `design.yaml` synced from Chai Studio.
 
 ## Optional JSON Schema
 

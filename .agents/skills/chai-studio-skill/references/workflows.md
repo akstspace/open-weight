@@ -10,9 +10,11 @@ This reference covers the operations the skill should perform after reading `cha
    - application by `applicationId`
    - preset by `presetId`
    - rulesets by `auditRuleSetIds`
-4. Fetch application-level `DESIGN.md` with `get-design-doc(applicationId)` (required).
-5. Fetch application-level rules with `get-rulesets(applicationId)` (required).
-6. Use MCP responses directly; do not create local mirror files (`DESIGN.md`, `DESIGN-RULES.md`).
+4. Fetch application-level design YAML with `get_design_yaml(applicationId)` (required).
+5. Write the returned YAML to `design.yaml` as the local design source-of-truth file.
+6. Fetch application-level rules with `get-rulesets(applicationId)` (required).
+7. Keep `design.yaml` synced by re-fetching from `get_design_yaml` before redesigns, audits, or any Chai-driven design decision.
+8. Delete legacy local mirror docs (`DESIGN.md`, `DESIGN-RULES.md`, and similar) and do not recreate them.
 
 ## Redesign Workflow
 
@@ -23,10 +25,9 @@ Use this workflow whenever the user asks to redesign, restyle, refresh, polish, 
 1. Make sure the Chai Studio MCP tools are available before relying on the skill.
 2. If the connection is uncertain, call `get-profile`.
 3. Use the exact MCP tool names exposed by Chai Studio:
-   - Read/context tools: `get-profile`, `get-applications`, `get-design-doc`, `get-rulesets`, `get-presets`, `get_audits`, `get_audit_violations`
-   - Write/audit tools: `start_audit_run`, `add_audit_violation`, `complete_audit_run`, `add_audit_results`, `update_violation_status`
+   - Read/context tools: `get-profile`, `get-applications`, `get_design_yaml`, `get-design-doc`, `get-rulesets`, `get-presets`, `get_audits`, `get_audit_violations`
+   - Write/audit tools: `start_audit_run`, `add_audit_violation`, `complete_audit_run`, `update_violation_status`
 4. Prefer streaming audit writes: `start_audit_run` -> `add_audit_violation` -> `complete_audit_run`.
-5. Use `add_audit_results` only if streaming tools are unavailable.
 
 ### 1. Resolve Project Identity
 
@@ -48,15 +49,17 @@ Use this workflow whenever the user asks to redesign, restyle, refresh, polish, 
 Fetch fresh MCP context before reading too deeply or editing:
 
 1. `get-design-doc({ applicationId })`
-   - Treat `content` as the live `DESIGN.md`.
-   - Use it directly in memory. Do not write `DESIGN.md` locally.
-2. `get-rulesets({ applicationId })`
+   - Legacy markdown representation; optional fallback context.
+2. `get_design_yaml({ applicationId })`
+   - Treat `content` as the canonical design payload.
+   - Write it to `design.yaml` and use that file as the local design source of truth.
+3. `get-rulesets({ applicationId })`
    - Use only linked application rulesets.
    - Build a working map of `ruleId`, `ruleTitle`, `severity`, `category`, and `guidance`.
-3. `get-presets()`
+4. `get-presets()`
    - Find the configured `presetId`.
    - Use raw preset data for exact tokens when the design doc is ambiguous.
-4. If any local `DESIGN.md` or `DESIGN-RULES.md` exists, delete it before continuing; Chai Studio MCP is the source of truth.
+5. If any local `DESIGN.md`, `DESIGN-RULES.md`, or similar mirror docs exist, delete them before continuing; Chai Studio MCP is the source of truth and local source-of-truth file is `design.yaml`.
 
 Extract these decisions before editing:
 
@@ -84,6 +87,7 @@ Extract these decisions before editing:
 Implement the redesign against the MCP contract:
 
 - Use Chai Studio preset tokens and semantic roles over arbitrary colors, fonts, radii, shadows, or spacing.
+- Enforce component-level adherence: border radius, spacing, typography, semantic colors/tokens, borders/shadows, and interaction states must match `design.yaml` and linked rulesets.
 - Preserve application behavior, data flow, routing, auth boundaries, form submission, and analytics unless the user asked to change them.
 - Build real UI states: loading, empty, error, disabled, hover, focus, active, selected, expanded/collapsed, validation, and long-content states when they apply.
 - Keep accessibility first: semantic landmarks, labels, keyboard flow, focus visibility, dialog behavior, hit targets, reduced motion, and contrast.
@@ -252,10 +256,22 @@ Keep the final user response concise, but include enough audit status detail tha
 
 ## Audit Local UI
 
+Audit flow (required):
+
+1. Start audit: `start_audit_run`.
+2. Add violations as they are found: `add_audit_violation` for each finding.
+3. Stop audit: `complete_audit_run`.
+
+Fixing audit flow (required):
+
+1. Update individual violations as each fix is verified: `update_violation_status`.
+
 Every audit request must follow this sequence:
 
 1. Reconcile previous audits.
 2. Start a new audit run.
+
+Rule: regardless of previous conversation context, do not skip this sequence and do not bypass ruleset validation. Always validate against the configured `auditRuleSetIds`.
 
 Detailed flow:
 
@@ -264,14 +280,15 @@ Detailed flow:
 3. For previous runs, call `get_audit_violations` and inspect open findings.
 4. Verify whether previously reported issues are now fixed in the current code/UI.
 5. For each verified fix, call `update_violation_status` with `status: "resolved"` (and `resolvedBy` when available).
-6. Read spec context in this order: Chai Studio `DESIGN.md` (`get-design-doc(applicationId)`), then rulesets (`get-rulesets(applicationId)`), then preset (`get-presets`).
+6. Read spec context in this order: Chai Studio `design.yaml` (`get_design_yaml(applicationId)`), then rulesets (`get-rulesets(applicationId)`), then preset (`get-presets`).
 7. Read the requested files or inspect the requested browser view.
 8. Audit against project hard rules first (`MUST`/`NEVER`), then ruleset severity guidance.
-9. Prioritize critical and high findings (especially accessibility, keyboard/focus/dialog, metadata correctness).
-10. Keep findings tight: exact code, why it matters, and code-level fix.
-11. Create a fresh run with `start_audit_run`, upload findings one by one with `add_audit_violation` as soon as each finding is confirmed, then close the run with `complete_audit_run` (even when zero new violations are found).
-12. Keep a per-run fingerprint set and skip duplicate findings before upload. Build the fingerprint from `ruleId`, `filePath`, `lineStart`, `lineEnd`, normalized `codeSnippet`, and normalized `violationDescription`.
-13. When multiple `auditRuleSetIds` are configured, audit each ruleset separately. Repeat the full streaming sequence once per ruleset, evaluating that ruleset's rules and uploading only that ruleset's findings to its audit run.
+9. For every relevant component, verify component-level design adherence (including border radius, spacing, typography, semantic token usage, border/shadow treatment, and states).
+10. Prioritize critical and high findings (especially accessibility, keyboard/focus/dialog, metadata correctness).
+11. Keep findings tight: exact code, why it matters, and code-level fix.
+12. Create a fresh run with `start_audit_run`, upload findings one by one with `add_audit_violation` as soon as each finding is confirmed, then close the run with `complete_audit_run` (even when zero new violations are found).
+13. Keep a per-run fingerprint set and skip duplicate findings before upload. Build the fingerprint from `ruleId`, `filePath`, `lineStart`, `lineEnd`, normalized `codeSnippet`, and normalized `violationDescription`.
+14. When multiple `auditRuleSetIds` are configured, audit each ruleset separately. Repeat the full streaming sequence once per ruleset, evaluating that ruleset's rules and uploading only that ruleset's findings to its audit run.
 
 Granularity requirements:
 
@@ -334,7 +351,6 @@ Prefer streaming uploads after a real audit, or when the user explicitly asks fo
 2. Call `add_audit_violation` for each confirmed finding as soon as it is found.
 3. Call `complete_audit_run` once after the audit pass is complete.
 
-Use `add_audit_results` only as a legacy fallback if streaming tools are unavailable.
 Always upload a fresh audit run after the reconciliation step above, even if all old issues were resolved and the new run contains zero violations.
 
 Required `start_audit_run` fields:
@@ -374,7 +390,6 @@ Violation fields should be as complete as possible:
 
 `aiFixPrompt` must be self-contained. It should name the file, the issue, the desired fix, and the constraints.
 Before every `add_audit_violation` call, check the current run's fingerprint set. If the fingerprint already exists, do not upload it again. Chai Studio also performs server-side duplicate detection for the same audit.
-`violations` is capped at 200 items per `add_audit_results` call when using the legacy batch fallback.
 
 ## Read Audits and Violations
 
