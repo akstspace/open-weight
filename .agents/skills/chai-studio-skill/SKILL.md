@@ -113,6 +113,12 @@ When producing findings or fixes:
 - Prioritize critical accessibility, keyboard, focus/dialog, and metadata correctness issues before lower-severity visual polish.
 - Avoid introducing prohibited patterns from project specs (for example unnecessary decorative motion or forbidden visual cliches).
 
+## Font Asset Requirement
+
+When implementing or auditing typography, always resolve each configured or chosen font family against Google Fonts first. If the family is available there, download the required font files into the codebase (for example `public/fonts/`, `src/assets/fonts/`, or the repo's established font asset directory) and wire the app to load those local files with the framework's local font API or `@font-face`.
+
+If a required font is not available on Google Fonts, look for the closest suitable alternative, use the best fit for the Chai Studio design context, and document the fallback in the completion report.
+
 ## Audit Standards
 
 Audit flow is strictly:

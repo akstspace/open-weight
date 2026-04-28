@@ -66,6 +66,7 @@ Extract these decisions before editing:
 - Brand and product tone from application name/description and preset overview.
 - Color tokens, semantic surfaces, contrast expectations, and dark/light mode behavior.
 - Typography families, scale, heading/body/label usage, and text density.
+- Font asset handling: resolve each configured/chosen family through Google Fonts first, download the required files into the codebase when found, and look for suitable alternatives when not found.
 - Radius, spacing, shadow, border, and component token conventions.
 - Ruleset prohibitions, especially high/critical rules.
 - Expected pages/components, states, and responsive behavior in scope.
@@ -87,6 +88,8 @@ Extract these decisions before editing:
 Implement the redesign against the MCP contract:
 
 - Use Chai Studio preset tokens and semantic roles over arbitrary colors, fonts, radii, shadows, or spacing.
+- For every configured or chosen font family, find it on Google Fonts first. If available, download the required font files into the project using the existing asset convention when present, otherwise a clear fonts asset directory such as `public/fonts/`.
+- If a required family is unavailable on Google Fonts, look for the closest suitable alternative, use the best fit for the Chai Studio design context, and report the fallback in the completion summary.
 - Enforce component-level adherence: border radius, spacing, typography, semantic colors/tokens, borders/shadows, and interaction states must match `design.yaml` and linked rulesets.
 - Preserve application behavior, data flow, routing, auth boundaries, form submission, and analytics unless the user asked to change them.
 - Build real UI states: loading, empty, error, disabled, hover, focus, active, selected, expanded/collapsed, validation, and long-content states when they apply.
@@ -124,6 +127,7 @@ Validate after implementation and before uploading a new audit run:
    - Loading/empty/error states when reachable.
    - Text overflow, long names, narrow widths, and wrapping.
    - Contrast and semantic color usage.
+   - Required Google Fonts files are present in the codebase when the chosen family is available from Google Fonts.
    - Motion safety and reduced-motion behavior when motion exists.
 9. Fix implementation defects before starting the new audit run.
 10. Record what validation ran, whether browser MCP validation was offered, whether the user accepted it, and what could not run.
@@ -284,11 +288,12 @@ Detailed flow:
 7. Read the requested files or inspect the requested browser view.
 8. Audit against project hard rules first (`MUST`/`NEVER`), then ruleset severity guidance.
 9. For every relevant component, verify component-level design adherence (including border radius, spacing, typography, semantic token usage, border/shadow treatment, and states).
-10. Prioritize critical and high findings (especially accessibility, keyboard/focus/dialog, metadata correctness).
-11. Keep findings tight: exact code, why it matters, and code-level fix.
-12. Create a fresh run with `start_audit_run`, upload findings one by one with `add_audit_violation` as soon as each finding is confirmed, then close the run with `complete_audit_run` (even when zero new violations are found).
-13. Keep a per-run fingerprint set and skip duplicate findings before upload. Build the fingerprint from `ruleId`, `filePath`, `lineStart`, `lineEnd`, normalized `codeSnippet`, and normalized `violationDescription`.
-14. When multiple `auditRuleSetIds` are configured, audit each ruleset separately. Repeat the full streaming sequence once per ruleset, evaluating that ruleset's rules and uploading only that ruleset's findings to its audit run.
+10. Verify that configured/chosen fonts were checked against Google Fonts first, downloaded into the codebase when available, or replaced with a suitable documented alternative when not available.
+11. Prioritize critical and high findings (especially accessibility, keyboard/focus/dialog, metadata correctness).
+12. Keep findings tight: exact code, why it matters, and code-level fix.
+13. Create a fresh run with `start_audit_run`, upload findings one by one with `add_audit_violation` as soon as each finding is confirmed, then close the run with `complete_audit_run` (even when zero new violations are found).
+14. Keep a per-run fingerprint set and skip duplicate findings before upload. Build the fingerprint from `ruleId`, `filePath`, `lineStart`, `lineEnd`, normalized `codeSnippet`, and normalized `violationDescription`.
+15. When multiple `auditRuleSetIds` are configured, audit each ruleset separately. Repeat the full streaming sequence once per ruleset, evaluating that ruleset's rules and uploading only that ruleset's findings to its audit run.
 
 Granularity requirements:
 
