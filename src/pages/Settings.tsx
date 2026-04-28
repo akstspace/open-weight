@@ -1,5 +1,5 @@
-import { ArrowLeft, Moon, Sun, Monitor } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ArrowLeft, Moon, Sun, Monitor } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import AddWeightEntry from "@/components/AddWeightEntry";
@@ -27,13 +27,13 @@ const Settings = () => {
         <div className="container mx-auto flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4">
           <Link
             to="/"
-            className="flex h-9 w-9 items-center justify-center rounded-sm border border-border bg-secondary transition-colors hover:bg-muted text-muted-foreground hover:text-foreground spring-tap sm:h-10 sm:w-10"
+            className="flex h-9 w-9 items-center justify-center border border-border bg-secondary transition-colors hover:bg-muted text-muted-foreground hover:text-foreground touch-active sm:h-10 sm:w-10"
             aria-label="Back to dashboard"
           >
             <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </Link>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">Settings</h1>
+            <h1 className="text-lg sm:text-xl font-bold text-foreground font-heading tracking-tight">Settings</h1>
             <p className="text-xs sm:text-sm text-muted-foreground font-medium">Customize your experience</p>
           </div>
         </div>
@@ -62,7 +62,7 @@ const Settings = () => {
                     <button
                       key={t.value}
                       onClick={() => setTheme(t.value)}
-                      className={`w-full flex items-center gap-3 rounded-sm px-4 py-3 transition-all spring-tap ${
+                      className={`w-full flex items-center gap-3 px-4 py-3 transition-colors touch-active ${
                         isActive
                           ? "bg-muted text-foreground"
                           : "text-foreground hover:bg-secondary"
@@ -70,7 +70,7 @@ const Settings = () => {
                       style={{ animationDelay: `${index * 50}ms` }}
                     >
                       <div
-                        className={`flex h-10 w-10 items-center justify-center rounded-full border transition-colors ${
+                        className={`flex h-10 w-10 items-center justify-center border transition-colors ${
                           isActive ? "border-border bg-primary text-primary-foreground" : "border-border bg-secondary"
                         }`}
                       >
@@ -97,7 +97,7 @@ const Settings = () => {
             <h2 className="label-caps text-muted-foreground mb-4">
               Advanced
             </h2>
-            <div className="mb-3 rounded-sm border border-warning/30 bg-warning/10 p-3">
+            <div className="mb-3 border border-warning/30 bg-warning/10 p-3">
               <p className="text-xs text-foreground">
                 <strong>Owner Only:</strong> This section is intended for the site owner to manually add weight entries.
                 Requires API key authentication.

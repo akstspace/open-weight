@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,104 +5,104 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 148 22% 14%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
-    --card-foreground: 148 22% 14%;
+    --card-foreground: 0 0% 0%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 148 22% 14%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 137 33% 36%;
+    --primary: 0 0% 0%;
     --primary-foreground: 0 0% 96%;
 
-    --secondary: 70 19% 94%;
-    --secondary-foreground: 148 22% 14%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 114 6% 67%;
-    --muted-foreground: 127 8% 40%;
+    --muted: 0 0% 67%;
+    --muted-foreground: 0 0% 33%;
 
-    --accent: 130 20% 93%;
-    --accent-foreground: 148 22% 14%;
+    --accent: 349 80% 50%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 96%;
+    --destructive-foreground: 0 0% 100%;
     --success: 142 76% 36%;
-    --success-foreground: 0 0% 96%;
+    --success-foreground: 0 0% 100%;
     --warning: 32 95% 44%;
-    --warning-foreground: 148 22% 14%;
+    --warning-foreground: 0 0% 0%;
 
-    --border: 97 8% 80%;
-    --input: 97 8% 80%;
-    --ring: 137 33% 36%;
+    --border: 0 0% 84%;
+    --input: 0 0% 80%;
+    --ring: 349 80% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0rem;
 
-    --chart-line: 148 22% 14%;
-    --chart-fill: 114 6% 67%;
-    --chart-highlight: 137 33% 36%;
+    --chart-line: 0 0% 0%;
+    --chart-fill: 0 0% 67%;
+    --chart-highlight: 349 80% 50%;
 
-    --metric-card: 70 19% 94%;
-    --metric-card-hover: 77 14% 90%;
+    --metric-card: 0 0% 96%;
+    --metric-card-hover: 0 0% 92%;
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 148 22% 14%;
-    --sidebar-primary: 137 33% 36%;
+    --sidebar-foreground: 0 0% 0%;
+    --sidebar-primary: 0 0% 0%;
     --sidebar-primary-foreground: 0 0% 96%;
-    --sidebar-accent: 70 19% 94%;
-    --sidebar-accent-foreground: 148 22% 14%;
-    --sidebar-border: 97 8% 80%;
-    --sidebar-ring: 137 33% 36%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 0%;
+    --sidebar-border: 0 0% 84%;
+    --sidebar-ring: 349 80% 50%;
   }
 
   .dark {
-    --background: 147 27% 8%;
-    --foreground: 70 19% 94%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 150 11% 17%;
-    --card-foreground: 70 19% 94%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 150 11% 17%;
-    --popover-foreground: 70 19% 94%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 138 28% 56%;
-    --primary-foreground: 147 27% 8%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 9%;
 
-    --secondary: 147 16% 14%;
-    --secondary-foreground: 70 19% 94%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 143 12% 21%;
-    --muted-foreground: 131 8% 59%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 64%;
 
-    --accent: 140 18% 20%;
-    --accent-foreground: 70 19% 94%;
+    --accent: 352 95% 71%;
+    --accent-foreground: 0 0% 96%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 70 19% 94%;
+    --destructive-foreground: 0 0% 100%;
     --success: 142 71% 45%;
-    --success-foreground: 147 27% 8%;
+    --success-foreground: 0 0% 0%;
     --warning: 38 92% 50%;
-    --warning-foreground: 147 27% 8%;
+    --warning-foreground: 0 0% 0%;
 
-    --border: 140 10% 26%;
-    --input: 138 9% 29%;
-    --ring: 138 28% 56%;
+    --border: 0 0% 22%;
+    --input: 0 0% 25%;
+    --ring: 352 95% 71%;
 
-    --chart-line: 70 19% 94%;
-    --chart-fill: 143 12% 21%;
-    --chart-highlight: 138 28% 56%;
+    --chart-line: 0 0% 100%;
+    --chart-fill: 0 0% 16%;
+    --chart-highlight: 352 95% 71%;
 
-    --metric-card: 147 16% 14%;
-    --metric-card-hover: 150 11% 17%;
+    --metric-card: 0 0% 10%;
+    --metric-card-hover: 0 0% 14%;
 
-    --sidebar-background: 147 27% 8%;
-    --sidebar-foreground: 70 19% 94%;
-    --sidebar-primary: 138 28% 56%;
-    --sidebar-primary-foreground: 147 27% 8%;
-    --sidebar-accent: 147 16% 14%;
-    --sidebar-accent-foreground: 70 19% 94%;
-    --sidebar-border: 140 10% 26%;
-    --sidebar-ring: 138 28% 56%;
+    --sidebar-background: 0 0% 0%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 22%;
+    --sidebar-ring: 352 95% 71%;
   }
 }
 
@@ -114,79 +112,77 @@
   }
 
   ::selection {
-    background: hsl(137 33% 36% / 0.25);
-    color: hsl(148 22% 14%);
+    background: hsl(349 80% 50% / 0.25);
+    color: hsl(0 0% 0%);
   }
 
   .dark ::selection {
-    background: hsl(138 28% 56% / 0.35);
-    color: hsl(70 19% 94%);
+    background: hsl(352 95% 71% / 0.35);
+    color: hsl(0 0% 100%);
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    line-height: 1.5;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'IBM Plex Sans', -apple-system, system-ui, sans-serif;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', -apple-system, system-ui, sans-serif;
+    line-height: 1.2;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Public Sans', sans-serif;
+    font-family: 'Space Grotesk', -apple-system, system-ui, sans-serif;
   }
 
   .font-mono {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 
   .label-caps {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
     font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
-  /* Touch feedback animations */
+  /* Touch feedback */
   .touch-active {
-    @apply transition-transform duration-150 active:scale-[0.97];
+    @apply transition-transform duration-150 active:scale-[0.98];
   }
 
   .touch-subtle {
-    @apply transition-all duration-200 active:scale-[0.98] active:opacity-80;
+    @apply transition-colors duration-200;
   }
 
   /* Smooth transitions */
   .smooth-transition {
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .smooth-transition-fast {
-    transition: all 0.15s ease;
+    transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .smooth-transition-slow {
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  /* Animation wrapper classes - ensures content is visible even if animation fails */
+  /* Animation wrapper classes */
   .animate-in-slide-up {
-    animation: slide-up 0.4s cubic-bezier(0.32, 0.72, 0, 1) both;
+    animation: slide-up 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
 
   .animate-in-slide-down {
-    animation: slide-down 0.35s cubic-bezier(0.32, 0.72, 0, 1) both;
+    animation: slide-down 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
 
   .animate-in-fade {
-    animation: fade-in 0.3s cubic-bezier(0.32, 0.72, 0, 1) both;
-  }
-
-  .animate-in-bounce {
-    animation: bounce-in 0.3s ease both;
-  }
-
-  .animate-in-spring {
-    animation: spring 0.28s ease both;
+    animation: fade-in 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
 
   /* Skeleton loading shimmer */
@@ -199,15 +195,6 @@
     );
     background-size: 200% 100%;
     animation: skeleton-shimmer 1.5s ease-in-out infinite;
-  }
-
-  /* Spring effect for interactive elements */
-  .spring-tap {
-    @apply transition-transform duration-200;
-  }
-
-  .spring-tap:active {
-    animation: press 0.2s cubic-bezier(0.32, 0.72, 0, 1);
   }
 
   /* Stagger animations helper */
@@ -250,46 +237,6 @@
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes bounce-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  50% {
-    transform: scale(1.02);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes spring {
-  0% {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  60% {
-    transform: scale(1.05);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes press {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.96);
-  }
-  100% {
-    transform: scale(1);
   }
 }
 

@@ -67,7 +67,7 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
 
   return (
     <>
-      <div className="flex flex-col rounded-lg border border-border bg-card p-4 sm:p-6">
+      <div className="flex h-full flex-col rounded-lg border border-border bg-card p-4 sm:p-6">
         <div className="mb-3 sm:mb-4 flex items-center justify-between">
           <span className="label-caps text-muted-foreground">
             Data Log
@@ -85,7 +85,7 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
                 Failed to load entries
               </div>
             ) : (
-              <div className="flex flex-col gap-1.5 sm:gap-2">
+              <div className="flex flex-col">
                 {allEntries.map((entry, index) => (
                   <div
                     key={entry.id}

@@ -4,9 +4,10 @@ Reusable agent skill for Chai Studio MCP workflows:
 
 - connect a repo to the correct Chai Studio application
 - fetch live design/rules context from MCP for every run
-- sync `design.yaml` from `get_design_yaml` as the local design source of truth
+- sync `design-studio.yaml` from `get_application_yaml` as the local design source of truth
 - run audit reconciliation
 - upload fresh audit runs with actionable violations
+- keep audit reporting and fix/remediation as separate flows
 
 ## Requirements
 
@@ -79,7 +80,8 @@ You should see `chai-studio-skill` in the installed skills list.
 ## What This Skill Expects
 
 - Access to a `chai-studio` MCP server
-- A project-level `chai-studio.json` configuration file (created during setup if missing)
+- A project-level `chai-studio.yaml` configuration file (created during setup if missing and added to `.gitignore`)
+- A synced `design-studio.yaml` application contract generated from Chai Studio MCP
 
 ## Typical usage
 
@@ -91,15 +93,16 @@ Use $chai-studio-skill to configure this project with Chai Studio and use live M
 
 Common requests:
 
-- "Set up `chai-studio.json` for this repo."
+- "Set up `chai-studio.yaml` for this repo."
 - "Fetch latest design and rules context from Chai Studio MCP for this app."
-- "Sync `design.yaml` from Chai Studio and delete stale local `DESIGN.md` files."
+- "Sync `design-studio.yaml` from Chai Studio and delete stale local `DESIGN.md` files."
 - "Reconcile old audit violations and upload a fresh audit run."
 
 ## Safety Notes
 
 - Do not upload dummy audits unless explicitly requested.
 - Verify prior violations and resolve fixed items before uploading a new run.
+- Do not fix newly discovered audit findings unless the user explicitly asks for remediation.
 - Treat all skill scripts/references as code and review before use.
 
 ## License

@@ -9,7 +9,7 @@ interface MetricCardProps {
 
 const MetricCard = ({ label, value, subtitle, icon }: MetricCardProps) => {
   return (
-    <div className="group relative overflow-hidden rounded-md border border-border bg-metric p-3 sm:p-4 touch-active transition-colors hover:bg-metric-hover">
+    <div className="group relative overflow-hidden border border-border bg-metric p-3 sm:p-4 touch-active transition-colors hover:bg-metric-hover">
       <div className="flex items-start justify-between">
         <span className="label-caps text-muted-foreground">
           {label}

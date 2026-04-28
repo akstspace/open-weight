@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          'Public Sans',
+          'IBM Plex Sans',
           '-apple-system',
           'system-ui',
           'Avenir Next',
@@ -27,6 +27,17 @@ export default {
           'Roboto',
           'Noto',
           'Arial',
+          'sans-serif',
+        ],
+        heading: [
+          'Space Grotesk',
+          '-apple-system',
+          'system-ui',
+          'Avenir Next',
+          'Avenir',
+          'Segoe UI',
+          'Helvetica Neue',
+          'Helvetica',
           'sans-serif',
         ],
         mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
@@ -94,10 +105,10 @@ export default {
         },
       },
       borderRadius: {
-        lg: "12px",
-        md: "8px",
-        sm: "4px",
-        xl: "16px",
+        lg: "2px",
+        md: "0px",
+        sm: "0px",
+        xl: "4px",
       },
       keyframes: {
         "accordion-down": {
@@ -107,11 +118,6 @@ export default {
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)", opacity: "1" },
           to: { height: "0", opacity: "0" },
-        },
-        "ios-bounce-in": {
-          "0%": { opacity: "0", transform: "scale(0.95)" },
-          "50%": { transform: "scale(1.02)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
         },
         "ios-slide-up": {
           "0%": { opacity: "0", transform: "translateY(16px)" },
@@ -123,37 +129,6 @@ export default {
         },
         "ios-fade-in": {
           "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
-        "ios-press": {
-          "0%": { transform: "scale(1)" },
-          "50%": { transform: "scale(0.97)" },
-          "100%": { transform: "scale(1)" },
-        },
-        "ios-spring": {
-          "0%": { opacity: "0", transform: "scale(0.9) translateY(8px)" },
-          "60%": { transform: "scale(1.03) translateY(-2px)" },
-          "100%": { opacity: "1", transform: "scale(1) translateY(0)" },
-        },
-        "ios-rubber": {
-          "0%": { transform: "scale(1)" },
-          "30%": { transform: "scale(1.15, 0.85)" },
-          "40%": { transform: "scale(0.85, 1.15)" },
-          "50%": { transform: "scale(1.05, 0.95)" },
-          "65%": { transform: "scale(0.98, 1.02)" },
-          "75%": { transform: "scale(1.02, 0.98)" },
-          "100%": { transform: "scale(1)" },
-        },
-        "ios-shake": {
-          "0%, 100%": { transform: "translateX(0)" },
-          "20%": { transform: "translateX(-4px)" },
-          "40%": { transform: "translateX(4px)" },
-          "60%": { transform: "translateX(-4px)" },
-          "80%": { transform: "translateX(4px)" },
-        },
-        "ios-pulse": {
-          "0%": { opacity: "1" },
-          "50%": { opacity: "0.6" },
           "100%": { opacity: "1" },
         },
         "sheet-slide-in": {
@@ -174,20 +149,14 @@ export default {
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
-        "accordion-up": "accordion-up 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
-        "ios-bounce-in": "ios-bounce-in 0.5s cubic-bezier(0.32, 0.72, 0, 1) forwards",
-        "ios-slide-up": "ios-slide-up 0.4s cubic-bezier(0.32, 0.72, 0, 1) forwards",
-        "ios-slide-down": "ios-slide-down 0.35s cubic-bezier(0.32, 0.72, 0, 1) forwards",
-        "ios-fade-in": "ios-fade-in 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards",
-        "ios-press": "ios-press 0.2s cubic-bezier(0.32, 0.72, 0, 1)",
-        "ios-spring": "ios-spring 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
-        "ios-rubber": "ios-rubber 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-        "ios-shake": "ios-shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97)",
-        "ios-pulse": "ios-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "sheet-slide-in": "sheet-slide-in 0.5s cubic-bezier(0.32, 0.72, 0, 1)",
-        "collapsible-expand": "collapsible-expand 0.35s cubic-bezier(0.32, 0.72, 0, 1)",
-        "collapsible-collapse": "collapsible-collapse 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
+        "accordion-down": "accordion-down 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        "accordion-up": "accordion-up 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        "ios-slide-up": "ios-slide-up 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards",
+        "ios-slide-down": "ios-slide-down 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards",
+        "ios-fade-in": "ios-fade-in 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards",
+        "sheet-slide-in": "sheet-slide-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        "collapsible-expand": "collapsible-expand 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        "collapsible-collapse": "collapsible-collapse 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         "skeleton-shimmer": "skeleton-shimmer 1.5s ease-in-out infinite",
       },
     },

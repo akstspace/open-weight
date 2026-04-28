@@ -43,8 +43,8 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
         </div>
       </div>
 
-      <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2 sm:gap-3">
-        <div className="rounded-md border border-border bg-metric p-3 sm:p-4 touch-active transition-colors hover:bg-metric-hover">
+      <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-0 border-t border-border">
+        <div className="p-3 sm:p-4 border-r border-border">
           <div className="flex items-center gap-2">
             <span className="label-caps text-muted-foreground">
               {changeLabel}
@@ -61,7 +61,7 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
             )}
           </div>
         </div>
-        <div className="rounded-md border border-border bg-metric p-3 sm:p-4 touch-active transition-colors hover:bg-metric-hover">
+        <div className="p-3 sm:p-4">
           <div className="flex items-center gap-2">
             <span className="label-caps text-muted-foreground">
               Total Entries

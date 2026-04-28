@@ -13,7 +13,7 @@ const EmptyState = ({ userName }: EmptyStateProps) => {
         <p className="label-caps text-muted-foreground mb-2">
           Fresh Start
         </p>
-        <h2 className="mb-3 flex items-center justify-center gap-3 text-2xl font-bold text-foreground tracking-tight sm:text-3xl">
+        <h2 className="mb-3 flex items-center justify-center gap-3 text-2xl font-bold text-foreground font-heading tracking-tight sm:text-3xl">
           <Scale className="h-8 w-8 text-primary" />
           No Weight Entries Yet
         </h2>

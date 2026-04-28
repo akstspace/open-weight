@@ -90,7 +90,7 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
         <div className="w-full max-w-md animate-in-slide-up">
           <div className="space-y-6 rounded-lg border border-border bg-card p-6 sm:p-8">
             <div className="text-center space-y-2">
-              <h1 className="flex items-center justify-center gap-3 text-2xl font-bold text-foreground tracking-tight">
+              <h1 className="flex items-center justify-center gap-3 text-2xl font-bold text-foreground font-heading tracking-tight">
                 <Key className="h-8 w-8 text-primary" />
                 Setup Complete!
               </h1>
@@ -104,7 +104,7 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
                 Save this key now. It will not be shown again.
               </Label>
               <div className="relative">
-                <div className="rounded-sm border border-border bg-secondary p-4 pr-12 font-mono text-sm break-all">
+                <div className="border border-border bg-secondary p-4 pr-12 font-mono text-sm break-all">
                   {apiKey}
                 </div>
                 <Button
@@ -122,10 +122,10 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
               </div>
             </div>
 
-            <div className="space-y-2 rounded-sm border border-border bg-secondary p-4 text-sm">
+            <div className="space-y-2 border border-border bg-secondary p-4 text-sm">
               <p className="font-medium text-foreground">How to use:</p>
               <p className="text-muted-foreground">
-                Use this API key in the <code className="bg-background px-1 rounded-sm">X-API-Key</code> header
+                Use this API key in the <code className="bg-background px-1">X-API-Key</code> header
                 when making requests to add or modify weight data.
               </p>
               <p className="text-muted-foreground">
@@ -150,7 +150,7 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
       <div className="w-full max-w-md animate-in-slide-up">
         <div className="space-y-6 rounded-lg border border-border bg-card p-6 sm:p-8">
             <div className="text-center space-y-2">
-              <h1 className="flex items-center justify-center gap-3 text-2xl font-bold text-foreground tracking-tight">
+              <h1 className="flex items-center justify-center gap-3 text-2xl font-bold text-foreground font-heading tracking-tight">
                 <User className="h-8 w-8 text-primary" />
                 Welcome!
               </h1>
@@ -219,7 +219,7 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
               </div>
             </div>
 
-            <p className="rounded-sm border border-border bg-secondary p-3 text-xs text-muted-foreground">
+            <p className="border border-border bg-secondary p-3 text-xs text-muted-foreground">
               Biometric data is required to calculate BMI, BMR, and body age automatically.
             </p>
 

@@ -37,8 +37,8 @@ const WeightChart = ({ entries }: WeightChartProps) => {
             contentStyle={{
               backgroundColor: 'hsl(var(--card))',
               border: '1px solid hsl(var(--border))',
-              borderRadius: '8px',
-              boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+              borderRadius: '0px',
+              boxShadow: '0 0 0 1px rgb(0 0 0 / 0.08)',
               color: 'hsl(var(--foreground))',
             }}
             labelFormatter={(_, payload) => payload[0]?.payload?.fullDate || ''}

@@ -44,25 +44,25 @@ const Index = () => {
       {/* Header */}
       <header className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4">
-          <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-primary sm:h-10 sm:w-10">
+          <div className="flex h-9 w-9 items-center justify-center bg-primary sm:h-10 sm:w-10">
             <Scale className="h-4 w-4 text-primary-foreground sm:h-5 sm:w-5" />
           </div>
           <div className="flex-1">
-            <h1 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">{displayName}</h1>
+            <h1 className="text-lg sm:text-xl font-bold text-foreground font-heading tracking-tight">{displayName}</h1>
             <p className="text-xs sm:text-sm text-muted-foreground font-medium">open-weight</p>
           </div>
           <a
             href="https://github.com/akstspace/open-weight"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex h-9 w-9 items-center justify-center rounded-sm border border-border bg-secondary transition-colors hover:bg-muted text-muted-foreground hover:text-foreground spring-tap sm:h-10 sm:w-10"
+            className="flex h-9 w-9 items-center justify-center border border-border bg-secondary transition-colors hover:bg-muted text-muted-foreground hover:text-foreground touch-active sm:h-10 sm:w-10"
             aria-label="View on GitHub"
           >
             <Github className="h-4 w-4 sm:h-5 sm:w-5" />
           </a>
           <Link
             to="/settings"
-            className="flex h-9 w-9 items-center justify-center rounded-sm border border-border bg-secondary transition-colors hover:bg-muted text-muted-foreground hover:text-foreground spring-tap sm:h-10 sm:w-10"
+            className="flex h-9 w-9 items-center justify-center border border-border bg-secondary transition-colors hover:bg-muted text-muted-foreground hover:text-foreground touch-active sm:h-10 sm:w-10"
             aria-label="Open settings"
           >
             <Settings className="h-4 w-4 sm:h-5 sm:w-5" />

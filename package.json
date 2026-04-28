@@ -13,6 +13,9 @@
     "server:dev": "bun --watch server/index.ts"
   },
   "dependencies": {
+    "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@fontsource/ibm-plex-sans": "^5.2.8",
+    "@fontsource/space-grotesk": "^5.2.10",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/adapter-libsql": "^7.2.0",
     "@prisma/client": "^7.2.0",
