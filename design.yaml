@@ -1,0 +1,499 @@
+name: Moss
+metadata:
+  description: Forest green and muted earth product UI.
+  version: 1.0.0
+modes:
+  light:
+    palette:
+      primary: "#1B2A22"
+      secondary: "#5D6E5F"
+      tertiary: "#3E7C50"
+      neutral: "#F1F2EC"
+      text: "#1B2A22"
+    semantic:
+      background: "#ffffff"
+      foreground: "#1B2A22"
+      muted: "#a7b0a6"
+      mutedForeground: "#5D6E5F"
+      border: "#ccd1c9"
+      input: "#c5cac2"
+      ring: "#3E7C50"
+      brand:
+        background: "#1B2A22"
+        foreground: "#f5f5f5"
+      accent:
+        background: "#3E7C50"
+        foreground: "#f5f5f5"
+      surface:
+        default: "#F1F2EC"
+        elevated: "#ffffff"
+        overlay: rgba(0,0,0,0.4)
+      feedback:
+        success: "#16a34a"
+        warning: "#d97706"
+        error: "#dc2626"
+        info: "#2563eb"
+  dark:
+    palette:
+      primary: "#F1F2EC"
+      secondary: "#8FA092"
+      tertiary: "#6FAE82"
+      neutral: "#0F1A14"
+      text: "#F1F2EC"
+    semantic:
+      background: "#0F1A14"
+      foreground: "#F1F2EC"
+      muted: "#2f3c34"
+      mutedForeground: "#8FA092"
+      border: "#3c4940"
+      input: "#425046"
+      ring: "#6FAE82"
+      brand:
+        background: "#F1F2EC"
+        foreground: "#171717"
+      accent:
+        background: "#6FAE82"
+        foreground: "#f5f5f5"
+      surface:
+        default: "#1d2822"
+        elevated: "#27312c"
+        overlay: rgba(0,0,0,0.7)
+      feedback:
+        success: "#22c55e"
+        warning: "#f59e0b"
+        error: "#ef4444"
+        info: "#3b82f6"
+typography:
+  fonts:
+    heading: Public Sans
+    body: Public Sans
+    mono: IBM Plex Mono
+  scale:
+    h1:
+      fontFamily: Public Sans
+      fontSize: 3rem
+      fontWeight: "800"
+      lineHeight: "1.05"
+    h2:
+      fontFamily: Public Sans
+      fontSize: 2rem
+      fontWeight: "700"
+      lineHeight: "1.15"
+    body-md:
+      fontFamily: Public Sans
+      fontSize: 1rem
+      fontWeight: "400"
+      lineHeight: "1.6"
+    label-caps:
+      fontFamily: IBM Plex Mono
+      fontSize: 0.75rem
+      fontWeight: "600"
+      letterSpacing: 0.12em
+      textTransform: uppercase
+radius:
+  none: 0px
+  sm: 4px
+  md: 8px
+  lg: 12px
+  xl: 16px
+  full: 9999px
+spacing:
+  xs: 4px
+  sm: 8px
+  md: 16px
+  lg: 24px
+  xl: 32px
+shadow:
+  sm: 0 1px 2px 0 rgb(0 0 0 / 0.05)
+  md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)
+  lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)
+components:
+  button:
+    modes:
+      light:
+        variant: default
+        size: default
+        shadow: none
+        bg: "#3E7C50"
+        text: "#f5f5f5"
+        borderRadius: 4px
+      dark:
+        bg: "#6FAE82"
+        text: "#f5f5f5"
+        borderRadius: 4px
+  input:
+    modes:
+      light:
+        shadow: none
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 4px
+      dark:
+        bg: "#0F1A14"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 4px
+  textarea:
+    modes:
+      light:
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 4px
+      dark:
+        bg: "#0F1A14"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 4px
+  select:
+    modes:
+      light:
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 4px
+      dark:
+        bg: "#0F1A14"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 4px
+  checkbox:
+    modes:
+      light:
+        bg: "#3E7C50"
+        text: "#f5f5f5"
+        borderRadius: 4px
+      dark:
+        bg: "#6FAE82"
+        text: "#f5f5f5"
+        borderRadius: 4px
+  button-group:
+    modes:
+      light:
+        bg: "#3E7C50"
+        text: "#f5f5f5"
+        borderRadius: 4px
+      dark:
+        bg: "#6FAE82"
+        text: "#f5f5f5"
+        borderRadius: 4px
+  input-group:
+    modes:
+      light:
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 4px
+      dark:
+        bg: "#0F1A14"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 4px
+  radio-group:
+    modes:
+      light:
+        bg: "#3E7C50"
+        text: "#f5f5f5"
+        border: "#ccd1c9"
+      dark:
+        bg: "#6FAE82"
+        text: "#f5f5f5"
+        border: "#3c4940"
+  tabs:
+    modes:
+      light:
+        border: "#a7b0a6"
+        text: "#1B2A22"
+        borderRadius: 8px
+      dark:
+        border: "#2f3c34"
+        text: "#F1F2EC"
+        borderRadius: 8px
+  navigation-menu:
+    modes:
+      light:
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+      dark:
+        bg: "#0F1A14"
+        text: "#F1F2EC"
+        border: "#3c4940"
+  menubar:
+    modes:
+      light:
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+      dark:
+        bg: "#0F1A14"
+        text: "#F1F2EC"
+        border: "#3c4940"
+  breadcrumb:
+    modes:
+      light:
+        text: "#1B2A22"
+        border: "#5D6E5F"
+      dark:
+        text: "#F1F2EC"
+        border: "#8FA092"
+  pagination:
+    modes:
+      light:
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 4px
+      dark:
+        bg: "#0F1A14"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 4px
+  command:
+    modes:
+      light:
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+      dark:
+        bg: "#0F1A14"
+        text: "#F1F2EC"
+        border: "#3c4940"
+  dialog:
+    modes:
+      light:
+        shadow: lg
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 8px
+      dark:
+        bg: "#27312c"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 8px
+  alert-dialog:
+    modes:
+      light:
+        shadow: lg
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 8px
+      dark:
+        bg: "#27312c"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 8px
+  sheet:
+    modes:
+      light:
+        shadow: lg
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+      dark:
+        bg: "#27312c"
+        text: "#F1F2EC"
+        border: "#3c4940"
+  dropdown-menu:
+    modes:
+      light:
+        shadow: md
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 8px
+      dark:
+        bg: "#27312c"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 8px
+  dropdown-menu-item:
+    modes:
+      light:
+        bg: "#3E7C50"
+        text: "#f5f5f5"
+        borderRadius: 4px
+      dark:
+        bg: "#6FAE82"
+        text: "#f5f5f5"
+        borderRadius: 4px
+  context-menu:
+    modes:
+      light:
+        shadow: md
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 8px
+      dark:
+        bg: "#27312c"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 8px
+  context-menu-item:
+    modes:
+      light:
+        bg: "#3E7C50"
+        text: "#f5f5f5"
+        borderRadius: 4px
+      dark:
+        bg: "#6FAE82"
+        text: "#f5f5f5"
+        borderRadius: 4px
+  popover:
+    modes:
+      light:
+        shadow: md
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 8px
+      dark:
+        bg: "#27312c"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 8px
+  tooltip:
+    modes:
+      light:
+        text: "#1B2A22"
+        bg: "#ffffff"
+        borderRadius: 4px
+      dark:
+        text: "#F1F2EC"
+        bg: "#0F1A14"
+        borderRadius: 4px
+  hover-card:
+    modes:
+      light:
+        shadow: md
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 8px
+      dark:
+        bg: "#27312c"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 8px
+  alert:
+    modes:
+      light:
+        variant: default
+        bg: "#F1F2EC"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 8px
+      dark:
+        bg: "#1d2822"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 8px
+  badge:
+    modes:
+      light:
+        variant: default
+        bg: "#3E7C50"
+        text: "#f5f5f5"
+        borderRadius: 4px
+      dark:
+        bg: "#6FAE82"
+        text: "#f5f5f5"
+        borderRadius: 4px
+  progress:
+    modes:
+      light:
+        border: "#a7b0a6"
+        bg: "#3E7C50"
+        borderRadius: 4px
+      dark:
+        border: "#2f3c34"
+        bg: "#6FAE82"
+        borderRadius: 4px
+  skeleton:
+    modes:
+      light:
+        border: "#a7b0a6"
+        borderRadius: 4px
+      dark:
+        border: "#2f3c34"
+        borderRadius: 4px
+  spinner:
+    modes:
+      light:
+        border: "#a7b0a6"
+        bg: "#3E7C50"
+      dark:
+        border: "#2f3c34"
+        bg: "#6FAE82"
+  accordion:
+    modes:
+      light:
+        bg: "#F1F2EC"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 8px
+      dark:
+        bg: "#1d2822"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 8px
+  collapsible:
+    modes:
+      light:
+        bg: "#F1F2EC"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+      dark:
+        bg: "#1d2822"
+        text: "#F1F2EC"
+        border: "#3c4940"
+  separator:
+    modes:
+      light:
+        border: "#ccd1c9"
+      dark:
+        border: "#3c4940"
+  scroll-area:
+    modes:
+      light:
+        bg: "#ffffff"
+        border: "#ccd1c9"
+      dark:
+        bg: "#0F1A14"
+        border: "#3c4940"
+  avatar:
+    modes:
+      light:
+        border: "#a7b0a6"
+        text: "#1B2A22"
+        borderRadius: 8px
+      dark:
+        border: "#2f3c34"
+        text: "#F1F2EC"
+        borderRadius: 8px
+  carousel:
+    modes:
+      light:
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+      dark:
+        bg: "#0F1A14"
+        text: "#F1F2EC"
+        border: "#3c4940"
+  table:
+    modes:
+      light:
+        bg: "#ffffff"
+        text: "#1B2A22"
+        border: "#ccd1c9"
+        borderRadius: 4px
+      dark:
+        bg: "#0F1A14"
+        text: "#F1F2EC"
+        border: "#3c4940"
+        borderRadius: 4px

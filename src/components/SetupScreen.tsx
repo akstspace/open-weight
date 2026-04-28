@@ -90,10 +90,10 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
         <div className="w-full max-w-md animate-in-slide-up">
           <div className="space-y-6 rounded-lg border border-border bg-card p-6 sm:p-8">
             <div className="text-center space-y-2">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+              <h1 className="flex items-center justify-center gap-3 text-2xl font-bold text-foreground tracking-tight">
                 <Key className="h-8 w-8 text-primary" />
-              </div>
-              <h1 className="text-2xl font-bold text-foreground tracking-tight">Setup Complete!</h1>
+                Setup Complete!
+              </h1>
               <p className="text-muted-foreground">
                 Save your API key below. You'll need it to add weight data.
               </p>
@@ -149,11 +149,11 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-in-slide-up">
         <div className="space-y-6 rounded-lg border border-border bg-card p-6 sm:p-8">
-          <div className="text-center space-y-2">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-              <User className="h-8 w-8 text-primary" />
-            </div>
-            <h1 className="text-2xl font-bold text-foreground tracking-tight">Welcome!</h1>
+            <div className="text-center space-y-2">
+              <h1 className="flex items-center justify-center gap-3 text-2xl font-bold text-foreground tracking-tight">
+                <User className="h-8 w-8 text-primary" />
+                Welcome!
+              </h1>
             <p className="text-muted-foreground">
               Let's set up your personal health tracker.
             </p>

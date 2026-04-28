@@ -12,7 +12,7 @@ const KeyMetrics = ({ entry }: KeyMetricsProps) => {
       <span className="label-caps text-muted-foreground">
         Key Metrics
       </span>
-      <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 sm:gap-3">
+      <div className="flex flex-col gap-2 sm:gap-3">
         <MetricCard
           label="Weight"
           value={`${entry.weight.value.toFixed(2)}kg`}

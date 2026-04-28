@@ -161,7 +161,7 @@ For each configured ruleset:
 ```
 
 2. Evaluate every relevant rule in that ruleset against the redesigned scope.
-3. Upload each genuine, non-duplicate finding immediately with `add_audit_violation`.
+3. Upload each genuine, non-duplicate finding immediately with `add_audit_violation`. So that the user is informed about the progress.
 4. Keep an in-memory fingerprint set for this audit run. Use:
    - `ruleId`
    - `filePath`
