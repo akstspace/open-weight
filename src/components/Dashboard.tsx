@@ -11,11 +11,9 @@ const Dashboard = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["weightData"],
     queryFn: fetchWeightData,
-    retry: 1, // Only retry once
+    retry: 1,
     refetchInterval: (query) => {
-      // Don't refetch if there's an error (likely no entries)
       if (query.state.error) return false;
-      // Refetch every 30 seconds if we have data
       return 30000;
     },
   });
@@ -36,11 +34,10 @@ const Dashboard = () => {
   }
 
   if (error) {
-    // Check if it's a "no entries" error
     if (error instanceof Error && error.message.includes('No weight entries found')) {
       return <EmptyState userName={config?.userName || undefined} />;
     }
-    
+
     return (
       <div className="flex h-96 items-center justify-center rounded-lg border border-border bg-card">
         <p className="text-muted-foreground">Failed to load weight data</p>

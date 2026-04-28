@@ -13,7 +13,7 @@ const DataLogSkeleton = ({ count = 6 }: DataLogSkeletonProps) => {
           className="animate-in-fade"
           style={{ animationDelay: `${index * 50}ms` }}
         >
-          <div className="flex items-center justify-between rounded-lg border border-border bg-secondary/50 px-3 sm:px-4 py-2.5 sm:py-3">
+          <div className="flex items-center justify-between rounded-sm border border-border bg-secondary/50 px-3 sm:px-4 py-2.5 sm:py-3">
             <div className="flex items-center gap-2">
               <Skeleton className="h-4 w-12 sm:w-16" />
               <Skeleton className="h-4 w-24 sm:w-32" />

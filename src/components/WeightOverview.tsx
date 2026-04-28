@@ -10,23 +10,22 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
   const { latestEntry, weeklyChange, changePeriodDays, entries, totalEntries } = data;
   const weightInLbs = (latestEntry.weight.value * 2.20462).toFixed(1);
   const isLoss = weeklyChange <= 0;
-  
-  // Dynamic label based on actual period
+
   const changeLabel = changePeriodDays === 7 ? 'Weekly Change' : `${changePeriodDays}-Day Change`;
 
   return (
     <div className="flex h-full flex-col rounded-lg border border-border bg-card p-4 sm:p-6">
       <div className="mb-3 sm:mb-4 flex items-center justify-between">
-        <h2 className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+        <span className="label-caps text-muted-foreground">
           Weight Overview
-        </h2>
+        </span>
       </div>
 
       <div className="mb-3 sm:mb-4">
-        <span className="font-mono text-4xl sm:text-5xl font-bold text-foreground">
+        <span className="font-mono text-4xl sm:text-5xl font-extrabold text-foreground tracking-tight">
           {latestEntry.weight.value.toFixed(2)}
         </span>
-        <span className="ml-1 text-xl sm:text-2xl font-light text-muted-foreground">kg</span>
+        <span className="ml-1 text-xl sm:text-2xl font-medium text-muted-foreground">kg</span>
       </div>
 
       <div className="flex-1 min-h-[180px] sm:min-h-[200px]">
@@ -45,9 +44,9 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
       </div>
 
       <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2 sm:gap-3">
-        <div className="rounded-lg border border-border bg-metric p-3 sm:p-4 touch-active">
+        <div className="rounded-md border border-border bg-metric p-3 sm:p-4 touch-active transition-colors hover:bg-metric-hover">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            <span className="label-caps text-muted-foreground">
               {changeLabel}
             </span>
           </div>
@@ -62,9 +61,9 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
             )}
           </div>
         </div>
-        <div className="rounded-lg border border-border bg-metric p-3 sm:p-4 touch-active">
+        <div className="rounded-md border border-border bg-metric p-3 sm:p-4 touch-active transition-colors hover:bg-metric-hover">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            <span className="label-caps text-muted-foreground">
               Total Entries
             </span>
           </div>
@@ -72,7 +71,7 @@ const WeightOverview = ({ data }: WeightOverviewProps) => {
             <span className="font-mono text-lg sm:text-2xl font-bold text-foreground">
               {totalEntries}
             </span>
-            <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
+            <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
           </div>
         </div>
       </div>

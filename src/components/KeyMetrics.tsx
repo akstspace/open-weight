@@ -9,9 +9,9 @@ interface KeyMetricsProps {
 const KeyMetrics = ({ entry }: KeyMetricsProps) => {
   return (
     <div className="flex flex-col gap-3 sm:gap-4">
-      <h2 className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+      <span className="label-caps text-muted-foreground">
         Key Metrics
-      </h2>
+      </span>
       <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 sm:gap-3">
         <MetricCard
           label="Weight"

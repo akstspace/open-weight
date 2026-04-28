@@ -69,17 +69,17 @@ const DataLogEntry = memo(({ entry, onClick, hasApiKey = false, onDeleted }: Dat
     <>
       <button
         onClick={onClick}
-        className="group flex w-full items-center justify-between rounded-lg border border-border bg-secondary/70 px-3 py-2.5 text-left smooth-transition hover:border-accent/30 hover:bg-secondary active:bg-secondary sm:px-4 sm:py-3"
+        className="group flex w-full items-center justify-between rounded-sm border border-border bg-secondary px-3 py-2.5 text-left smooth-transition hover:border-primary/20 hover:bg-secondary/80 active:bg-secondary sm:px-4 sm:py-3"
       >
         <div className="flex flex-col gap-1">
           <span className="font-medium text-sm sm:text-base text-foreground">
             {formattedDate}: {entry.weight.value.toFixed(2)}kg, {entry.bodyFat.value.toFixed(2)}% BF
           </span>
           <span className={cn(
-            "text-[10px] px-1.5 py-0.5 rounded-full font-medium w-fit",
+            "text-[10px] px-1.5 py-0.5 rounded-sm font-medium w-fit",
             entry.source === 'automated'
               ? "bg-success/10 text-success"
-              : "bg-background text-accent"
+              : "bg-primary/10 text-primary"
           )}>
             {entry.source === 'automated' ? 'Automated' : 'Manual'}
           </span>
@@ -88,13 +88,13 @@ const DataLogEntry = memo(({ entry, onClick, hasApiKey = false, onDeleted }: Dat
           {hasApiKey && (
             <button
               onClick={handleDelete}
-              className="p-1.5 rounded-md hover:bg-destructive/10 text-muted-foreground hover:text-destructive smooth-transition"
+              className="p-1.5 rounded-sm hover:bg-destructive/10 text-muted-foreground hover:text-destructive smooth-transition"
               aria-label="Delete entry"
             >
               <Trash2 className="h-4 w-4" />
             </button>
           )}
-          <ChevronRight className="h-4 w-4 text-muted-foreground smooth-transition group-hover:text-accent group-active:translate-x-0.5" />
+          <ChevronRight className="h-4 w-4 text-muted-foreground smooth-transition group-hover:text-primary group-active:translate-x-0.5" />
         </div>
       </button>
 

@@ -5,22 +5,22 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md border text-sm font-semibold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] active:opacity-80 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm border text-sm font-semibold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] active:opacity-80 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "border-primary bg-primary text-primary-foreground hover:opacity-70 hover:text-warning",
+        default: "border-primary bg-primary text-primary-foreground hover:opacity-80",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border-input bg-secondary text-secondary-foreground hover:bg-background hover:text-accent",
-        secondary: "border-transparent bg-muted text-secondary-foreground hover:bg-background hover:text-accent",
-        ghost: "border-transparent bg-background text-foreground hover:border-border hover:bg-background hover:text-accent",
-        link: "border-transparent px-0 text-foreground underline-offset-4 hover:text-accent hover:underline",
+        outline: "border-input bg-secondary text-secondary-foreground hover:bg-background hover:text-foreground",
+        secondary: "border-transparent bg-muted text-secondary-foreground hover:bg-background hover:text-foreground",
+        ghost: "border-transparent bg-background text-foreground hover:border-border hover:bg-secondary hover:text-foreground",
+        link: "border-transparent px-0 text-foreground underline-offset-4 hover:text-primary hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 px-3",
         lg: "h-11 px-8",
-        icon: "h-10 w-10 rounded-md",
+        icon: "h-10 w-10 rounded-sm",
       },
     },
     defaultVariants: {

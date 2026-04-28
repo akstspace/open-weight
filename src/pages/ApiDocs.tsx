@@ -6,18 +6,18 @@ const ApiDocs = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-10 border-b border-border bg-background">
+      <header className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4">
           <Link
             to="/"
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-secondary transition-colors hover:bg-background sm:h-10 sm:w-10"
+            className="flex h-9 w-9 items-center justify-center rounded-sm border border-border bg-secondary transition-colors hover:bg-muted text-muted-foreground hover:text-foreground sm:h-10 sm:w-10"
             aria-label="Back to dashboard"
           >
-            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-foreground" />
+            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </Link>
           <div className="flex-1">
-            <h1 className="text-lg sm:text-xl font-bold text-foreground">API Documentation</h1>
-            <p className="text-xs sm:text-sm text-muted-foreground">Open-Weight API Reference</p>
+            <h1 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">API Documentation</h1>
+            <p className="text-xs sm:text-sm text-muted-foreground font-medium">OpenWeight API Reference</p>
           </div>
         </div>
       </header>
@@ -28,30 +28,30 @@ const ApiDocs = () => {
           {/* Quick Start */}
           <section className="mb-8">
             <div className="flex items-center gap-2 mb-4">
-              <Code className="h-5 w-5 text-accent" />
-              <h2 className="text-xl font-bold m-0">Quick Start</h2>
+              <Code className="h-5 w-5 text-primary" />
+              <h2 className="text-xl font-bold m-0 tracking-tight">Quick Start</h2>
             </div>
             <p className="mb-3 text-base leading-6 text-muted-foreground">
-              The Open-Weight API allows you to add and retrieve weight entries. All write operations require authentication with an API key.
+              The OpenWeight API allows you to add and retrieve weight entries. All write operations require authentication with an API key.
             </p>
-            <div className="rounded-lg border border-border bg-secondary p-4">
+            <div className="rounded-sm border border-border bg-secondary p-4">
               <p className="mb-2 text-sm font-medium">Tip: You can also add entries from the Settings page</p>
               <p className="text-xs text-muted-foreground">
-                Navigate to Settings → Advanced → Add Weight Entry to manually add data through the UI.
+                Navigate to Settings &rarr; Advanced &rarr; Add Weight Entry to manually add data through the UI.
               </p>
             </div>
           </section>
 
           {/* Authentication */}
-          <section className="mb-8 rounded-lg border border-border bg-card p-4">
+          <section className="mb-8 rounded-sm border border-border bg-card p-4">
             <div className="flex items-center gap-2 mb-3">
-              <Key className="h-5 w-5 text-accent" />
+              <Key className="h-5 w-5 text-primary" />
               <h3 className="text-lg font-semibold m-0">Authentication</h3>
             </div>
             <p className="text-sm text-muted-foreground mb-3">
               Include your API key in the request headers for authenticated endpoints:
             </p>
-            <pre className="overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-xs">
+            <pre className="overflow-x-auto rounded-sm border border-border bg-secondary p-3 text-xs">
               <code>X-API-Key: wt_your_api_key_here</code>
             </pre>
             <p className="text-xs text-muted-foreground mt-2">
@@ -62,20 +62,20 @@ const ApiDocs = () => {
           {/* Endpoints */}
           <section className="mb-8">
             <div className="flex items-center gap-2 mb-4">
-              <Database className="h-5 w-5 text-accent" />
-              <h2 className="text-xl font-bold m-0">Endpoints</h2>
+              <Database className="h-5 w-5 text-primary" />
+              <h2 className="text-xl font-bold m-0 tracking-tight">Endpoints</h2>
             </div>
 
             {/* Add Entry */}
-            <div className="mb-6 rounded-lg border border-border bg-card p-4">
+            <div className="mb-6 rounded-sm border border-border bg-card p-4">
               <div className="flex items-baseline gap-2 mb-2">
                 <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-success">POST</span>
                 <code className="text-sm font-mono">/api/entries</code>
               </div>
               <p className="text-sm text-muted-foreground mb-3">Add a new weight entry</p>
-              
+
               <p className="text-xs font-semibold mb-2">Request Body:</p>
-              <pre className="mb-3 overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-xs">
+              <pre className="mb-3 overflow-x-auto rounded-sm border border-border bg-secondary p-3 text-xs">
 {`{
   "weight": 75.5,          // Required: weight in kg
   "bodyFat": 18.5,         // Optional: body fat %
@@ -90,7 +90,7 @@ const ApiDocs = () => {
               </pre>
 
               <p className="text-xs font-semibold mb-2">Example:</p>
-              <pre className="overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-xs">
+              <pre className="overflow-x-auto rounded-sm border border-border bg-secondary p-3 text-xs">
 {`curl -X POST http://localhost:3000/api/entries \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: wt_your_api_key" \\
@@ -99,13 +99,13 @@ const ApiDocs = () => {
             </div>
 
             {/* Get Entries */}
-            <div className="mb-6 rounded-lg border border-border bg-card p-4">
+            <div className="mb-6 rounded-sm border border-border bg-card p-4">
               <div className="flex items-baseline gap-2 mb-2">
-                <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-accent">GET</span>
+                <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-primary">GET</span>
                 <code className="text-sm font-mono">/api/entries</code>
               </div>
               <p className="text-sm text-muted-foreground mb-3">Get all weight entries (public, no auth required)</p>
-              
+
               <p className="text-xs font-semibold mb-2">Query Parameters:</p>
               <ul className="text-xs space-y-1 ml-4 mb-3">
                 <li><code>limit</code> - Number of entries to return (default: 50)</li>
@@ -115,33 +115,33 @@ const ApiDocs = () => {
               </ul>
 
               <p className="text-xs font-semibold mb-2">Example:</p>
-              <pre className="overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-xs">
+              <pre className="overflow-x-auto rounded-sm border border-border bg-secondary p-3 text-xs">
 {`curl http://localhost:3000/api/entries?limit=10`}
               </pre>
             </div>
 
             {/* Get Stats */}
-            <div className="mb-6 rounded-lg border border-border bg-card p-4">
+            <div className="mb-6 rounded-sm border border-border bg-card p-4">
               <div className="flex items-baseline gap-2 mb-2">
-                <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-accent">GET</span>
+                <span className="rounded-sm bg-secondary px-2 py-1 font-mono text-xs text-primary">GET</span>
                 <code className="text-sm font-mono">/api/stats</code>
               </div>
               <p className="text-sm text-muted-foreground mb-3">Get statistics (public, no auth required)</p>
 
               <p className="text-xs font-semibold mb-2">Example:</p>
-              <pre className="overflow-x-auto rounded-lg border border-border bg-secondary p-3 text-xs">
+              <pre className="overflow-x-auto rounded-sm border border-border bg-secondary p-3 text-xs">
 {`curl http://localhost:3000/api/stats`}
               </pre>
             </div>
           </section>
 
           {/* CLI */}
-          <section className="mb-8 rounded-lg border border-border bg-secondary p-4">
+          <section className="mb-8 rounded-sm border border-border bg-secondary p-4">
             <h3 className="text-lg font-semibold mb-3">CLI Commands</h3>
             <p className="text-sm text-muted-foreground mb-3">
-              Manage your Open-Weight installation using the CLI:
+              Manage your OpenWeight installation using the CLI:
             </p>
-            <pre className="overflow-x-auto rounded-lg border border-border bg-background p-3 text-xs">
+            <pre className="overflow-x-auto rounded-sm border border-border bg-background p-3 text-xs">
 {`# Check status
 docker compose exec weight-log bun run server/cli.ts status
 
@@ -149,7 +149,7 @@ docker compose exec weight-log bun run server/cli.ts status
 docker compose exec weight-log bun run server/cli.ts reset-key`}
             </pre>
             <p className="text-xs text-muted-foreground mt-2">
-              <strong>Important:</strong> API keys are hashed for security and cannot be retrieved after creation. 
+              <strong>Important:</strong> API keys are hashed for security and cannot be retrieved after creation.
               Save your key securely during initial setup or when resetting.
             </p>
           </section>

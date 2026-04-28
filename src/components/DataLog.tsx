@@ -21,7 +21,6 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
   const queryClient = useQueryClient();
   const apiKeyExists = hasApiKey();
 
-  // Fetch user config for gender
   const { data: userConfig } = useQuery({
     queryKey: ['userConfig'],
     queryFn: fetchConfigStatus,
@@ -70,14 +69,14 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
     <>
       <div className="flex flex-col rounded-lg border border-border bg-card p-4 sm:p-6">
         <div className="mb-3 sm:mb-4 flex items-center justify-between">
-          <h2 className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+          <span className="label-caps text-muted-foreground">
             Data Log
-          </h2>
-          <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          </span>
+          <span className="label-caps text-muted-foreground">
             {data?.pages[0]?.total ? `${allEntries.length} of ${data.pages[0].total}` : 'Date'}
           </span>
         </div>
-        
+
         <ScrollArea className="h-[320px] sm:h-[420px] pr-2 sm:pr-4">
             {isLoading ? (
               <DataLogSkeleton count={8} />
@@ -88,7 +87,7 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
             ) : (
               <div className="flex flex-col gap-1.5 sm:gap-2">
                 {allEntries.map((entry, index) => (
-                  <div 
+                  <div
                     key={entry.id}
                     className="animate-in-fade smooth-transition"
                     style={{ animationDelay: `${Math.min(index, 10) * 30}ms` }}
@@ -101,13 +100,13 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
                     />
                   </div>
                 ))}
-                
+
                 {/* Load More Button */}
                 {hasNextPage && (
                   <div className="pt-2 sm:pt-3 animate-in-fade" style={{ animationDelay: '200ms' }}>
                     <Button
                       variant="ghost"
-                      className="w-full h-10 sm:h-11 gap-2 text-xs font-medium text-muted-foreground smooth-transition touch-subtle hover:bg-secondary hover:text-accent sm:text-sm"
+                      className="w-full h-10 sm:h-11 gap-2 text-xs font-medium text-muted-foreground smooth-transition touch-subtle hover:bg-secondary hover:text-primary sm:text-sm"
                       onClick={handleLoadMore}
                       disabled={isFetchingNextPage}
                     >
@@ -125,7 +124,7 @@ const DataLog = ({ entries: initialEntries }: DataLogProps) => {
                     </Button>
                   </div>
                 )}
-                
+
                 {/* Loading indicator for next page */}
                 {isFetchingNextPage && (
                   <div className="py-2 animate-in-fade">

@@ -1,4 +1,4 @@
-import { ArrowLeft, Moon, Sun, Monitor, Coffee } from "lucide-react";
+import { ArrowLeft, Moon, Sun, Monitor } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -15,7 +15,6 @@ const Settings = () => {
   const themes = [
     { value: "light", label: "Light", icon: Sun },
     { value: "dark", label: "Dark", icon: Moon },
-    { value: "chai", label: "Chai", icon: Coffee },
     { value: "system", label: "System", icon: Monitor },
   ];
 
@@ -24,18 +23,18 @@ const Settings = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-10 border-b border-border bg-background">
+      <header className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto flex items-center gap-3 px-4 sm:px-6 py-3 sm:py-4">
           <Link
             to="/"
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-secondary transition-colors hover:bg-background spring-tap sm:h-10 sm:w-10"
+            className="flex h-9 w-9 items-center justify-center rounded-sm border border-border bg-secondary transition-colors hover:bg-muted text-muted-foreground hover:text-foreground spring-tap sm:h-10 sm:w-10"
             aria-label="Back to dashboard"
           >
-            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 text-foreground" />
+            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </Link>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-foreground">Settings</h1>
-            <p className="text-xs sm:text-sm text-muted-foreground">Customize your experience</p>
+            <h1 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">Settings</h1>
+            <p className="text-xs sm:text-sm text-muted-foreground font-medium">Customize your experience</p>
           </div>
         </div>
       </header>
@@ -45,7 +44,7 @@ const Settings = () => {
         <div className="max-w-md mx-auto space-y-6">
           {/* Theme Section */}
           <section className="animate-in-slide-up">
-            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
+            <h2 className="label-caps text-muted-foreground mb-4">
               Appearance
             </h2>
             <div className="overflow-hidden rounded-lg border border-border bg-card">
@@ -63,7 +62,7 @@ const Settings = () => {
                     <button
                       key={t.value}
                       onClick={() => setTheme(t.value)}
-                      className={`w-full flex items-center gap-3 rounded-md px-4 py-3 transition-all spring-tap ${
+                      className={`w-full flex items-center gap-3 rounded-sm px-4 py-3 transition-all spring-tap ${
                         isActive
                           ? "bg-muted text-foreground"
                           : "text-foreground hover:bg-secondary"
@@ -79,7 +78,7 @@ const Settings = () => {
                       </div>
                       <span className="font-medium">{t.label}</span>
                       {isActive && (
-                        <div className="ml-auto h-2 w-2 rounded-full bg-accent animate-in-fade" />
+                        <div className="ml-auto h-2 w-2 rounded-full bg-primary animate-in-fade" />
                       )}
                     </button>
                   );
@@ -87,7 +86,7 @@ const Settings = () => {
               </div>
               <div className="border-t border-border px-4 py-3">
                 <p className="text-xs text-muted-foreground">
-                  <strong>System</strong> follows your device light or standard dark mode. <strong>Chai</strong> is the warm editorial dark theme and stays opt-in.
+                  <strong>System</strong> follows your device light or dark mode preference.
                 </p>
               </div>
             </div>
@@ -95,12 +94,12 @@ const Settings = () => {
 
           {/* Manual Entry Section */}
           <section className="animate-in-slide-up stagger-2">
-            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
+            <h2 className="label-caps text-muted-foreground mb-4">
               Advanced
             </h2>
-            <div className="mb-3 rounded-lg border border-warning/30 bg-warning/10 p-3">
+            <div className="mb-3 rounded-sm border border-warning/30 bg-warning/10 p-3">
               <p className="text-xs text-foreground">
-                <strong>Owner Only:</strong> This section is intended for the site owner to manually add weight entries. 
+                <strong>Owner Only:</strong> This section is intended for the site owner to manually add weight entries.
                 Requires API key authentication.
               </p>
             </div>
@@ -109,14 +108,14 @@ const Settings = () => {
 
           {/* About Section */}
           <section className="animate-in-slide-up stagger-3">
-            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
+            <h2 className="label-caps text-muted-foreground mb-4">
               About
             </h2>
             <div className="overflow-hidden rounded-lg border border-border bg-card">
               <div className="p-4 space-y-3">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Application</span>
-                  <span className="font-medium text-foreground">Open-Weight</span>
+                  <span className="font-medium text-foreground">OpenWeight</span>
                 </div>
               </div>
               <div className="border-t border-border">

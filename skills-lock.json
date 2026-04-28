@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "chai-studio-skill": {
+      "source": "chai-studio-space/chai-studio-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "f28b9f865cde6df5a648a8e1ed27bf5778a8edaf3334e88f1f9a73157b503a9f"
+    }
+  }
+}

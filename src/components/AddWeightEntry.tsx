@@ -24,14 +24,12 @@ const AddWeightEntry = () => {
   const [isOpen, setIsOpen] = useState(false);
   const queryClient = useQueryClient();
   const [apiKey, setApiKey] = useState(() => {
-    // Load API key from localStorage on mount
     return localStorage.getItem(API_KEY_STORAGE_KEY) || "";
   });
   const [showApiKey, setShowApiKey] = useState(!apiKey);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Form state
   const [formData, setFormData] = useState({
     weight: "",
     bodyFat: "",
@@ -57,10 +55,9 @@ const AddWeightEntry = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Get the latest API key from localStorage
+
     const currentApiKey = localStorage.getItem(API_KEY_STORAGE_KEY) || "";
-    
+
     if (!currentApiKey) {
       toast({
         title: "API Key Required",
@@ -101,7 +98,6 @@ const AddWeightEntry = () => {
         source: 'manual',
       };
 
-      // Add optional fields if provided
       if (formData.bodyFat) payload.bodyFat = parseFloat(formData.bodyFat);
       if (formData.muscleMass) payload.muscleMass = parseFloat(formData.muscleMass);
       if (formData.bodyWater) payload.bodyWater = parseFloat(formData.bodyWater);
@@ -132,7 +128,6 @@ const AddWeightEntry = () => {
         description: "Your weight entry has been saved successfully.",
       });
 
-      // Reset form
       setFormData({
         weight: "",
         bodyFat: "",
@@ -147,11 +142,9 @@ const AddWeightEntry = () => {
         notes: "",
       });
 
-      // Invalidate queries to refetch updated data
       await queryClient.invalidateQueries({ queryKey: ['weightData'] });
       await queryClient.invalidateQueries({ queryKey: ['paginatedEntries'] });
 
-      // Close the collapsible after successful submission
       setIsOpen(false);
     } catch (error: unknown) {
       toast({
@@ -167,9 +160,9 @@ const AddWeightEntry = () => {
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <CollapsibleTrigger asChild>
-        <button className="flex w-full items-center justify-between rounded-lg border border-border bg-card px-4 py-3 transition-colors hover:bg-secondary">
+        <button className="flex w-full items-center justify-between rounded-sm border border-border bg-card px-4 py-3 transition-colors hover:bg-secondary">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
+            <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-muted">
               <Plus className="h-5 w-5 text-foreground" />
             </div>
             <div className="text-left">
@@ -186,7 +179,7 @@ const AddWeightEntry = () => {
       </CollapsibleTrigger>
 
       <CollapsibleContent className="mt-3">
-        <div className="space-y-4 rounded-lg border border-border bg-card p-4">
+        <div className="space-y-4 rounded-sm border border-border bg-card p-4">
           {/* API Key Section */}
           {showApiKey ? (
             <div className="space-y-2">
@@ -224,7 +217,7 @@ const AddWeightEntry = () => {
               </p>
             </div>
           ) : (
-            <div className="flex items-center justify-between rounded-lg border border-border bg-secondary px-3 py-2">
+            <div className="flex items-center justify-between rounded-sm border border-border bg-secondary px-3 py-2">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Key className="h-4 w-4" />
                 <span>API Key configured</span>
@@ -364,7 +357,7 @@ const AddWeightEntry = () => {
                       </TooltipTrigger>
                       <TooltipContent className="max-w-xs">
                         <p className="text-xs">
-                          If not entered, body age will be auto-calculated based on your BMI, body fat percentage, 
+                          If not entered, body age will be auto-calculated based on your BMI, body fat percentage,
                           and other metrics compared to healthy ranges for your chronological age.
                         </p>
                       </TooltipContent>

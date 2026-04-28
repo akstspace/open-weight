@@ -35,11 +35,11 @@ const PullToRefreshIndicator = ({
         }}
       >
         {isRefreshing ? (
-          <Loader2 className="h-5 w-5 animate-spin text-accent" />
+          <Loader2 className="h-5 w-5 animate-spin text-primary" />
         ) : (
           <ArrowDown
             className={`h-5 w-5 smooth-transition-fast ${
-              isTriggered ? 'text-accent' : 'text-muted-foreground'
+              isTriggered ? 'text-primary' : 'text-muted-foreground'
             }`}
             style={{
               transform: isTriggered ? 'rotate(180deg)' : 'rotate(0deg)',

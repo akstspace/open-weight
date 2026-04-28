@@ -40,7 +40,6 @@ const MetricRow = ({ label, value, unit, rating, gender }: {
   const hasRating = rating !== undefined && rating !== null;
   const formattedValue = unit === '' && Number.isInteger(value) ? value.toString() : value.toFixed(2);
 
-  // If no rating, show as simple info row without dropdown
   if (!hasRating) {
     return (
       <div className="flex items-center justify-between py-2.5 sm:py-3 px-2 -mx-2">
@@ -59,7 +58,7 @@ const MetricRow = ({ label, value, unit, rating, gender }: {
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <CollapsibleTrigger className="w-full touch-subtle">
-        <div className="flex items-center justify-between py-2.5 sm:py-3 hover:bg-secondary/30 px-2 -mx-2 rounded smooth-transition">
+        <div className="flex items-center justify-between py-2.5 sm:py-3 hover:bg-secondary/30 px-2 -mx-2 rounded-sm smooth-transition">
           <span className="text-sm sm:text-base text-muted-foreground text-left">{label}</span>
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="font-mono text-sm sm:text-base font-semibold text-foreground">
@@ -93,13 +92,13 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: Entr
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg border-border bg-card p-0">
+      <SheetContent className="w-full sm:max-w-lg border-border bg-card p-0 sm:rounded-l-md">
         <div className="p-4 sm:p-6 pb-0">
           <SheetHeader className="pb-3 sm:pb-4">
-            <SheetTitle className="text-lg sm:text-xl text-foreground">Body Composition</SheetTitle>
+            <SheetTitle className="text-lg sm:text-xl text-foreground tracking-tight">Body Composition</SheetTitle>
           </SheetHeader>
         </div>
-        
+
         {isLoading ? (
           <div className="space-y-4 p-4 sm:p-6">
             <Skeleton className="h-24 w-full" />
@@ -110,16 +109,16 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: Entr
         ) : entry ? (
           <ScrollArea className="h-[calc(100vh-80px)] px-4 sm:px-6">
             {/* Header Summary */}
-            <div className="mb-4 sm:mb-6 rounded-lg border border-border bg-secondary p-3 sm:p-4 animate-in-fade">
+            <div className="mb-4 sm:mb-6 rounded-sm border border-border bg-secondary p-3 sm:p-4 animate-in-fade">
               <div className="flex items-center justify-between">
                 <p className="text-xs sm:text-sm text-muted-foreground">
-                  {entry.time} • {format(parseISO(entry.date), "MMM dd, yyyy")}
+                  {entry.time} &bull; {format(parseISO(entry.date), "MMM dd, yyyy")}
                 </p>
                 <span className={cn(
-                  "text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-medium",
+                  "text-[10px] sm:text-xs px-2 py-0.5 rounded-sm font-medium",
                   entry.source === 'automated'
                     ? "bg-success/10 text-success"
-                    : "bg-background text-accent"
+                    : "bg-primary/10 text-primary"
                 )}>
                   {entry.source === 'automated' ? 'Automated' : 'Manual'}
                 </span>
@@ -152,8 +151,8 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: Entr
             </p>
 
             {/* Metrics */}
-            <div className="rounded-lg border border-border bg-card px-3 sm:px-4 animate-in-slide-up" style={{ animationDelay: '150ms' }}>
-              <div className="flex items-center justify-between border-b border-border py-2.5 sm:py-3 text-[10px] sm:text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            <div className="rounded-sm border border-border bg-card px-3 sm:px-4 animate-in-slide-up" style={{ animationDelay: '150ms' }}>
+              <div className="flex items-center justify-between border-b border-border py-2.5 sm:py-3 label-caps text-muted-foreground">
                 <span>Index</span>
                 <div className="flex items-center gap-2 sm:gap-3">
                   <span>Value</span>
@@ -169,7 +168,7 @@ const EntryDetailSheet = ({ entryId, open, onOpenChange, gender = 'male' }: Entr
               <MetricRow label="BMI" value={entry.bmi.value} unit="" rating={entry.bmi.rating} gender={gender} />
               <Separator className="bg-border/50" />
               <MetricRow label="Fat-free Body Weight" value={entry.fatFreeBodyWeight.value} unit="kg" rating={entry.fatFreeBodyWeight.rating} gender={gender} />
-              
+
               {entry.fatMass.value > 0 && (
                 <>
                   <Separator className="bg-border/50" />

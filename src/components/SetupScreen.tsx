@@ -21,7 +21,7 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!userName.trim()) {
       toast.error("Please enter your name");
       return;
@@ -43,7 +43,7 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
       const response = await fetch("/api/config/setup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           userName: userName.trim(),
           birthday: birthday,
           height: parseFloat(height),
@@ -69,7 +69,7 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
 
   const handleCopyApiKey = async () => {
     if (!apiKey) return;
-    
+
     try {
       await navigator.clipboard.writeText(apiKey);
       setCopied(true);
@@ -84,17 +84,16 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
     onSetupComplete(userName);
   };
 
-  // Show API key screen after successful setup
   if (apiKey) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="w-full max-w-md animate-in-slide-up">
           <div className="space-y-6 rounded-lg border border-border bg-card p-6 sm:p-8">
             <div className="text-center space-y-2">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-border bg-secondary">
-                <Key className="h-8 w-8 text-accent" />
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                <Key className="h-8 w-8 text-primary" />
               </div>
-              <h1 className="text-2xl font-bold text-foreground">Setup Complete!</h1>
+              <h1 className="text-2xl font-bold text-foreground tracking-tight">Setup Complete!</h1>
               <p className="text-muted-foreground">
                 Save your API key below. You'll need it to add weight data.
               </p>
@@ -105,7 +104,7 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
                 Save this key now. It will not be shown again.
               </Label>
               <div className="relative">
-                <div className="rounded-lg border border-border bg-secondary p-4 pr-12 font-mono text-sm break-all">
+                <div className="rounded-sm border border-border bg-secondary p-4 pr-12 font-mono text-sm break-all">
                   {apiKey}
                 </div>
                 <Button
@@ -123,10 +122,10 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
               </div>
             </div>
 
-            <div className="space-y-2 rounded-lg border border-border bg-secondary p-4 text-sm">
+            <div className="space-y-2 rounded-sm border border-border bg-secondary p-4 text-sm">
               <p className="font-medium text-foreground">How to use:</p>
               <p className="text-muted-foreground">
-                Use this API key in the <code className="bg-secondary px-1 rounded">X-API-Key</code> header 
+                Use this API key in the <code className="bg-background px-1 rounded-sm">X-API-Key</code> header
                 when making requests to add or modify weight data.
               </p>
               <p className="text-muted-foreground">
@@ -134,8 +133,8 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
               </p>
             </div>
 
-            <Button 
-              className="w-full h-12 touch-active" 
+            <Button
+              className="w-full h-12 touch-active"
               onClick={handleContinue}
             >
               Continue to Dashboard
@@ -146,16 +145,15 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
     );
   }
 
-  // Initial setup form
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md animate-in-slide-up">
         <div className="space-y-6 rounded-lg border border-border bg-card p-6 sm:p-8">
           <div className="text-center space-y-2">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-border bg-secondary">
-              <User className="h-8 w-8 text-accent" />
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+              <User className="h-8 w-8 text-primary" />
             </div>
-            <h1 className="text-2xl font-bold text-foreground">Welcome!</h1>
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">Welcome!</h1>
             <p className="text-muted-foreground">
               Let's set up your personal health tracker.
             </p>
@@ -221,12 +219,12 @@ const SetupScreen = ({ onSetupComplete }: SetupScreenProps) => {
               </div>
             </div>
 
-            <p className="rounded-lg border border-border bg-secondary p-3 text-xs text-muted-foreground">
+            <p className="rounded-sm border border-border bg-secondary p-3 text-xs text-muted-foreground">
               Biometric data is required to calculate BMI, BMR, and body age automatically.
             </p>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full h-12 touch-active"
               disabled={isLoading || !userName.trim() || !birthday || !height}
             >

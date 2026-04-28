@@ -15,8 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          'IBM Plex Sans',
-          'IBM Plex Sans Variable',
+          'Public Sans',
           '-apple-system',
           'system-ui',
           'Avenir Next',
@@ -30,7 +29,7 @@ export default {
           'Arial',
           'sans-serif',
         ],
-        mono: ['Source Code Pro', 'Menlo', 'Consolas', 'Monaco', 'monospace'],
+        mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -95,11 +94,12 @@ export default {
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "12px",
+        md: "8px",
+        sm: "4px",
+        xl: "16px",
       },
-keyframes: {
+      keyframes: {
         "accordion-down": {
           from: { height: "0", opacity: "0" },
           to: { height: "var(--radix-accordion-content-height)", opacity: "1" },
@@ -173,7 +173,7 @@ keyframes: {
           "100%": { backgroundPosition: "200% 0" },
         },
       },
-animation: {
+      animation: {
         "accordion-down": "accordion-down 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
         "accordion-up": "accordion-up 0.3s cubic-bezier(0.32, 0.72, 0, 1)",
         "ios-bounce-in": "ios-bounce-in 0.5s cubic-bezier(0.32, 0.72, 0, 1) forwards",

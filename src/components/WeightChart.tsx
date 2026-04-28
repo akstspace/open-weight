@@ -37,8 +37,8 @@ const WeightChart = ({ entries }: WeightChartProps) => {
             contentStyle={{
               backgroundColor: 'hsl(var(--card))',
               border: '1px solid hsl(var(--border))',
-              borderRadius: '6px',
-              boxShadow: '0px 25px 50px -12px rgba(0,0,0,0.20)',
+              borderRadius: '8px',
+              boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
               color: 'hsl(var(--foreground))',
             }}
             labelFormatter={(_, payload) => payload[0]?.payload?.fullDate || ''}
@@ -47,10 +47,10 @@ const WeightChart = ({ entries }: WeightChartProps) => {
           <Area
             type="monotone"
             dataKey="weight"
-            stroke="hsl(var(--chart-line))"
+            stroke="hsl(var(--primary))"
             strokeWidth={2}
-            fill="hsl(var(--chart-fill))"
-            fillOpacity={0.35}
+            fill="hsl(var(--primary))"
+            fillOpacity={0.12}
           />
         </AreaChart>
       </ResponsiveContainer>
